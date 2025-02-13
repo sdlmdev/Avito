@@ -1,0 +1,18 @@
+@import 'shared/styles/mixins.scss';
+
+.ErrorPage {
+  @include flex-column-center;
+  width: 100%;
+  height: 100vh;
+  font: var(--font-l);
+  row-gap: 10px;
+}
+
+.reloadBtn {
+  padding: 5px;
+  transition: 0.3s;
+}
+
+.reloadBtn:hover {
+  opacity: 0.6;
+}

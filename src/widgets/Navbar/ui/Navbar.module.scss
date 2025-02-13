@@ -1,0 +1,16 @@
+@import 'src/shared/styles/mixins';
+
+.Navbar {
+  @include flex-row-center;
+  position: sticky;
+  justify-content: space-between;
+  padding: 10px 20px;
+  width: 100%;
+  background-color: var(--header-bg-color);
+  color: var(--inverted-text-color);
+}
+
+.navigation {
+  @include flex-row-center;
+  column-gap: 10px;
+}

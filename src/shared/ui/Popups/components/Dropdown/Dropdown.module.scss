@@ -1,17 +1,18 @@
+@import '../../../../styles/mixins.scss';
+
 .menu {
-    background: var(--dark-bg-redesigned);
-    position: absolute;
-    z-index: 10000;
-    flex-direction: column;
-    display: flex;
+  @include flex-column;
+  position: absolute;
+  z-index: 1000;
+  box-shadow: var(--main-box-shadow);
+  background-color: var(--main-bg-color);
 }
 
 .item {
-    padding: 10px 25px;
-    width: 100%;
-    border: none;
-    background: none;
-    outline: none;
-    color: var(--text-redesigned);
-    cursor: pointer;
+  padding: 10px 25px;
+  color: var(--text-color);
+
+  &:hover {
+    color: var(--link-hover-color);
+  }
 }

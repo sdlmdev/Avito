@@ -1,0 +1,26 @@
+@import 'src/shared/styles/mixins.scss';
+
+.LoginForm {
+  @include flex-column;
+  width: 400px;
+  row-gap: 20px;
+}
+
+.inputs {
+  @include flex-column;
+  row-gap: 10px;
+}
+
+.loginBtn {
+  align-self: flex-start;
+}
+
+.title {
+  font: var(--font-xl);
+}
+
+.submitContainer {
+  @include flex-row;
+  align-items: center;
+  column-gap: 15px;
+}

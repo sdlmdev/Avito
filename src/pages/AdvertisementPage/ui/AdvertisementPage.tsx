@@ -1,9 +1,9 @@
 import {useTranslation} from 'react-i18next';
 
-const PlacementFormPage = ({}) => {
-  const {t} = useTranslation('aboutPage');
+const AdvertisementPage = ({}) => {
+  const {t} = useTranslation('advertisementPage');
 
-  return <div>{t('О сайте')}</div>;
+  return <div>{t('AdvertisementPage')}</div>;
 };
 
-export default PlacementFormPage;
+export default AdvertisementPage;

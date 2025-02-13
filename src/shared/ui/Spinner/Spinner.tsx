@@ -1,12 +1,6 @@
-import LogoBubbles from '../../assets/icons/bubblesLogo.svg';
-import LogoText from '../../assets/icons/logo.svg';
-import styles from './Logo.module.scss';
+import SpinnerIcon from '../../assets/icons/load.svg';
+import styles from './Spinner.module.scss';
 
-export const Logo = () => {
-  return (
-    <div className={styles.Logo}>
-      <LogoBubbles />
-      <LogoText />
-    </div>
-  );
+export const Spinner = ({}) => {
+  return <SpinnerIcon className={styles.Spinner} />;
 };

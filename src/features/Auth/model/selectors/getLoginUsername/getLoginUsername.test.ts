@@ -1,17 +1,20 @@
-import { StateSchema } from '@/app/providers/StoreProvider';
-import { getLoginUsername } from './getLoginUsername';
+import {StateScheme} from 'app/providers/StoreProvider';
 
-describe('getLoginUsername.test', () => {
-    test('should return value', () => {
-        const state: DeepPartial<StateSchema> = {
-            loginForm: {
-                username: '123123',
-            },
-        };
-        expect(getLoginUsername(state as StateSchema)).toEqual('123123');
-    });
-    test('should work with empty state', () => {
-        const state: DeepPartial<StateSchema> = {};
-        expect(getLoginUsername(state as StateSchema)).toEqual('');
-    });
+import {getLoginUsername} from './getLoginUsername';
+
+describe('Тесты getLoginUsername', () => {
+  test('Проверка возвращаемого значения', () => {
+    const state: DeepPartial<StateScheme> = {
+      loginForm: {
+        username: 'testName',
+      },
+    };
+
+    expect(getLoginUsername(state as StateScheme)).toEqual('testName');
+  });
+
+  test('Проверка работоспособности с пустым значением', () => {
+    const state: DeepPartial<StateScheme> = {};
+    expect(getLoginUsername(state as StateScheme)).toEqual('');
+  });
 });

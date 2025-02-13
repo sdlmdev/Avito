@@ -1,46 +1,38 @@
 .popup {
-    position: relative;
+  position: relative;
 }
 
 .menu {
-    border-radius: 18px;
-    border: 1px solid var(--accent-redesigned);
-    overflow: hidden;
-}
-
-.trigger {
-    background: none;
-    outline: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-    cursor: pointer;
+  overflow: hidden;
+  width: max-content;
+  border: 1px solid var(--header-bg-color);
+  border-radius: var(--br-size-m);
 }
 
 .active {
-    background: var(--light-bg-redesigned);
+  color: var(--link-hover-color);
 }
 
 .optionsBottomLeft {
-    top: 100%;
-    right: 0;
+  top: 120%;
+  right: 0;
 }
 
 .optionsBottomRight {
-    top: 100%;
-    left: 0;
+  top: 120%;
+  left: 0;
 }
 
 .optionsTopRight {
-    bottom: 100%;
-    left: 0;
+  bottom: 120%;
+  left: 0;
 }
 
 .optionsTopLeft {
-    right: 0;
-    bottom: 100%;
+  right: 0;
+  bottom: 100%;
 }
 
 .disabled {
-    opacity: 0.7;
+  opacity: 0.7;
 }

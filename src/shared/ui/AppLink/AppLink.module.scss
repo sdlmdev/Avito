@@ -1,0 +1,13 @@
+.AppLink {
+  &:hover {
+    color: var(--link-hover-color);
+  }
+}
+
+.s {
+  font: var(--font-s);
+}
+
+.m {
+  font: var(--font-m);
+}

@@ -1,0 +1,41 @@
+@import '../../styles/mixins.scss';
+
+.Modal {
+  @include flex-center;
+  position: fixed;
+  z-index: -1;
+  background-color: var(--overlay-color);
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+  inset: 0;
+}
+
+.content {
+  position: relative;
+  padding: 30px;
+  border-radius: var(--br-size-m);
+  background-color: var(--main-bg-color);
+  opacity: 0;
+  transform: scale(0.3);
+  transition: 0.3s transform;
+}
+
+.opened {
+  display: flex;
+  z-index: var(--modal-z-index);
+  opacity: 1;
+  pointer-events: auto;
+
+  .content {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.closeBtn {
+  @include flex-row-center;
+  position: absolute;
+  top: -5px;
+  right: -40px;
+}

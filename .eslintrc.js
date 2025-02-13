@@ -19,15 +19,27 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'react-memo', 'unused-imports', 'i18next'],
-  extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'plugin:i18next/recommended'],
+  plugins: [
+    '@typescript-eslint',
+    'prettier',
+    'react',
+    'react-hooks',
+    'react-memo',
+    'unused-imports',
+    'i18next',
+  ],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'plugin:i18next/recommended',
+  ],
   rules: {
     'linebreak-style': ['error', 'unix'],
     'eol-last': ['error', 'always'],
     'max-len': [
       'error',
       {
-        code: 120,
+        code: 80,
         tabWidth: 2,
         ignoreRegExpLiterals: true,
         ignoreStrings: true,
@@ -184,16 +196,32 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     'react/display-name': 'error',
     'react/jsx-key': 'error',
-    'i18next/no-literal-string': ['error', {markupOnly: true, onlyAttribute: ['']}],
+    'i18next/no-literal-string': [
+      'error',
+      {markupOnly: true, onlyAttribute: ['']},
+    ],
   },
   globals: {
     __IS_DEV__: true,
+    __API__: true,
   },
   overrides: [
     {
       files: ['**/src/**/*.test.{ts,tsx}'],
       rules: {
         'i18next/no-literal-string': 'off',
+      },
+    },
+    {
+      files: ['src/app/providers/StoreProvider/config/store.ts'],
+      rules: {
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
+    },
+    {
+      files: ['src/shared/lib/tests/TestAsyncThunk/TestAsyncThunk.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
       },
     },
   ],

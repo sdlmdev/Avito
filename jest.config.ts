@@ -1,12 +1,7 @@
-/*
- * For a detailed explanation regarding each configuration property and type check, visit:
- * https://jestjs.io/docs/configuration
- */
-import path from 'path';
-
 export default {
   globals: {
     __IS_DEV__: true,
+    __API__: '',
   },
   clearMocks: true,
   testEnvironment: 'jsdom',
@@ -16,8 +11,12 @@ export default {
   modulePaths: ['<rootDir>/src'],
   testMatch: ['<rootDir>/src/**/*(*.)@(spec|test).[tj]s?(x)'],
   setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.ts'],
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+    '\\.svg$': 'jest-transform-stub',
+  },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleNameMapper: {
     '\\.s?css$': 'identity-obj-proxy',
-    '\\.svg': path.resolve(__dirname, './config/jest/jestEmptyComponent.tsx'),
   },
 };

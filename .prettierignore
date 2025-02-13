@@ -4,5 +4,4 @@
 *.css.d.ts
 /reports
 /.vscode
-src/index.tsx
 

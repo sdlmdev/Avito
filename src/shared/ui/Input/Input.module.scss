@@ -1,0 +1,46 @@
+@import '../../styles/mixins.scss';
+
+.inputWrapper,
+.input,
+.ToggleButton {
+  background-color: var(--input-bg-color);
+}
+
+.inputWrapper,
+.input {
+  border-radius: var(--br-size-s);
+}
+
+.inputWrapper {
+  @include flex-row-center;
+  position: relative;
+  padding: 3px 10px;
+  min-height: 36px;
+
+  &:focus-within {
+    box-shadow: var(--box-shadow-main);
+    background-color: var(--main-bg-color);
+
+    .toggleButton,
+    input {
+      background-color: var(--main-bg-color);
+    }
+  }
+}
+
+.toggleButton {
+  @include flex-row-center;
+  padding: 5px 0 5px 5px;
+}
+
+.input {
+  width: 100%;
+}
+
+.s {
+  font: var(--font-s);
+}
+
+.m {
+  font: var(--font-m);
+}

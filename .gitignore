@@ -2,7 +2,6 @@ node_modules
 
 /build
 /dist
-/storybook-static
 
 .idea
 .vscode
@@ -20,6 +19,3 @@ yarn-error.log*
 .env.production.local
 .env.test
 env.js
-
-.loki/report.html
-.loki/report.json

@@ -1,0 +1,7 @@
+@import 'shared/styles/mixins.scss';
+
+.NotFoundPage {
+  @include flex-row-center;
+  height: 100%;
+  font: var(--font-l);
+}

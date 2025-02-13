@@ -1,0 +1,6 @@
+@import 'src/shared/styles/mixins.scss';
+
+.PageLoader {
+  @include flex-row-center;
+  flex-grow: 1;
+}

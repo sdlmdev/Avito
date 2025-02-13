@@ -1,5 +1,10 @@
+@import '../../styles/mixins.scss';
+
 .Avatar {
-    border-radius: 50%;
-    height: 100px;
-    width: 100px;
+  @include flex-row-center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--avatar-bg-color);
+  font-weight: 700;
 }

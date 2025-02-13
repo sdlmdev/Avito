@@ -1,3 +1,5 @@
 import {lazy} from 'react';
 
-export const PlacementFormPageAsync = lazy(async () => import('./PlacementFormPage'));
+export const AdvertisementPageAsync = lazy(
+  async () => import('./AdvertisementPage'),
+);

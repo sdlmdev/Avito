@@ -1,0 +1,44 @@
+@import '../../styles/mixins.scss';
+
+.Button {
+  @include flex-row-center;
+  border-radius: var(--br-size-m);
+  color: var(--inverted-text-color);
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.blue {
+  background-color: var(--main-color-blue);
+
+  &:hover {
+    background-color: var(--button-blue-bgColor-hover);
+  }
+
+  &:active {
+    background-color: var(--button-blue-bgColor-active);
+  }
+}
+
+.outline {
+  border: 1px solid var(--main-color-blue);
+  background-color: transparent;
+  color: var(--main-color-blue);
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.s {
+  padding: var(--button-padding-size-s);
+  font: var(--font-s);
+}
+
+.m {
+  padding: var(--button-padding-size-m);
+  font: var(--font-m);
+}

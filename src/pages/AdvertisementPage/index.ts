@@ -1,1 +1,1 @@
-export {PlacementFormPageAsync as PlacementFormPage} from './ui/PlacementFormPageAsync.async';
+export {AdvertisementPageAsync as AdvertisementPage} from './ui/AdvertisementPageAsync.async';

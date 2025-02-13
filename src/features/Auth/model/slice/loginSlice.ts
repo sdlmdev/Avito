@@ -1,14 +1,40 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import {UserScheme} from '../types/user';
+import {login} from '../../model/services/login/login';
+import {LoginScheme} from '../types/LoginScheme';
 
-const initialState: UserScheme = {};
+const initialState: LoginScheme = {
+  username: '',
+  password: '',
+  isLoading: false,
+};
 
-export const userSlice = createSlice({
-  name: 'user',
+export const loginSlice = createSlice({
+  name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    setUsername: (state, action: PayloadAction<string>) => {
+      state.username = action.payload;
+    },
+    setPassword: (state, action: PayloadAction<string>) => {
+      state.password = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.pending, (state) => {
+        state.error = undefined;
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
-export const {actions: userActions} = userSlice;
-export const {reducer: userReducer} = userSlice;
+export const {actions: loginActions} = loginSlice;
+export const {reducer: loginReducer} = loginSlice;

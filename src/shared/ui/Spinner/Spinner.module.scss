@@ -1,8 +1,12 @@
-@import '../../styles/mixins.scss';
+.Spinner {
+  animation: spin 1s linear infinite;
+}
 
-.Logo {
-  @include flex-row-center;
-  column-gap: 3px;
-  width: 113px;
-  height: 30px;
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
