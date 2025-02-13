@@ -46,10 +46,18 @@ app.post('/register', async (req, res) => {
     return res.status(400).json({error: 'Missing username or password'});
   }
 
+  const existingUser = users.find((u) => u.username === username);
+
+  if (existingUser) {
+    return res.status(400).json({error: 'Username already exists'});
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = {id: usersIdCounter(), username, password: hashedPassword};
   users.push(user);
-  res.status(201).json({message: 'User registered successfully'});
+
+  const token = jwt.sign({userId: user.id}, SECRET_KEY, {expiresIn: '1h'});
+  res.status(201).json({token, username, password});
 });
 
 // Авторизация пользователя
@@ -73,7 +81,7 @@ app.post('/login', async (req, res) => {
   }
 
   const token = jwt.sign({userId: user.id}, SECRET_KEY, {expiresIn: '1h'});
-  res.json({token, username, password});
+  res.status(200).json({token, username, password});
 });
 
 // Middleware для проверки токена

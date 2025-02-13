@@ -7,6 +7,7 @@ import styles from './Button.module.scss';
 export enum ButtonTheme {
   BLUE = 'blue',
   OUTLINE = 'outline',
+  CLEAR = 'clear',
 }
 
 export enum ButtonSize {

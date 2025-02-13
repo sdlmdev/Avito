@@ -2,13 +2,13 @@ import {userActions} from 'entities/User';
 
 import {TestAsyncThunk} from 'shared/lib/tests/TestAsyncThunk/TestAsyncThunk';
 
-import {login} from './login';
+import {register} from './register';
 
-describe('Тесты login', () => {
-  test('Должен пройти успешный процесс авторизации', async () => {
+describe('Тесты register', () => {
+  test('Должен пройти успешный процесс регистрации', async () => {
     const userValue = {username: 'testName'};
 
-    const thunk = new TestAsyncThunk(login);
+    const thunk = new TestAsyncThunk(register);
     thunk.api.post.mockReturnValue(Promise.resolve({data: userValue}));
 
     const result = await thunk.callThunk({
@@ -26,8 +26,8 @@ describe('Тесты login', () => {
     expect(result.payload).toEqual(userValue);
   });
 
-  test('Процесс авторизации должен пройти с ошибкой', async () => {
-    const thunk = new TestAsyncThunk(login);
+  test('Процесс регистрации должен пройти с ошибкой', async () => {
+    const thunk = new TestAsyncThunk(register);
     thunk.api.post.mockReturnValue(Promise.resolve({status: 403}));
 
     const result = await thunk.callThunk({

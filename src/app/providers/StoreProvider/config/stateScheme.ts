@@ -8,7 +8,7 @@ import {
 import {AxiosInstance} from 'axios';
 import {UserScheme} from 'entities/User';
 
-import {LoginScheme} from 'features/Auth';
+import {LoginScheme, RegisterScheme} from 'features/Auth';
 
 import {rtkApi} from 'shared/api/rtkApi';
 
@@ -17,6 +17,7 @@ export interface StateScheme {
   [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
   loginForm?: LoginScheme;
+  registerForm?: RegisterScheme;
 }
 
 export interface ThunkExtraArg {

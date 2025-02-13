@@ -3,7 +3,7 @@ import {StateScheme} from 'app/providers/StoreProvider';
 import {getLoginIsLoading} from './getLoginIsLoading';
 
 describe('Тесты getLoginIsLoading', () => {
-  test('should return true', () => {
+  test('Должен возвращать true, если isLoading установлено в true', () => {
     const state: DeepPartial<StateScheme> = {
       loginForm: {
         isLoading: true,
@@ -13,7 +13,7 @@ describe('Тесты getLoginIsLoading', () => {
     expect(getLoginIsLoading(state as StateScheme)).toEqual(true);
   });
 
-  test('Проверка работоспособности с пустым значением', () => {
+  test('Должен возвращать false, если isLoading не установлено', () => {
     const state: DeepPartial<StateScheme> = {};
 
     expect(getLoginIsLoading(state as StateScheme)).toEqual(false);

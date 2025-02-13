@@ -1,20 +1,20 @@
 import {StateScheme} from 'app/providers/StoreProvider';
 
-import {getLoginUsername} from './getLoginUsername';
+import {getRegisterUsername} from './getRegisterUsername';
 
-describe('Тесты getLoginUsername', () => {
+describe('Тесты getRegisterUsername', () => {
   test('Должен возвращать имя пользователя, если оно установлено в состоянии', () => {
     const state: DeepPartial<StateScheme> = {
-      loginForm: {
+      registerForm: {
         username: 'testName',
       },
     };
 
-    expect(getLoginUsername(state as StateScheme)).toEqual('testName');
+    expect(getRegisterUsername(state as StateScheme)).toEqual('testName');
   });
 
   test('Должен возвращать пустую строку, если имя пользователя не установлено в состоянии', () => {
     const state: DeepPartial<StateScheme> = {};
-    expect(getLoginUsername(state as StateScheme)).toEqual('');
+    expect(getRegisterUsername(state as StateScheme)).toEqual('');
   });
 });

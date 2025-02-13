@@ -42,3 +42,17 @@
   padding: var(--button-padding-size-m);
   font: var(--font-m);
 }
+
+.clear {
+  background-color: transparent;
+  color: var(--text-color);
+  padding: 0;
+
+  &:hover {
+    color: var(--link-hover-color)
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
+}

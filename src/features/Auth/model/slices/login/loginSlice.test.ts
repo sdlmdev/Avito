@@ -1,8 +1,8 @@
-import {LoginScheme} from '../types/loginScheme';
+import {LoginScheme} from '../../types/loginScheme';
 import {loginActions, loginReducer} from './loginSlice';
 
 describe('Тесты loginSlice', () => {
-  test('Назначение username', () => {
+  test('Должен установить username', () => {
     const state: DeepPartial<LoginScheme> = {username: '123'};
 
     expect(
@@ -10,7 +10,7 @@ describe('Тесты loginSlice', () => {
     ).toEqual({username: 'testName'});
   });
 
-  test('Назначение password', () => {
+  test('Должен установить password', () => {
     const state: DeepPartial<LoginScheme> = {password: '123'};
 
     expect(

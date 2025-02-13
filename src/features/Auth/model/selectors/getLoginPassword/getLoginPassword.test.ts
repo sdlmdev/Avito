@@ -3,7 +3,7 @@ import {StateScheme} from 'app/providers/StoreProvider';
 import {getLoginPassword} from './getLoginPassword';
 
 describe('Тесты getLoginPassword', () => {
-  test('Проверка возвращаемого значения', () => {
+  test('Должен возвращать пароль, если он установлен в состоянии', () => {
     const state: DeepPartial<StateScheme> = {
       loginForm: {
         password: 'testPassword',
@@ -13,7 +13,7 @@ describe('Тесты getLoginPassword', () => {
     expect(getLoginPassword(state as StateScheme)).toEqual('testPassword');
   });
 
-  test('Проверка работоспособности с пустым значением', () => {
+  test('Должен возвращать пустую строку, если значение не установлено', () => {
     const state: DeepPartial<StateScheme> = {};
     expect(getLoginPassword(state as StateScheme)).toEqual('');
   });
