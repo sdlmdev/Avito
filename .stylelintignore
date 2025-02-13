@@ -1,0 +1,15 @@
+node_modules
+package-lock.lock
+*.md
+*.json
+.*
+*.html
+*.woff
+*.woff2
+*.ttf
+*.png
+*.sh
+*.cur
+/dist
+/build
+/coverage
