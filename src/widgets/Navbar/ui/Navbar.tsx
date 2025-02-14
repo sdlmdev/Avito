@@ -1,4 +1,3 @@
-import {routePath} from 'app/providers/router/config/routeConfig';
 import cn from 'classnames';
 import {getUserData} from 'entities/User';
 import {memo, useCallback, useState} from 'react';
@@ -10,6 +9,7 @@ import {LoginModal} from 'features/Auth';
 import {AvatarDropdown} from 'features/AvatarDropdown';
 import {LangSwitcher} from 'features/LangSwitcher';
 
+import {getRouteMain, getRoutePlacementForm} from 'shared/constants/router';
 import {AppLink} from 'shared/ui/AppLink';
 import {Button} from 'shared/ui/Button';
 import {Logo} from 'shared/ui/Logo';
@@ -31,7 +31,7 @@ export const Navbar = memo(({className}: NavbarProps) => {
 
   return (
     <header className={cn(styles.Navbar, className)}>
-      <Link to={routePath.main}>
+      <Link to={getRouteMain()}>
         <Logo />
       </Link>
 
@@ -39,7 +39,9 @@ export const Navbar = memo(({className}: NavbarProps) => {
         <LangSwitcher />
         {userData && (
           <>
-            <AppLink to={routePath.form}>{t('Разместить объявление')}</AppLink>
+            <AppLink to={getRoutePlacementForm()}>
+              {t('Разместить объявление')}
+            </AppLink>
             <AvatarDropdown />
           </>
         )}

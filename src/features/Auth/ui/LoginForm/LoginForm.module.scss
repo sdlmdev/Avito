@@ -26,9 +26,9 @@
 }
 
 .footer {
+  margin: 0 -30px -30px;
   padding: 20px 30px;
-  background-color: var(--footer-login-form-bg-color);
-  margin: 0 -30px -30px -30px;
   border-bottom-left-radius: var(--br-size-m);
   border-bottom-right-radius: var(--br-size-m);
+  background-color: var(--footer-login-form-bg-color);
 }

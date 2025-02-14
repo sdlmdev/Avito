@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import {memo} from 'react';
 import {useTranslation} from 'react-i18next';
+import {Page} from 'widgets/Page';
 
 import {Button} from 'shared/ui/Button/Button';
 
@@ -14,12 +15,12 @@ export const ErrorPage = memo(() => {
   };
 
   return (
-    <div className={styles.ErrorPage}>
+    <Page testId="ErrorPage" className={styles.ErrorPage}>
       <p>{t('error')}</p>
       <Button onClick={reloadPage} className={cn(styles.reloadBtn)}>
         {t('Обновить страницу')}
       </Button>
-    </div>
+    </Page>
   );
 });
 

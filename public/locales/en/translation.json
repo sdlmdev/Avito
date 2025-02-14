@@ -7,5 +7,9 @@
   "Произошла ошибка": "An error occurred",
   "Логин": "Login",
   "Пароль": "Password",
-  "Выйти": "Sign out"
+  "Выйти": "Sign out",
+  "Нет аккаунта? Зарегистрироваться": "No account? Register",
+  "Уже есть аккаунт? Войти": "Already have an account? Sign in",
+  "Зарегистрироваться": "Register",
+  "Регистрация": "Registration"
 }

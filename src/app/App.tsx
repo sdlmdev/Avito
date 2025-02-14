@@ -14,14 +14,10 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div id="app" className="app">
-      <Suspense fallback={<PageLoader />}>
-        <Navbar />
-        <main className="content-page">
-          <AppRouter />
-        </main>
-      </Suspense>
-    </div>
+    <Suspense fallback={<PageLoader />}>
+      <Navbar />
+      <AppRouter />
+    </Suspense>
   );
 };
 

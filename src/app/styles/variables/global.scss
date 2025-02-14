@@ -18,8 +18,7 @@
 
   // Размеры
 
-  --sidebar-width: 300px;
-  --sidebar-width-collapsed: 80px;
+  --navbar-height: 55px;
 
   // border-radius
 
@@ -30,6 +29,7 @@
 
   --button-padding-size-s: 5px 15px;
   --button-padding-size-m: 8px 15px;
+  --page-padding: 10px 20px;
 
   // z-index
 
@@ -60,5 +60,5 @@
   --link-hover-color: #ff6163;
   --error-color: #ff4053;
   --avatar-bg-color: #896f64;
-  --footer-login-form-bg-color: #F1EFEA;
+  --footer-login-form-bg-color: #f1efea;
 }

@@ -5,6 +5,10 @@ import {MainPage} from 'pages/MainPage';
 import {NotFoundPage} from 'pages/NotFoundPage';
 import {PlacementFormPage} from 'pages/PlacementFormPage';
 
+export type AppRoutesProps = RouteProps & {
+  authOnly?: boolean;
+};
+
 export enum AppRoutes {
   MAIN = 'main',
   PLACEMENT_FORM = 'form',
@@ -19,7 +23,7 @@ export const routePath: Record<AppRoutes, string> = {
   [AppRoutes.NOT_FOUND]: '/*',
 };
 
-export const routeConfig: Record<AppRoutes, RouteProps> = {
+export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.MAIN]: {
     path: routePath[AppRoutes.MAIN],
     element: <MainPage />,
@@ -27,6 +31,7 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.PLACEMENT_FORM]: {
     path: routePath[AppRoutes.PLACEMENT_FORM],
     element: <PlacementFormPage />,
+    authOnly: true,
   },
   [AppRoutes.ADVERTISEMENT]: {
     path: routePath[AppRoutes.ADVERTISEMENT],

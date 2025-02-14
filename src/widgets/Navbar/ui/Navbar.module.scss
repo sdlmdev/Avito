@@ -4,10 +4,11 @@
   @include flex-row-center;
   position: sticky;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: var(--page-padding);
   width: 100%;
   background-color: var(--header-bg-color);
   color: var(--inverted-text-color);
+  height: var(--navbar-height);
 }
 
 .navigation {

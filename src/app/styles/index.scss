@@ -19,13 +19,9 @@ a {
   cursor: pointer;
 }
 
-.app {
+#root {
   min-height: 100vh;
   background-color: var(--main-bg-color);
   color: var(--text-color);
   font: var(--font-s);
-}
-
-.content-page {
-  display: flex;
 }
