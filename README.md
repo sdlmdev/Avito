@@ -37,8 +37,8 @@
 ## Установка и запуск проекта
 
 - Клонировать репозиторий: `git clone https://github.com/sdlmdev/Avito.git`
-- Установить зависимости: `npm run install`
-- Установить зависимости для сервера: `cd server` `npm run install`
+- Установить зависимости: `npm install`
+- Установить зависимости для сервера: `cd server` `npm install`
 - Запустить сервер для работы с API: `npm run start:server`
 - Запустить проект: `npm run start`
 
