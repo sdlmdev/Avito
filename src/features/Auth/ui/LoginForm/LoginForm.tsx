@@ -122,16 +122,20 @@ const LoginForm = memo(({className, onSuccess}: LoginFormProps) => {
         <div className={styles.inputs}>
           <Input
             value={isRegistered ? usernameLogin : usernameRegister}
-            onChange={onChangeUsername}
+            onChange={(e) => onChangeUsername(e.target.value)}
             autofocus
             type="text"
             placeholder={t('Логин')}
+            maxLength={20}
+            minLength={4}
           />
           <Input
             value={isRegistered ? passwordLogin : passwordRegister}
-            onChange={onChangePassword}
+            onChange={(e) => onChangePassword(e.target.value)}
             type="password"
             placeholder={t('Пароль')}
+            maxLength={20}
+            minLength={4}
           />
         </div>
         <div className={styles.submitContainer}>

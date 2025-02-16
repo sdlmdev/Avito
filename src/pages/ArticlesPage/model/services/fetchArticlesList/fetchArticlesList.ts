@@ -1,58 +1,128 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { Article, ArticleType } from '@/entities/Article';
-import { addQueryParams } from '@/shared/lib/url/addQueryParams/addQueryParams';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {ThunkConfig} from 'app/providers/StoreProvider';
+import {AxiosResponse} from 'axios';
+import {Advertisement, AdvertisementType} from 'entities/Advertisement';
+
 import {
-    getArticlesPageLimit,
-    getArticlesPageNum,
-    getArticlesPageOrder,
-    getArticlesPageSearch,
-    getArticlesPageSort,
-    getArticlesPageType,
+  addQueryParams,
+  clearQueryParams,
+} from 'shared/lib/url/changeQueryParams/changeQueryParams';
+
+import {articlesPageActions} from 'pages/ArticlesPage/model/slices/articlesPageSlice';
+
+import {
+  getArticlesPageArea,
+  getArticlesPageBrand,
+  getArticlesPageCost,
+  getArticlesPageExperience,
+  getArticlesPageLimit,
+  getArticlesPageLocation,
+  getArticlesPageMileage,
+  getArticlesPageModel,
+  getArticlesPageNum,
+  getArticlesPagePrice,
+  getArticlesPagePropertyType,
+  getArticlesPageRooms,
+  getArticlesPageSearch,
+  getArticlesPageServiceType,
+  getArticlesPageType,
+  getArticlesPageYear,
 } from '../../selectors/articlesPageSelectors';
 
 interface FetchArticlesListProps {
-    replace?: boolean;
+  replace?: boolean;
 }
 
 export const fetchArticlesList = createAsyncThunk<
-    Article[],
-    FetchArticlesListProps,
-    ThunkConfig<string>
+  Array<Advertisement>,
+  FetchArticlesListProps,
+  ThunkConfig<string>
 >('articlesPage/fetchArticlesList', async (props, thunkApi) => {
-    const { extra, rejectWithValue, getState } = thunkApi;
-    const limit = getArticlesPageLimit(getState());
-    const sort = getArticlesPageSort(getState());
-    const order = getArticlesPageOrder(getState());
-    const search = getArticlesPageSearch(getState());
-    const page = getArticlesPageNum(getState());
-    const type = getArticlesPageType(getState());
+  const {extra, rejectWithValue, getState, dispatch} = thunkApi;
+  const limit = getArticlesPageLimit(getState());
+  const search = getArticlesPageSearch(getState());
+  const page = getArticlesPageNum(getState());
+  const type = getArticlesPageType(getState());
+  const propertyType = getArticlesPagePropertyType(getState());
+  const area = getArticlesPageArea(getState());
+  const rooms = getArticlesPageRooms(getState());
+  const price = getArticlesPagePrice(getState());
+  const brand = getArticlesPageBrand(getState());
+  const model = getArticlesPageModel(getState());
+  const year = getArticlesPageYear(getState());
+  const mileage = getArticlesPageMileage(getState());
+  const serviceType = getArticlesPageServiceType(getState());
+  const experience = getArticlesPageExperience(getState());
+  const cost = getArticlesPageCost(getState());
+  const location = getArticlesPageLocation(getState());
 
-    try {
-        addQueryParams({
-            sort,
-            order,
-            search,
-            type,
-        });
-        const response = await extra.api.get<Article[]>('/articles', {
-            params: {
-                _expand: 'user',
-                _limit: limit,
-                _page: page,
-                _sort: sort,
-                _order: order,
-                q: search,
-                type: type === ArticleType.ALL ? undefined : type,
-            },
-        });
+  try {
+    clearQueryParams();
 
-        if (!response.data) {
-            throw new Error();
-        }
+    const queryParams: Record<string, string> = {
+      search,
+      type,
+      location,
+    };
 
-        return response.data;
-    } catch (e) {
-        return rejectWithValue('error');
+    switch (type) {
+      case AdvertisementType.IMMOVABLES:
+        queryParams.propertyType = propertyType;
+        queryParams.area = String(area);
+        queryParams.rooms = String(rooms);
+        queryParams.price = String(price);
+
+        break;
+
+      case AdvertisementType.AUTOMOBILE:
+        queryParams.brand = brand;
+        queryParams.model = model;
+        queryParams.year = String(year);
+        queryParams.mileage = String(mileage);
+
+        break;
+
+      case AdvertisementType.SERVICES:
+        queryParams.serviceType = serviceType;
+        queryParams.experience = String(experience);
+        queryParams.cost = String(cost);
+
+        break;
+
+      default:
+        break;
     }
+
+    addQueryParams(queryParams);
+
+    interface AdvertisementItems {
+      items: Array<Advertisement>;
+      maxPage: number;
+      currentPage: number;
+    }
+
+    const response: AxiosResponse<AdvertisementItems> = await extra.api.get(
+      '/items',
+      {
+        params: {
+          limit,
+          page,
+          ...queryParams,
+        },
+      },
+    );
+
+    if (!response.data) {
+      throw new Error();
+    }
+
+    const {items, maxPage, currentPage} = response.data;
+
+    dispatch(articlesPageActions.setMaxPage(maxPage));
+    dispatch(articlesPageActions.setPage(currentPage));
+
+    return items;
+  } catch (error) {
+    return rejectWithValue((error as Error).message);
+  }
 });

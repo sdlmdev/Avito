@@ -1,7 +1,7 @@
-import {Advertisement} from './article';
+import {Advertisement} from './advertisement';
 
-export interface ArticleDetailsSchema {
+export interface AdvertisementDetailsSchema {
   isLoading: boolean;
   error?: string;
-  data?: Advertisement;
+  data: Advertisement;
 }

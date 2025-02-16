@@ -1,5 +1,12 @@
 import cn from 'classnames';
-import {InputHTMLAttributes, memo, useEffect, useRef, useState} from 'react';
+import {
+  ChangeEvent,
+  InputHTMLAttributes,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import CloseEye from '../../assets/icons/eye-password-hide.svg';
 import OpenEye from '../../assets/icons/eye-password-show.svg';
@@ -19,7 +26,7 @@ interface InputProps extends HTMLInputProps {
   className?: string;
   autofocus?: boolean;
   inputSize?: InputSize;
-  onChange?: (value: string) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
 }
 
@@ -40,15 +47,15 @@ export const Input = memo(
       setIsPasswordVisible(!isPasswordVisible);
     };
 
-    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-      onChange?.(e.target.value);
-    };
-
     useEffect(() => {
       if (autofocus) {
         inputRef.current?.focus();
       }
     }, [autofocus]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e);
+    };
 
     return (
       <div className={cn(styles.inputWrapper, className)}>
@@ -56,7 +63,7 @@ export const Input = memo(
           className={cn(styles.input, styles[inputSize])}
           ref={inputRef}
           type={isPasswordVisible && type === 'password' ? 'text' : type}
-          onChange={onChangeHandler}
+          onChange={handleChange}
           value={value}
           {...props}
         />

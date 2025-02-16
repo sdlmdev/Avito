@@ -1,55 +1,53 @@
-import { memo, ReactNode, useCallback } from 'react';
-import { classNames } from '@/shared/lib/classNames/classNames';
-import { Card } from '../Card/Card';
-import cls from './Tabs.module.scss';
-import { Flex, FlexDirection } from '../Stack/Flex/Flex';
+import cn from 'classnames';
+import {memo, ReactNode, useCallback} from 'react';
+
+import {Button, ButtonTheme} from 'shared/ui/Button';
+
+import styles from './Tabs.module.scss';
 
 export interface TabItem {
-    value: string;
-    content: ReactNode;
+  value: string;
+  content: ReactNode;
 }
 
 interface TabsProps {
-    className?: string;
-    tabs: TabItem[];
-    value: string;
-    onTabClick: (tab: TabItem) => void;
-    direction?: FlexDirection;
+  className?: string;
+  tabs: Array<TabItem>;
+  value: string;
+  onTabClick: (tab: TabItem) => void;
+  direction?: 'row' | 'column';
 }
 
-export const Tabs = memo((props: TabsProps) => {
-    const { className, tabs, onTabClick, value, direction = 'row' } = props;
-
+export const Tabs = memo(
+  ({className, tabs, onTabClick, value, direction = 'row'}: TabsProps) => {
     const clickHandle = useCallback(
-        (tab: TabItem) => () => {
-            onTabClick(tab);
-        },
-        [onTabClick],
+      (tab: TabItem) => () => {
+        onTabClick(tab);
+      },
+      [onTabClick],
     );
 
     return (
-        <Flex
-            direction={direction}
-            gap="8"
-            align="start"
-            className={classNames(cls.Tabs, {}, [className])}
-        >
-            {tabs.map((tab) => {
-                const isSelected = tab.value === value;
-                return (
-                    <Card
-                        variant={isSelected ? 'light' : 'normal'}
-                        className={classNames(cls.tab, {
-                            [cls.selected]: isSelected,
-                        })}
-                        key={tab.value}
-                        onClick={clickHandle(tab)}
-                        border="round"
-                    >
-                        {tab.content}
-                    </Card>
-                );
-            })}
-        </Flex>
+      <div className={cn(styles.Tabs, className, styles[direction])}>
+        {tabs.map((tab) => {
+          const isSelected = tab.value === value;
+
+          return (
+            <Button
+              className={cn(styles.tab, {
+                [styles.selected]: isSelected,
+              })}
+              key={tab.value}
+              onClick={clickHandle(tab)}
+              theme={ButtonTheme.CLEAR}
+            >
+              {tab.content}
+            </Button>
+          );
+        })}
+      </div>
     );
-});
+  },
+);
+
+Tabs.displayName = 'Tabs';

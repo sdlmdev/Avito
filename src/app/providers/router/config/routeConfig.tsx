@@ -1,7 +1,14 @@
 import {RouteProps} from 'react-router-dom';
 
+import {
+  getRouteAdvertisement,
+  getRouteMain,
+  getRouteNotFound,
+  getRoutePlacementForm,
+} from 'shared/constants/router';
+
 import {AdvertisementPage} from 'pages/AdvertisementPage';
-import {MainPage} from 'pages/MainPage';
+import {ArticlesPage} from 'pages/ArticlesPage';
 import {NotFoundPage} from 'pages/NotFoundPage';
 import {PlacementFormPage} from 'pages/PlacementFormPage';
 
@@ -16,29 +23,23 @@ export enum AppRoutes {
   NOT_FOUND = 'not_found',
 }
 
-export const routePath: Record<AppRoutes, string> = {
-  [AppRoutes.MAIN]: '/',
-  [AppRoutes.PLACEMENT_FORM]: '/form',
-  [AppRoutes.ADVERTISEMENT]: '/item/:id',
-  [AppRoutes.NOT_FOUND]: '/*',
-};
-
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.MAIN]: {
-    path: routePath[AppRoutes.MAIN],
-    element: <MainPage />,
+    path: getRouteMain(),
+    // element: <MainPage />,
+    element: <ArticlesPage />,
   },
   [AppRoutes.PLACEMENT_FORM]: {
-    path: routePath[AppRoutes.PLACEMENT_FORM],
+    path: getRoutePlacementForm(),
     element: <PlacementFormPage />,
     authOnly: true,
   },
   [AppRoutes.ADVERTISEMENT]: {
-    path: routePath[AppRoutes.ADVERTISEMENT],
+    path: getRouteAdvertisement(':id'),
     element: <AdvertisementPage />,
   },
   [AppRoutes.NOT_FOUND]: {
-    path: routePath[AppRoutes.NOT_FOUND],
+    path: getRouteNotFound(),
     element: <NotFoundPage />,
   },
 };

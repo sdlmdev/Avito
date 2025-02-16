@@ -1,30 +1,51 @@
-import { StateSchema } from '@/app/providers/StoreProvider';
-import { ArticleSortField, ArticleType, ArticleView } from '@/entities/Article';
-import { buildSelector } from '@/shared/lib/store';
+import {StateScheme} from 'app/providers/StoreProvider';
+import {AdvertisementType, AdvertisementView} from 'entities/Advertisement';
 
-export const getArticlesPageIsLoading = (state: StateSchema) =>
-    state.articlesPage?.isLoading || false;
-export const getArticlesPageError = (state: StateSchema) =>
-    state.articlesPage?.error;
-export const getArticlesPageView = (state: StateSchema) =>
-    state.articlesPage?.view || ArticleView.SMALL;
-export const getArticlesPageNum = (state: StateSchema) =>
-    state.articlesPage?.page || 1;
-export const getArticlesPageLimit = (state: StateSchema) =>
-    state.articlesPage?.limit || 9;
-export const getArticlesPageHasMore = (state: StateSchema) =>
-    state.articlesPage?.hasMore;
-export const getArticlesPageInited = (state: StateSchema) =>
-    state.articlesPage?._inited;
-export const getArticlesPageOrder = (state: StateSchema) =>
-    state.articlesPage?.order ?? 'asc';
-export const getArticlesPageSort = (state: StateSchema) =>
-    state.articlesPage?.sort ?? ArticleSortField.CREATED;
-export const getArticlesPageSearch = (state: StateSchema) =>
-    state.articlesPage?.search ?? '';
-export const getArticlesPageType = (state: StateSchema) =>
-    state.articlesPage?.type ?? ArticleType.ALL;
+import {buildSelector} from 'shared/lib/store';
+
+export const getArticlesPageIsLoading = (state: StateScheme) =>
+  state.advertisementsPage?.isLoading || false;
+export const getArticlesPageError = (state: StateScheme) =>
+  state.advertisementsPage?.error;
+export const getArticlesPageView = (state: StateScheme) =>
+  state.advertisementsPage?.view || AdvertisementView.SMALL;
+export const getArticlesPageNum = (state: StateScheme) =>
+  state.advertisementsPage?.page || 1;
+export const getArticlesPageLimit = (state: StateScheme) =>
+  state.advertisementsPage?.limit || 5;
+export const getArticlesPageInited = (state: StateScheme) =>
+  state.advertisementsPage?._inited;
+export const getArticlesPageSearch = (state: StateScheme) =>
+  state.advertisementsPage?.search ?? '';
+export const getArticlesPageType = (state: StateScheme) =>
+  state.advertisementsPage?.type ?? AdvertisementType.ALL;
+export const getArticlesPagePropertyType = (state: StateScheme) =>
+  state.advertisementsPage?.propertyType ?? '';
+export const getArticlesPageArea = (state: StateScheme) =>
+  state.advertisementsPage?.area ?? 0;
+export const getArticlesPageRooms = (state: StateScheme) =>
+  state.advertisementsPage?.rooms ?? 0;
+export const getArticlesPagePrice = (state: StateScheme) =>
+  state.advertisementsPage?.price ?? 0;
+export const getArticlesPageBrand = (state: StateScheme) =>
+  state.advertisementsPage?.brand ?? '';
+export const getArticlesPageModel = (state: StateScheme) =>
+  state.advertisementsPage?.model ?? '';
+export const getArticlesPageYear = (state: StateScheme) =>
+  state.advertisementsPage?.year ?? 0;
+export const getArticlesPageMileage = (state: StateScheme) =>
+  state.advertisementsPage?.mileage ?? 0;
+export const getArticlesPageServiceType = (state: StateScheme) =>
+  state.advertisementsPage?.serviceType ?? '';
+export const getArticlesPageExperience = (state: StateScheme) =>
+  state.advertisementsPage?.experience ?? 0;
+export const getArticlesPageCost = (state: StateScheme) =>
+  state.advertisementsPage?.cost ?? 0;
+export const getArticlesPageLocation = (state: StateScheme) =>
+  state.advertisementsPage?.location ?? '';
+export const getArticlesPageMaxPage = (state: StateScheme) =>
+  state.advertisementsPage?.maxPage || 1;
 
 export const [useArticleItemById] = buildSelector(
-    (state, id: string) => state.articlesPage?.entities[id],
+  (state, id: string) => state.advertisementsPage?.entities[id],
 );

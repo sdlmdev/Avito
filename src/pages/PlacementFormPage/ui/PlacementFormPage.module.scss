@@ -1,0 +1,44 @@
+@import 'shared/styles/mixins.scss';
+
+.PlacementFormPage {
+  @include flex-column-center;
+}
+
+.step {
+  @include flex-column;
+  gap: 10px;
+  width: 100%;
+}
+
+.label {
+  @include flex-column;
+  gap: 5px;
+}
+
+.listBox {
+  @include flex-column;
+  width: max-content;
+  gap: 5px;
+}
+
+.buttons {
+  @include flex-row;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px;
+}
+
+.formWrapper {
+  @include flex-column;
+  gap: 30px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.error {
+  color: var(--error-color);
+}
+
+.success {
+  color: var(--main-color-green);
+}

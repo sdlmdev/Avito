@@ -1,11 +1,14 @@
-export {ArticleDetailsSkeleton} from './ui/ArticleDetails/ArticleDetails';
+export {AdvertisementDetailsSkeleton} from 'entities/Advertisement/ui/AdvertisementDetails/AdvertisementDetails';
 
-export {ArticleDetails} from './ui/ArticleDetails/ArticleDetails';
+export {AdvertisementDetails} from 'entities/Advertisement/ui/AdvertisementDetails/AdvertisementDetails';
 
-export type {Article} from './model/types/article';
+export type {Advertisement} from './model/types/advertisement';
 
-export type {ArticleDetailsSchema} from './model/types/articleDetailsSchema';
+export type {AdvertisementDetailsSchema} from './model/types/articleDetailsSchema';
 
-export {ArticleList} from './ui/ArticleList/ArticleList';
-export {getArticleDetailsData} from './model/selectors/articleDetails';
-export {ArticleView, ArticleType} from './model/consts/articleConsts';
+export {AdvertisementList} from 'entities/Advertisement/ui/AdvertisementList/AdvertisementList';
+export {getAdvertisementDetailsData} from './model/selectors/advertisementDetails';
+export {
+  AdvertisementView,
+  AdvertisementType,
+} from './model/consts/advertisementConstants';

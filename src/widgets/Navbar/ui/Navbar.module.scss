@@ -2,13 +2,12 @@
 
 .Navbar {
   @include flex-row-center;
-  position: sticky;
   justify-content: space-between;
   padding: var(--page-padding);
   width: 100%;
+  height: var(--navbar-height);
   background-color: var(--header-bg-color);
   color: var(--inverted-text-color);
-  height: var(--navbar-height);
 }
 
 .navigation {

@@ -1,90 +1,56 @@
-import { useTranslation } from 'react-i18next';
-import { memo, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { classNames } from '@/shared/lib/classNames/classNames';
+import {memo, useEffect} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {Page} from 'widgets/Page';
+
 import {
-    DynamicModuleLoader,
-    ReducersList,
-} from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { useInitialEffect } from '@/shared/lib/hooks/useInitialEffect/useInitialEffect';
-import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { Page } from '@/widgets/Page';
-import { ArticleInfiniteList } from '../ArticleInfiniteList/ArticleInfiniteList';
-import { ArticlesPageFilters } from '../ArticlesPageFilters/ArticlesPageFilters';
-import { fetchNextArticlesPage } from '../../model/services/fetchNextArticlesPage/fetchNextArticlesPage';
-import { initArticlesPage } from '../../model/services/initArticlesPage/initArticlesPage';
-import { articlesPageReducer } from '../../model/slices/articlesPageSlice';
-import cls from './ArticlesPage.module.scss';
-import { ArticlePageGreeting } from '@/features/articlePageGreeting';
-import { ToggleFeatures } from '@/shared/lib/features';
-import { StickyContentLayout } from '@/shared/layouts/StickyContentLayout';
-import { ViewSelectorContainer } from '../ViewSelectorContainer/ViewSelectorContainer';
-import { FiltersContainer } from '../FiltersContainer/FiltersContainer';
+  DynamicModuleLoader,
+  ReducersList,
+} from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import {StickyContentLayout} from 'shared/ui/StickyContentLayout';
+
+import {AdvertisementPaginationList} from 'pages/ArticlesPage/ui/AdvertisementPaginationList/AdvertisementPaginationList';
+import {FiltersContainer} from 'pages/ArticlesPage/ui/FiltersContainer/FiltersContainer';
+import {ViewSelector} from 'pages/ArticlesPage/ui/ViewSelector/ViewSelectorContainer';
+
+import {initArticlesPage} from '../../model/services/initArticlesPage/initArticlesPage';
+import {articlesPageReducer} from '../../model/slices/articlesPageSlice';
+import styles from './ArticlesPage.module.scss';
 
 interface ArticlesPageProps {
-    className?: string;
+  className?: string;
 }
 
 const reducers: ReducersList = {
-    articlesPage: articlesPageReducer,
+  advertisementsPage: articlesPageReducer,
 };
 
 const ArticlesPage = (props: ArticlesPageProps) => {
-    const { className } = props;
-    const { t } = useTranslation();
-    const dispatch = useAppDispatch();
-    const [searchParams] = useSearchParams();
+  const {className} = props;
+  const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
 
-    const onLoadNextPart = useCallback(() => {
-        dispatch(fetchNextArticlesPage());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(initArticlesPage(searchParams));
+  }, [dispatch, searchParams]);
 
-    useInitialEffect(() => {
-        dispatch(initArticlesPage(searchParams));
-    });
+  const content = (
+    <StickyContentLayout
+      left={<ViewSelector />}
+      right={<FiltersContainer />}
+      content={
+        <Page testId="ArticlesPage" className={className}>
+          <AdvertisementPaginationList className={styles.list} />
+        </Page>
+      }
+    />
+  );
 
-    const content = (
-        <ToggleFeatures
-            feature="isAppRedesigned"
-            on={
-                <StickyContentLayout
-                    left={<ViewSelectorContainer />}
-                    right={<FiltersContainer />}
-                    content={
-                        <Page
-                            data-testid="ArticlesPage"
-                            onScrollEnd={onLoadNextPart}
-                            className={classNames(
-                                cls.ArticlesPageRedesigned,
-                                {},
-                                [className],
-                            )}
-                        >
-                            <ArticleInfiniteList className={cls.list} />
-                            <ArticlePageGreeting />
-                        </Page>
-                    }
-                />
-            }
-            off={
-                <Page
-                    data-testid="ArticlesPage"
-                    onScrollEnd={onLoadNextPart}
-                    className={classNames(cls.ArticlesPage, {}, [className])}
-                >
-                    <ArticlesPageFilters />
-                    <ArticleInfiniteList className={cls.list} />
-                    <ArticlePageGreeting />
-                </Page>
-            }
-        />
-    );
-
-    return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
-            {content}
-        </DynamicModuleLoader>
-    );
+  return (
+    <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+      {content}
+    </DynamicModuleLoader>
+  );
 };
 
 export default memo(ArticlesPage);

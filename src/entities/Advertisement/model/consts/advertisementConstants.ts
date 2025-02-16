@@ -1,11 +1,11 @@
-export enum ArticleType {
+export enum AdvertisementType {
   ALL = 'Все',
   IMMOVABLES = 'Недвижимость',
   AUTOMOBILE = 'Авто',
-  SERVICE = 'Услуги',
+  SERVICES = 'Услуги',
 }
 
-export enum ArticleView {
+export enum AdvertisementView {
   BIG = 'BIG',
   SMALL = 'SMALL',
 }

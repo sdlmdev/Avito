@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ThunkConfig} from 'app/providers/StoreProvider';
 
-import {Advertisement} from '../../types/advertisement';
+import {Advertisement} from '../../../../../entities/Advertisement/model/types/advertisement';
 
 export const fetchAdvertisementById = createAsyncThunk<
   Advertisement,

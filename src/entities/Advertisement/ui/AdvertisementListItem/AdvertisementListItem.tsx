@@ -9,68 +9,40 @@ import {Text} from 'shared/ui/Text';
 
 import {AdvertisementView} from '../../model/consts/advertisementConstants';
 import {Advertisement} from '../../model/types/advertisement';
-import styles from './ArticleListItem.module.scss';
+import styles from './AdvertisementListItem.module.scss';
 
-export interface ArticleListItemProps {
+export interface AdvertisementListItemProps {
   className?: string;
-  article: Advertisement;
+  advertisement: Advertisement;
   view: AdvertisementView;
   target?: HTMLAttributeAnchorTarget;
 }
 
-export const ArticleListItem = memo(
-  ({className, article, view, target}: ArticleListItemProps) => {
-    const userInfo = <Text bold text={article?.user?.username} />;
-
-    if (view === AdvertisementView.BIG) {
-      return (
-        <article
-          data-testid="ArticleListItem"
-          className={cn(styles.ArticleListItem, className, styles[view])}
-        >
-          <AppImage
-            fallback={<Skeleton width="100%" height={250} />}
-            src={article.image as string}
-            className={styles.img}
-            alt={article.name}
-          />
-          <AppLink
-            className={styles.articleData}
-            target={target}
-            to={getRouteAdvertisement(article.id)}
-          >
-            {userInfo}
-            <Text title={article.name} bold />
-            <Text title={article.location} size="s" />
-          </AppLink>
-        </article>
-      );
-    }
-
+export const AdvertisementListItem = memo(
+  ({className, advertisement, view, target}: AdvertisementListItemProps) => {
     return (
       <AppLink
-        data-testid="ArticleListItem"
+        data-testid="AdvertisementListItem"
         target={target}
-        to={getRouteAdvertisement(article.id)}
-        className={cn(styles.ArticleListItem, {}, [className, styles[view]])}
+        to={getRouteAdvertisement(advertisement.id)}
+        className={cn(styles.AdvertisementListItem, className, styles[view])}
       >
-        <div className={styles.card}>
+        <article className={styles.card}>
           <AppImage
-            fallback={<Skeleton width="100%" height={200} />}
-            alt={article.name}
-            src={article.image as string}
+            fallback={<Skeleton width={200} height={200} />}
+            alt={advertisement.name}
+            src={advertisement.image as string}
             className={styles.img}
           />
-          <div className={styles.info}>
-            <Text title={article.name} className={styles.title} />
-            <Text title={article.location} className={styles.location} />
-            <Text title={article.type} className={styles.type} />
-            <div className={styles.footer}>{userInfo}</div>
+          <div className={styles.text}>
+            <Text title={advertisement.name} className={styles.title} />
+            <Text title={advertisement.location} className={styles.location} />
+            <Text title={advertisement.type} className={styles.type} />
           </div>
-        </div>
+        </article>
       </AppLink>
     );
   },
 );
 
-ArticleListItem.displayName = 'ArticleListItemRedesigned';
+AdvertisementListItem.displayName = 'AdvertisementListItemRedesigned';

@@ -2,7 +2,7 @@ import {User} from 'entities/User';
 
 import {AdvertisementType} from '../consts/advertisementConstants';
 
-export interface Article {
+export interface AdvertisementDefault {
   name: string;
   description: string;
   location: string;
@@ -12,21 +12,21 @@ export interface Article {
   user: User;
 }
 
-export interface AdvertisementTypeImmovables extends Article {
+export interface AdvertisementTypeImmovables extends AdvertisementDefault {
   propertyType: string;
   area: number;
   rooms: number;
   price: number;
 }
 
-export interface AdvertisementTypeAutomobile extends Article {
+export interface AdvertisementTypeAutomobile extends AdvertisementDefault {
   brand: string;
   model: string;
   year: number;
   mileage?: number;
 }
 
-export interface AdvertisementTypeService extends Article {
+export interface AdvertisementTypeService extends AdvertisementDefault {
   serviceType: string;
   experience: number;
   cost: number;

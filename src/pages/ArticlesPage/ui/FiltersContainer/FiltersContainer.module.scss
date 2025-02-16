@@ -1,0 +1,19 @@
+@import 'shared/styles/mixins.scss';
+
+.ArticlesFilters {
+  @include flex-column-center;
+  width: 250px;
+  gap: 5px;
+}
+
+.label {
+  @include flex-column;
+  width: 100%;
+  gap: 3px;
+}
+
+.listBox {
+  @include flex-column;
+  width: 100%;
+  gap: 5px;
+}

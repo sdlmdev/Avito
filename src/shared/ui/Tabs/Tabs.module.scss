@@ -1,10 +1,17 @@
+@import '../../styles/mixins.scss';
+
 .Tabs {
-    display: flex;
-    gap: 8px;
-    cursor: pointer;
+  gap: 8px;
 }
 
-
 .selected {
-    padding: 8px 16px;
+  color: var(--main-color-blue);
+}
+
+.row {
+  @include flex-row;
+}
+
+.column {
+  @include flex-column;
 }

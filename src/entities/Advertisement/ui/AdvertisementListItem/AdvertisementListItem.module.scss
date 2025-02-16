@@ -1,24 +1,48 @@
 @import 'shared/styles/mixins.scss';
 
-.ArticleListItem {
-  @include flex-row;
+.AdvertisementListItem {
+  border-radius: var(--br-size-m);
+
+  &:hover {
+    box-shadow: var(--main-box-shadow);
+  }
 }
 
-.articleData {
-  @include flex-column;
+.text {
+  padding: 15px;
+}
+
+.img {
+  max-width: 250px;
+  max-height: 250px;
 }
 
 .BIG {
-  .img {
+  @include flex-row-center;
+
+  .AdvertisementListItem {
+    @include flex-row;
+    max-width: 500px;
+  }
+
+  .card {
+    @include flex-row;
     width: 100%;
-    max-height: 250px;
-    object-fit: cover;
+    height: 100%;
+  }
+
+  .text {
+    width: 100%;
   }
 }
 
 .SMALL {
+  @include flex-row;
+  flex-wrap: wrap;
   transition: 0.2s;
   cursor: pointer;
+  max-width: 200px;
+  width: 100%;
 
   &:hover {
     opacity: 0.8;
@@ -28,5 +52,9 @@
     width: 200px;
     height: 200px;
     object-fit: cover;
+  }
+
+  .text {
+    max-width: 250px;
   }
 }

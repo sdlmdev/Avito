@@ -1,35 +1,62 @@
-import { memo } from 'react';
-import { ArticlesFilters } from '@/widgets/ArticlesFilters';
-import { useArticleFilters } from '../../lib/hooks/useArticleFilters';
+import cn from 'classnames';
+import {memo} from 'react';
+import {useTranslation} from 'react-i18next';
+
+import {Input, InputSize} from 'shared/ui/Input';
+
+import {ArticleFields} from 'pages/ArticlesPage/ui/FiltersContainer/ArticleFields/ArticleFields';
+
+import {useArticleFilters} from '../../lib/hooks/useArticleFilters';
+import {ArticleTypeTabs} from './ArticleTypeTabs/ArticleTypeTabs';
+import styles from './FiltersContainer.module.scss';
 
 interface FiltersContainerProps {
-    className?: string;
+  className?: string;
 }
 
 export const FiltersContainer = memo((props: FiltersContainerProps) => {
-    const { className } = props;
-    const {
-        onChangeSort,
-        onChangeType,
-        sort,
-        type,
-        onChangeSearch,
-        search,
-        onChangeOrder,
-        order,
-    } = useArticleFilters();
+  const {className} = props;
 
-    return (
-        <ArticlesFilters
-            type={type}
-            onChangeSearch={onChangeSearch}
-            order={order}
-            onChangeOrder={onChangeOrder}
-            search={search}
-            sort={sort}
-            onChangeSort={onChangeSort}
-            onChangeType={onChangeType}
-            className={className}
+  const {
+    onChangeLocation,
+    onChangeType,
+    type,
+    onChangeSearch,
+    search,
+    location,
+  } = useArticleFilters();
+
+  const {t} = useTranslation();
+
+  return (
+    <div className={cn(styles.ArticlesFilters, {}, [className])}>
+      <ArticleTypeTabs
+        value={type}
+        onChangeType={onChangeType}
+        className={styles.tabs}
+      />
+      <label className={styles.label}>
+        {t('Поиск')}
+        <Input
+          onChange={(e) => onChangeSearch(e.target.value)}
+          value={search}
+          inputSize={InputSize.M}
+          placeholder={t('Поиск')}
         />
-    );
+      </label>
+      <label className={styles.label}>
+        {t('Город')}
+        <Input
+          onChange={(e) => onChangeLocation(e.target.value)}
+          value={location}
+          inputSize={InputSize.M}
+          placeholder={t('Город')}
+        />
+      </label>
+
+      <ArticleFields />
+    </div>
+  );
 });
+
+FiltersContainer.displayName = 'FiltersContainer';

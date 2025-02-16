@@ -1,22 +1,19 @@
 @import 'shared/styles/mixins.scss';
 
-.ArticleList {
-  @include flex-column;
+.AdvertisementList {
+  display: flex;
   gap: 20px;
+  margin-bottom: 50px;
 }
 
 .BIG {
-  .card {
-  }
+  @include flex-column;
 }
 
 .SMALL {
-  display: flex;
+  .AdvertisementList {
+    @include flex-column;
+  }
+  @include flex-row-center;
   flex-wrap: wrap;
-
-  .card {
-  }
-
-  .row {
-  }
 }

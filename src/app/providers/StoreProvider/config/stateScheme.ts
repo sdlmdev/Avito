@@ -6,11 +6,14 @@ import {
   ReducersMapObject,
 } from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
+import {AdvertisementDetailsSchema} from 'entities/Advertisement';
 import {UserScheme} from 'entities/User';
 
 import {LoginScheme, RegisterScheme} from 'features/Auth';
 
 import {rtkApi} from 'shared/api/rtkApi';
+
+import {ArticlesPageSchema} from 'pages/ArticlesPage';
 
 export interface StateScheme {
   user: UserScheme;
@@ -18,6 +21,8 @@ export interface StateScheme {
 
   loginForm?: LoginScheme;
   registerForm?: RegisterScheme;
+  advertisementDetails?: AdvertisementDetailsSchema;
+  advertisementsPage?: ArticlesPageSchema;
 }
 
 export interface ThunkExtraArg {

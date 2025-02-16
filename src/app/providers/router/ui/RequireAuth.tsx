@@ -3,7 +3,7 @@ import {JSX} from 'react';
 import {useSelector} from 'react-redux';
 import {Navigate, useLocation} from 'react-router-dom';
 
-import {routePath} from '../config/routeConfig';
+import {getRouteMain} from 'shared/constants/router';
 
 interface RequireAuthProps {
   children: JSX.Element;
@@ -14,7 +14,7 @@ export const RequireAuth = ({children}: RequireAuthProps) => {
   const location = useLocation();
 
   if (!auth) {
-    return <Navigate to={routePath.main} state={{from: location}} replace />;
+    return <Navigate to={getRouteMain()} state={{from: location}} replace />;
   }
 
   return children;

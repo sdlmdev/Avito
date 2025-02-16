@@ -1,16 +1,15 @@
 import cn from 'classnames';
-import {Advertisement} from 'entities/Advertisement';
+import {Advertisement, AdvertisementView} from 'entities/Advertisement';
+import {AdvertisementListItem} from 'entities/Advertisement/ui/AdvertisementListItem/AdvertisementListItem';
+import {AdvertisementListItemSkeleton} from 'entities/Advertisement/ui/AdvertisementListItem/AdvertisementListItemSkeleton';
 import {HTMLAttributeAnchorTarget, memo} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {Text} from 'shared/ui/Text';
 
-import {AdvertisementView} from '../../model/consts/advertisementConstants';
-import {ArticleListItem} from '../ArticleListItem/ArticleListItem';
-import {ArticleListItemSkeleton} from '../ArticleListItem/ArticleListItemSkeleton';
-import styles from './ArticleList.module.scss';
+import styles from './AdvertisementList.module.scss';
 
-interface ArticleListProps {
+interface AdvertisementListProps {
   className?: string;
   articles: Array<Advertisement>;
   isLoading?: boolean;
@@ -19,29 +18,25 @@ interface ArticleListProps {
 }
 
 const getSkeletons = (view: AdvertisementView) =>
-  new Array(view === AdvertisementView.SMALL ? 9 : 3)
+  new Array(5)
     .fill(0)
     .map((item, index) => (
-      <ArticleListItemSkeleton
-        className={styles.card}
-        key={index}
-        view={view}
-      />
+      <AdvertisementListItemSkeleton key={index} view={view} />
     ));
 
-export const ArticleList = memo(
+export const AdvertisementList = memo(
   ({
     className,
     articles,
     view = AdvertisementView.SMALL,
     isLoading,
     target,
-  }: ArticleListProps) => {
+  }: AdvertisementListProps) => {
     const {t} = useTranslation();
 
     if (!isLoading && !articles.length) {
       return (
-        <div className={cn(styles.ArticleList, className, styles[view])}>
+        <div className={cn(styles.AdvertisementList, className, styles[view])}>
           <Text size="l" title={t('Статьи не найдены')} />
         </div>
       );
@@ -49,12 +44,12 @@ export const ArticleList = memo(
 
     return (
       <div
-        className={cn(styles.ArticleList, styles[view])}
-        data-testid="ArticleList"
+        className={cn(styles.AdvertisementList, styles[view])}
+        data-testid="AdvertisementList"
       >
         {articles.map((item) => (
-          <ArticleListItem
-            article={item}
+          <AdvertisementListItem
+            advertisement={item}
             view={view}
             target={target}
             key={item.id}
@@ -67,4 +62,4 @@ export const ArticleList = memo(
   },
 );
 
-ArticleList.displayName = 'ArticleList';
+AdvertisementList.displayName = 'AdvertisementList';

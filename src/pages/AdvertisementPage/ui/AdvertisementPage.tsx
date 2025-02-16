@@ -1,10 +1,21 @@
-import {useTranslation} from 'react-i18next';
+import {AdvertisementDetails} from 'entities/Advertisement';
+import {useParams} from 'react-router-dom';
 import {Page} from 'widgets/Page';
 
-const AdvertisementPage = ({}) => {
-  const {t} = useTranslation('advertisementPage');
+import styles from './AdvertisementPage.module.scss';
 
-  return <Page testId="AdvertisementPage">{t('AdvertisementPage')}</Page>;
+const AdvertisementPage = ({}) => {
+  const {id} = useParams<{id: string}>();
+
+  if (!id) {
+    return null;
+  }
+
+  return (
+    <Page testId="AdvertisementPage" className={styles.AdvertisementPage}>
+      <AdvertisementDetails id={id} />
+    </Page>
+  );
 };
 
 export default AdvertisementPage;

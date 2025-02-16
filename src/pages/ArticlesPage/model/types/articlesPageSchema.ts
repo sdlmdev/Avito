@@ -1,26 +1,33 @@
-import { EntityState } from '@reduxjs/toolkit';
+import {EntityState} from '@reduxjs/toolkit';
 import {
-    Article,
-    ArticleView,
-    ArticleSortField,
-    ArticleType,
-} from '@/entities/Article';
-import { SortOrder } from '@/shared/types/sort';
+  Advertisement,
+  AdvertisementType,
+  AdvertisementView,
+} from 'entities/Advertisement';
 
-export interface ArticlesPageSchema extends EntityState<Article> {
-    isLoading?: boolean;
-    error?: string;
+export interface ArticlesPageSchema extends EntityState<Advertisement> {
+  isLoading?: boolean;
+  error?: string;
+  page: number;
+  limit: number;
+  maxPage: number;
+  view: AdvertisementView;
+  search: string;
+  type: AdvertisementType;
+  propertyType?: string;
+  area?: number;
+  rooms?: number;
+  price?: number;
+  brand?: string;
+  model?: string;
+  year?: number;
+  mileage?: number;
+  serviceType?: string;
+  experience?: number;
+  cost?: number;
+  location?: string;
 
-    // pagination
-    page: number;
-    limit: number;
-    hasMore: boolean;
-    // filters
-    view: ArticleView;
-    order: SortOrder;
-    sort: ArticleSortField;
-    search: string;
-    type: ArticleType;
+  schedule?: string;
 
-    _inited: boolean;
+  _inited: boolean;
 }

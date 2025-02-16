@@ -7,7 +7,7 @@ import TiledIcon from 'shared/assets/icons/tile.svg';
 
 import {useArticleFilters} from 'pages/ArticlesPage/lib/hooks/useArticleFilters';
 
-import styles from './ArticleViewSelector.module.scss';
+import styles from './ViewSelector.module.scss';
 
 interface ViewSelectorProps {
   className?: string;
@@ -46,4 +46,4 @@ export const ViewSelector = memo(({className}: ViewSelectorProps) => {
   );
 });
 
-ViewSelector.displayName = 'ViewSelectorContainer';
+ViewSelector.displayName = 'ViewSelector';

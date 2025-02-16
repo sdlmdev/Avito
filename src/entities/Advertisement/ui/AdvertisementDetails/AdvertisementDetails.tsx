@@ -1,14 +1,14 @@
 import cn from 'classnames';
 import {AdvertisementType} from 'entities/Advertisement';
-import {changeAdvertisementData} from 'entities/Advertisement/model/services/changeAdvertisementData/changeAdvertisementData';
-import {fetchAdvertisementById} from 'entities/Advertisement/model/services/fetchAdvertisementById/fetchArticleById';
+import {changeAdvertisementData} from 'pages/AdvertisementPage/model/services/changeAdvertisementData/changeAdvertisementData';
+import {fetchAdvertisementById} from 'pages/AdvertisementPage/model/services/fetchAdvertisementById/fetchArticleById';
 import {
   Advertisement,
   AdvertisementTypeAutomobile,
   AdvertisementTypeImmovables,
   AdvertisementTypeService,
 } from 'entities/Advertisement/model/types/advertisement';
-import {ChangeEvent, FormEvent, memo, useEffect, useState} from 'react';
+import {ChangeEvent, FormEvent, memo, useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
@@ -29,25 +29,30 @@ import {
   getAdvertisementDetailsIsLoading,
 } from '../../model/selectors/advertisementDetails';
 import {advertisementDetailsReducer} from '../../model/slice/advertisementDetailsSlice';
-import styles from './ArticleDetails.module.scss';
+import styles from './AdvertisementDetails.module.scss';
+import {getUserData} from 'entities/User';
+import {ListBox} from 'shared/ui/Popups';
 
-interface ArticleDetailsProps {
+interface AdvertisementDetailsProps {
   className?: string;
   id?: string;
 }
 
 const reducers: ReducersList = {
-  articleDetails: advertisementDetailsReducer,
+  advertisementDetails: advertisementDetailsReducer,
 };
 
-const ArticleDetailsForm = ({
-  article,
+const AdvertisementDetailsForm = ({
+  advertisement,
   onSave,
+                                    isError,
 }: {
-  article: Advertisement;
-  onSave: (article: Advertisement) => void;
+  advertisement: Advertisement;
+  onSave: (advertisement: Advertisement) => void;
+  isError: boolean;
 }) => {
-  const [formData, setFormData] = useState(article);
+  const [formData, setFormData] = useState(advertisement);
+  const {t} = useTranslation();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -67,193 +72,361 @@ const ArticleDetailsForm = ({
     onSave({...formData, image: imageFile});
   };
 
+  const onPropertyTypeChange = useCallback(
+    (value: string) => {
+      setFormData({...formData, propertyType: value});
+    },
+    [formData],
+  );
+
+  const onServiceTypeChange = useCallback(
+    (value: string) => {
+      setFormData({...formData, serviceType: value});
+    },
+    [formData],
+  );
+
   return (
-    <form onSubmit={handleSubmit}>
-      <Input name="name" value={formData.name} onChange={handleChange} />
-      <Input
-        name="location"
-        value={formData.location}
-        onChange={handleChange}
-      />
-      <Input type="file" name="image" onChange={handleImageChange} />
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <label className={styles.label}>
+        <Text title={t('Название')} />
+        <Input
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder={t('Название')}
+          maxLength={200}
+          required
+          minLength={3}
+        />
+      </label>
+      <label className={styles.label}>
+        <Text title={t('Описание')} />
+        <Input
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder={t('Описание')}
+          maxLength={200}
+          minLength={3}
+          required
+        />
+      </label>
+      <label className={styles.label}>
+        <Text title={t('Локация')} />
+        <Input
+          name="location"
+          value={formData.location}
+          onChange={handleChange}
+          placeholder={t('Локация')}
+          required
+          maxLength={50}
+          minLength={3}
+        />
+      </label>
+      <label className={styles.label}>
+        <Text title={t('Изображение')} />
+        <Input
+          type="file"
+          name="image"
+          onChange={handleImageChange}
+        />
+      </label>
       {formData.type === AdvertisementType.IMMOVABLES && (
         <>
-          <Input
-            name="area"
-            value={(formData as AdvertisementTypeImmovables).area}
-            onChange={handleChange}
+          <ListBox
+            items={[
+              {value: 'Квартира', content: t('Квартира')},
+              {value: 'Дом', content: t('Дом')},
+              {value: 'Земля', content: t('Земля')},
+              {value: 'Коммерческая недвижимость', content: t('Коммерческая недвижимость')},
+            ]}
+            value={(formData as AdvertisementTypeImmovables)?.propertyType}
+            onChange={onPropertyTypeChange}
+            label={t('Тип недвижимости')}
+            defaultValue=""
+            className={styles.listBox}
+            direction="bottom right"
           />
-          <Input
-            name="rooms"
-            value={(formData as AdvertisementTypeImmovables).rooms}
-            onChange={handleChange}
-          />
-          <Input
-            name="price"
-            value={(formData as AdvertisementTypeImmovables).price}
-            onChange={handleChange}
-          />
+          <label className={styles.label}>
+            <Text title={t('Площадь')} />
+            <Input
+              name="area"
+              value={(formData as AdvertisementTypeImmovables).area}
+              onChange={handleChange}
+              placeholder={t('Площадь')}
+              max={10 ** 4}
+              required
+              minLength={1}
+              type="number"
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('Комнаты')} />
+            <Input
+              name="rooms"
+              value={(formData as AdvertisementTypeImmovables).rooms}
+              onChange={handleChange}
+              placeholder={t('Количество комнат')}
+              type="number"
+              max={50}
+              required
+              min={1}
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('Цена')} />
+            <Input
+              name="price"
+              value={(formData as AdvertisementTypeImmovables).price}
+              onChange={handleChange}
+              placeholder={t('Цена')}
+              type="number"
+              max={10 ** 9}
+              required
+              min={1}
+            />
+          </label>
         </>
       )}
       {formData.type === AdvertisementType.AUTOMOBILE && (
         <>
-          <Input
-            name="brand"
-            value={(formData as AdvertisementTypeAutomobile).brand}
-            onChange={handleChange}
-          />
-          <Input
-            name="model"
-            value={(formData as AdvertisementTypeAutomobile).model}
-            onChange={handleChange}
-          />
-          <Input
-            name="year"
-            value={(formData as AdvertisementTypeAutomobile).year}
-            onChange={handleChange}
-          />
-          <Input
-            name="mileage"
-            value={(formData as AdvertisementTypeAutomobile).mileage}
-            onChange={handleChange}
-          />
+          <label className={styles.label}>
+            <Text title={t('Марка')} />
+            <Input
+              name="brand"
+              value={(formData as AdvertisementTypeAutomobile).brand}
+              onChange={handleChange}
+              placeholder={t('Марка')}
+              required
+              maxLength={30}
+              minLength={1}
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('Модель')} />
+            <Input
+              name="model"
+              value={(formData as AdvertisementTypeAutomobile).model}
+              onChange={handleChange}
+              placeholder={t('Модель')}
+              required
+              maxLength={30}
+              minLength={1}
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('Год')} />
+            <Input
+              name="year"
+              value={(formData as AdvertisementTypeAutomobile).year}
+              onChange={handleChange}
+              placeholder={t('Год')}
+              type="number"
+              max={new Date().getFullYear()}
+              required
+              min={1800}
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('Пробег')} />
+            <Input
+              name="mileage"
+              value={(formData as AdvertisementTypeAutomobile).mileage}
+              onChange={handleChange}
+              placeholder={t('Пробег')}
+              type="number"
+              required
+              max={10 ** 6}
+              min={0}
+            />
+          </label>
         </>
       )}
-      {formData.type === AdvertisementType.SERVICE && (
+      {formData.type === AdvertisementType.SERVICES && (
         <>
-          <Input
-            name="serviceType"
-            value={(formData as AdvertisementTypeService).serviceType}
-            onChange={handleChange}
+          <ListBox
+            items={[
+              {value: 'Консультация', content: t('Консультация')},
+              {value: 'Ремонт', content: t('Ремонт')},
+              {value: 'Уборка', content: t('Уборка')},
+              {value: 'Обучение', content: t('Обучение')},
+            ]}
+            value={(formData as AdvertisementTypeService)?.serviceType}
+            onChange={onServiceTypeChange}
+            label={t('Тип услуги')}
+            defaultValue=""
+            className={styles.listBox}
+            direction="bottom right"
           />
-          <Input
-            name="experience"
-            value={(formData as AdvertisementTypeService).experience}
-            onChange={handleChange}
-          />
-          <Input
-            name="cost"
-            value={(formData as AdvertisementTypeService).cost}
-            onChange={handleChange}
-          />
-          <Input
-            name="schedule"
-            value={(formData as AdvertisementTypeService).schedule}
-            onChange={handleChange}
-          />
+          <label className={styles.label}>
+            <Text title={t('Опыт')} />
+            <Input
+              name="experience"
+              value={(formData as AdvertisementTypeService).experience}
+              onChange={handleChange}
+              placeholder={t('Опыт')}
+              type="number"
+              required
+              max={100}
+              min={0}
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('Стоимость')} />
+            <Input
+              name="cost"
+              value={(formData as AdvertisementTypeService).cost}
+              onChange={handleChange}
+              placeholder={t('Стоимость')}
+              type="number"
+              required
+              max={10 ** 9}
+              min={1}
+            />
+          </label>
+          <label className={styles.label}>
+            <Text title={t('График')} />
+            <Input
+              name="schedule"
+              value={(formData as AdvertisementTypeService).schedule}
+              onChange={handleChange}
+              placeholder={t('График')}
+              maxLength={30}
+            />
+          </label>
         </>
       )}
-      <Button type="submit">Сохранить</Button>
+      <Button className={styles.button} type="submit">Сохранить</Button>
+      {isError && <Text className={styles.error} title={t('Произошла ошибка при сохранении данных.')} />}
     </form>
   );
 };
 
-const Article = () => {
+const Advertisement = () => {
   const dispatch = useAppDispatch();
-  const article = useSelector(getAdvertisementDetailsData);
+  const advertisement = useSelector(getAdvertisementDetailsData);
   const [isEditing, setIsEditing] = useState(false);
+  const {t} = useTranslation();
+  const [isError, setIsError] = useState(false);
+  const auth = useSelector(getUserData);
+  const {user} = advertisement || {};
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleSave = async (updatedArticle: Advertisement) => {
-    const res = await dispatch(changeAdvertisementData(updatedArticle));
+  const handleSave = async (updatedAdvertisement: Advertisement) => {
+    const res = await dispatch(changeAdvertisementData(updatedAdvertisement));
 
-    if (res.meta.requestStatus === 'fulfilled') {
-      console.log('Advertisement updated');
+    if (res.meta.requestStatus !== 'fulfilled') {
+      setIsError(true);
+    } else {
+      setIsError(false);
+      setIsEditing(false);
     }
-
-    setIsEditing(false);
   };
 
-  if (!article) {
+  if (!advertisement) {
     return null;
   }
 
   return (
-    <div className={styles.ArticleDetails}>
+    <div className={cn(styles.AdvertisementDetails, {[styles.editing]: isEditing})}>
       {isEditing ? (
-        <ArticleDetailsForm article={article} onSave={handleSave} />
+        <>
+          <AdvertisementDetailsForm isError={isError} advertisement={advertisement} onSave={handleSave} />
+          <Button className={styles.btnBack} onClick={() => setIsEditing(false)}>
+            {t('Назад')}
+          </Button>
+        </>
       ) : (
         <>
-          <Text title={article.name} size="l" bold />
-          <Text title={article.location} />
-          <AppImage src={article.image as string} className={styles.img} />
-          {article.type === AdvertisementType.IMMOVABLES && (
-            <>
-              <Text
-                title={`Property Type: ${(article as AdvertisementTypeImmovables).propertyType}`}
-              />
-              <Text
-                title={`Area: ${(article as AdvertisementTypeImmovables).area} sqm`}
-              />
-              <Text
-                title={`Rooms: ${(article as AdvertisementTypeImmovables).rooms}`}
-              />
-              <Text
-                title={`Price: ${(article as AdvertisementTypeImmovables).price} USD`}
-              />
-            </>
-          )}
-          {article.type === AdvertisementType.AUTOMOBILE && (
-            <>
-              <Text
-                title={`Brand: ${(article as AdvertisementTypeAutomobile).brand}`}
-              />
-              <Text
-                title={`Model: ${(article as AdvertisementTypeAutomobile).model}`}
-              />
-              <Text
-                title={`Year: ${(article as AdvertisementTypeAutomobile).year}`}
-              />
-              <Text
-                title={`Mileage: ${(article as AdvertisementTypeAutomobile).mileage} km`}
-              />
-            </>
-          )}
-          {article.type === AdvertisementType.SERVICE && (
-            <>
-              <Text
-                title={`Service Type: ${(article as AdvertisementTypeService).serviceType}`}
-              />
-              <Text
-                title={`Experience: ${(article as AdvertisementTypeService).experience} years`}
-              />
-              <Text
-                title={`Cost: ${(article as AdvertisementTypeService).cost} USD`}
-              />
-              <Text
-                title={`Schedule: ${(article as AdvertisementTypeService).schedule}`}
-              />
-            </>
-          )}
-          <Button onClick={handleEditClick}>Редактировать</Button>
+          <AppImage src={advertisement.image as string} className={styles.img} />
+
+          <div className={styles.descr}>
+            <Text title={`${t('Название')}: ${advertisement.name}`} size="l" bold />
+            <Text title={`${t('Местоположение')}: ${advertisement.location}`} />
+            <Text title={`${t('Описание')}: ${advertisement.description}`} />
+            {advertisement.type === AdvertisementType.IMMOVABLES && (
+              <>
+                <Text
+                  title={`${t('Тип недвижимости')}: ${(advertisement as AdvertisementTypeImmovables).propertyType}`}
+                />
+                <Text
+                  title={`${t('Площадь')}: ${(advertisement as AdvertisementTypeImmovables).area} ${t('кв.м')}`}
+                />
+                <Text
+                  title={`${t('Комнаты')}: ${(advertisement as AdvertisementTypeImmovables).rooms}`}
+                />
+                <Text
+                  title={`${t('Цена')}: ${(advertisement as AdvertisementTypeImmovables).price} ${t('USD')}`}
+                />
+              </>
+            )}
+            {advertisement.type === AdvertisementType.AUTOMOBILE && (
+              <>
+                <Text
+                  title={`${t('Марка')}: ${(advertisement as AdvertisementTypeAutomobile).brand}`}
+                />
+                <Text
+                  title={`${t('Модель')}: ${(advertisement as AdvertisementTypeAutomobile).model}`}
+                />
+                <Text
+                  title={`${t('Год')}: ${(advertisement as AdvertisementTypeAutomobile).year}`}
+                />
+                <Text
+                  title={`${t('Пробег')}: ${(advertisement as AdvertisementTypeAutomobile).mileage} ${t('км')}`}
+                />
+              </>
+            )}
+            {advertisement.type === AdvertisementType.SERVICES && (
+              <>
+                <Text
+                  title={`${t('Тип услуги')}: ${(advertisement as AdvertisementTypeService).serviceType}`}
+                />
+                <Text
+                  title={`${t('Опыт')}: ${(advertisement as AdvertisementTypeService).experience} ${t('лет')}`}
+                />
+                <Text
+                  title={`${t('Стоимость')}: ${(advertisement as AdvertisementTypeService).cost} ${t('USD')}`}
+                />
+                <Text
+                  title={`${t('График')}: ${(advertisement as AdvertisementTypeService).schedule}`}
+                />
+              </>
+            )}
+            {user?.id == auth?.id && (
+              <Button
+                className={styles.button}
+                onClick={handleEditClick}
+              >
+                {t('Редактировать')}
+              </Button>)
+            }
+          </div>
         </>
       )}
     </div>
   );
 };
 
-export const ArticleDetailsSkeleton = () => {
+export const AdvertisementDetailsSkeleton = () => {
   return (
-    <div>
-      <Skeleton
-        className={styles.avatar}
-        width={200}
-        height={200}
-        border="50%"
-      />
-      <Skeleton className={styles.title} width={300} height={32} />
-      <Skeleton className={styles.skeleton} width={600} height={24} />
-      <Skeleton className={styles.skeleton} width="100%" height={200} />
-      <Skeleton className={styles.skeleton} width="100%" height={200} />
+    <div className={styles.AdvertisementDetails}>
+      <Skeleton className={styles.img} width="100%" height={500} />
+      <div className={styles.descr}>
+        <Skeleton width="100%" className={styles.title} height={32} />
+        <Skeleton width="100%" className={styles.skeleton} height={24} />
+        <Skeleton width="100%" className={styles.skeleton} height={24} />
+        <Skeleton width="100%" className={styles.skeleton} height={24} />
+        <Skeleton width="100%" className={styles.skeleton} height={24} />
+      </div>
     </div>
   );
 };
 
-export const ArticleDetails = memo((props: ArticleDetailsProps) => {
-  const {className, id} = props;
+export const AdvertisementDetails = memo(({className, id}: AdvertisementDetailsProps) => {
   const {t} = useTranslation();
   const isLoading = useSelector(getAdvertisementDetailsIsLoading);
   const error = useSelector(getAdvertisementDetailsError);
@@ -266,20 +439,20 @@ export const ArticleDetails = memo((props: ArticleDetailsProps) => {
   let content;
 
   if (isLoading) {
-    content = <ArticleDetailsSkeleton />;
+    content = <AdvertisementDetailsSkeleton />;
   } else if (error) {
     content = (
       <Text align="center" title={t('Произошла ошибка при загрузке статьи.')} />
     );
   } else {
-    content = <Article />;
+    content = <Advertisement />;
   }
 
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
-      <div className={cn(styles.ArticleDetails, className)}>{content}</div>
+      {content}
     </DynamicModuleLoader>
   );
 });
 
-ArticleDetails.displayName = 'ArticleDetails';
+AdvertisementDetails.displayName = 'AdvertisementDetails';

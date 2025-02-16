@@ -3,7 +3,9 @@ import {getUserData, userActions} from 'entities/User';
 import React, {memo, useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
+import {getRouteMain} from 'shared/constants/router';
 import {Avatar} from 'shared/ui/Avatar';
 import {Dropdown} from 'shared/ui/Popups';
 
@@ -16,10 +18,12 @@ export const AvatarDropdown = memo((props: AvatarDropdownProps) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const authData = useSelector(getUserData);
+  const navigation = useNavigate();
 
   const onLogout = useCallback(() => {
     dispatch(userActions.logout());
-  }, [dispatch]);
+    navigation(getRouteMain());
+  }, [dispatch, navigation]);
 
   if (!authData) {
     return null;

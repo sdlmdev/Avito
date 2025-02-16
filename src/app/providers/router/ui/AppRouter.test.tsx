@@ -1,14 +1,14 @@
 import {screen} from '@testing-library/react';
 
+import {getRouteMain, getRoutePlacementForm} from 'shared/constants/router';
 import {componentRender} from 'shared/lib/tests/componentRender/componentRender';
 
-import {routePath} from '../config/routeConfig';
 import AppRouter from './AppRouter';
 
 describe('Тесты роутера', () => {
   test('Страница должна отрендериться', async () => {
     componentRender(<AppRouter />, {
-      route: routePath.main,
+      route: getRouteMain(),
     });
 
     const page = await screen.findByTestId('MainPage');
@@ -26,7 +26,7 @@ describe('Тесты роутера', () => {
 
   test('Редирект неавторизованного пользователя на главную', async () => {
     componentRender(<AppRouter />, {
-      route: routePath.form,
+      route: getRoutePlacementForm(),
     });
 
     const page = await screen.findByTestId('MainPage');
@@ -35,7 +35,7 @@ describe('Тесты роутера', () => {
 
   test('Доступ к закрытой страницы для авторизованного пользователя', async () => {
     componentRender(<AppRouter />, {
-      route: routePath.form,
+      route: getRoutePlacementForm(),
       initialState: {
         user: {authData: {}},
       },

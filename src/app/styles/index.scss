@@ -6,12 +6,17 @@
   padding: 0;
   border: none;
   outline: none;
+  word-break: break-word;
 }
 
 button,
 input,
 a {
   all: unset;
+}
+
+input {
+  cursor: text;
 }
 
 button,

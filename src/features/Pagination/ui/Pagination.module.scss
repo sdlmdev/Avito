@@ -1,0 +1,37 @@
+@import 'shared/styles/mixins.scss';
+
+.paginator {
+  @include flex-row-center;
+}
+
+.pageNumber,
+.arrow {
+  @include flex-column-center;
+  width: 32px;
+  height: 32px;
+  color: var(--text-color);
+  background-color: var(--pagination-bg-color);
+}
+
+.active {
+  background-color: var(--pagination-active-bg-color);
+}
+
+.arrow {
+  &:disabled {
+    color: var(--text-color);
+    background-color: var(--pagination-bg-color);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.right {
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.left {
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}

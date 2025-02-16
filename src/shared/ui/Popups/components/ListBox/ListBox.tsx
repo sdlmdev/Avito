@@ -4,7 +4,7 @@ import {Fragment, ReactNode, useMemo} from 'react';
 
 import {DropdownDirection} from 'shared/types/ui';
 
-import {Button} from '../../../Button/Button';
+import {Button, ButtonTheme} from '../../../Button/Button';
 import {mapDirectionClass} from '../../styles/consts';
 import popupCls from '../../styles/popup.module.scss';
 import cls from './ListBox.module.scss';
@@ -33,7 +33,7 @@ export const ListBox = <T extends string>({
   defaultValue,
   onChange,
   readonly,
-  direction = 'bottom right',
+  direction = 'bottom left',
   label,
 }: ListBoxProps<T>) => {
   const optionsClasses = [mapDirectionClass[direction], popupCls.menu];
@@ -43,16 +43,20 @@ export const ListBox = <T extends string>({
   }, [items, value]);
 
   return (
-    <div>
-      {label && <span>{`${label}>`}</span>}
+    <div className={className}>
+      {label && <span>{label}</span>}
       <Listbox
         disabled={readonly}
         as="div"
-        className={cn(cls.ListBox, {}, [className, popupCls.popup])}
+        className={cn(cls.ListBox, popupCls.popup)}
         value={value}
         onChange={onChange}
       >
-        <Listbox.Button as={Button} disabled={readonly}>
+        <Listbox.Button
+          as={Button}
+          disabled={readonly}
+          theme={ButtonTheme.OUTLINE}
+        >
           {selectedItem?.content ?? defaultValue}
         </Listbox.Button>
         <Listbox.Options className={cn(cls.options, {}, optionsClasses)}>
