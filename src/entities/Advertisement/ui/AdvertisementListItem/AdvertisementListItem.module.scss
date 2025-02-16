@@ -1,0 +1,32 @@
+@import 'shared/styles/mixins.scss';
+
+.ArticleListItem {
+  @include flex-row;
+}
+
+.articleData {
+  @include flex-column;
+}
+
+.BIG {
+  .img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+  }
+}
+
+.SMALL {
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  .img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}

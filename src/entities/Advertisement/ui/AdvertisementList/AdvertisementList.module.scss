@@ -1,0 +1,22 @@
+@import 'shared/styles/mixins.scss';
+
+.ArticleList {
+  @include flex-column;
+  gap: 20px;
+}
+
+.BIG {
+  .card {
+  }
+}
+
+.SMALL {
+  display: flex;
+  flex-wrap: wrap;
+
+  .card {
+  }
+
+  .row {
+  }
+}
