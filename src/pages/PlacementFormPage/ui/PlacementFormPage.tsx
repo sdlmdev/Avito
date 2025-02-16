@@ -114,14 +114,14 @@ const PlacementFormPage = memo(({}) => {
   };
 
   const handleBrandChange = (value: string) => {
-    if (value.length >= 1 && value.length <= 30) {
+    if (value.length <= 30) {
       dispatch(advertisementDetailsActions.setBrand(value));
       validateForm();
     }
   };
 
   const handleModelChange = (value: string) => {
-    if (value.length >= 1 && value.length <= 30) {
+    if (value.length <= 30) {
       dispatch(advertisementDetailsActions.setModel(value));
       validateForm();
     }
@@ -130,7 +130,7 @@ const PlacementFormPage = memo(({}) => {
   const handleYearChange = (value: number) => {
     const currentYear = new Date().getFullYear();
 
-    if (value >= 1800 && value <= currentYear) {
+    if (value > 0 && value <= currentYear) {
       dispatch(advertisementDetailsActions.setYear(value));
       validateForm();
     }
@@ -144,7 +144,7 @@ const PlacementFormPage = memo(({}) => {
   };
 
   const handleExperienceChange = (value: number) => {
-    if (value >= 0 && value <= 100) {
+    if (value >= 1 && value <= 100) {
       dispatch(advertisementDetailsActions.setExperience(value));
       validateForm();
     }
@@ -168,14 +168,60 @@ const PlacementFormPage = memo(({}) => {
     }
   };
 
+  const validateImmovables = (advertisement: AdvertisementTypeImmovables) => {
+    const {area, rooms, price} = advertisement;
+
+    return area !== undefined && rooms !== undefined && price !== undefined;
+  };
+
+  const validateAutomobile = (advertisement: AdvertisementTypeAutomobile) => {
+    const {brand, model, year, mileage} = advertisement;
+
+    return (
+      brand?.trim() !== '' &&
+      model?.trim() !== '' &&
+      year !== undefined &&
+      mileage !== undefined
+    );
+  };
+
+  const validateServices = (advertisement: AdvertisementTypeService) => {
+    const {experience, cost} = advertisement;
+
+    return experience !== undefined && cost !== undefined;
+  };
+
   const validateForm = useCallback(() => {
     const {name, location, type} = advertisement || {};
 
-    const isValid =
+    let isValid =
       name?.trim() !== '' && location?.trim() !== '' && type !== undefined;
+
+    if (type === AdvertisementType.IMMOVABLES) {
+      isValid =
+        isValid &&
+        validateImmovables(advertisement as AdvertisementTypeImmovables);
+    } else if (type === AdvertisementType.AUTOMOBILE) {
+      isValid =
+        isValid &&
+        validateAutomobile(advertisement as AdvertisementTypeAutomobile);
+    } else if (type === AdvertisementType.SERVICES) {
+      isValid =
+        isValid && validateServices(advertisement as AdvertisementTypeService);
+    }
 
     setIsFormValid(isValid);
   }, [advertisement]);
+
+  useEffect(() => {
+    const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+
+    if (imageFile && fileInput) {
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(imageFile);
+      fileInput.files = dataTransfer.files;
+    }
+  }, [imageFile, step]);
 
   useEffect(() => {
     validateForm();
@@ -240,7 +286,12 @@ const PlacementFormPage = memo(({}) => {
               </label>
               <label className={styles.label}>
                 {t('Изображение')}
-                <Input type="file" name="image" onChange={handleFileChange} />
+                <Input
+                  id="imageFile"
+                  type="file"
+                  name="image"
+                  onChange={handleFileChange}
+                />
               </label>
             </div>
           )}
@@ -343,7 +394,7 @@ const PlacementFormPage = memo(({}) => {
                     type="number"
                     max={new Date().getFullYear()}
                     required
-                    min={1800}
+                    min={1}
                   />
                 </label>
                 <label className={styles.label}>

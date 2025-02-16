@@ -391,9 +391,11 @@ const Advertisement = () => {
                 <Text
                   title={`${t('Стоимость')}: ${(advertisement as AdvertisementTypeService).cost} ${t('USD')}`}
                 />
-                <Text
-                  title={`${t('График')}: ${(advertisement as AdvertisementTypeService).schedule}`}
-                />
+                {(advertisement as AdvertisementTypeService)?.schedule && (
+                  <Text
+                    title={`${t('График')}: ${(advertisement as AdvertisementTypeService).schedule}`}
+                  />
+                )}
               </>
             )}
             {user?.id == auth?.id && (

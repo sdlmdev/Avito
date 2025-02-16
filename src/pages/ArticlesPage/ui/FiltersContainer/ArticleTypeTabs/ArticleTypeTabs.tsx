@@ -1,12 +1,9 @@
 import {AdvertisementType} from 'entities/Advertisement';
 import {memo, useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useSelector} from 'react-redux';
 
 import {TabItem} from 'shared/ui/Tabs';
 import {Tabs} from 'shared/ui/Tabs';
-
-import {getArticlesPageType} from 'pages/ArticlesPage/model/selectors/articlesPageSelectors';
 
 interface ArticleTypeTabsProps {
   className?: string;
@@ -17,13 +14,12 @@ interface ArticleTypeTabsProps {
 export const ArticleTypeTabs = memo(
   ({className, value, onChangeType}: ArticleTypeTabsProps) => {
     const {t} = useTranslation();
-    const type = useSelector(getArticlesPageType);
 
     const typeTabs = useMemo<Array<TabItem>>(
       () => [
         {
           value: AdvertisementType.ALL,
-          content: t('Все статьи'),
+          content: t('Все'),
         },
         {
           value: AdvertisementType.IMMOVABLES,
