@@ -8,7 +8,7 @@ import {Button} from 'shared/ui/Button/Button';
 import styles from './ErrorPage.module.scss';
 
 export const ErrorPage = memo(() => {
-  const {t} = useTranslation('errorPage');
+  const {t} = useTranslation();
 
   const reloadPage = () => {
     location.reload();

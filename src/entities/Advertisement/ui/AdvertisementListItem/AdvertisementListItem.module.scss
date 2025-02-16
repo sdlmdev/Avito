@@ -19,6 +19,7 @@
 
 .BIG {
   @include flex-row-center;
+  overflow: hidden;
 
   .AdvertisementListItem {
     @include flex-row;
@@ -37,12 +38,18 @@
 }
 
 .SMALL {
-  @include flex-row;
+  @include flex-column;
   flex-wrap: wrap;
   transition: 0.2s;
   cursor: pointer;
   max-width: 200px;
+  max-height: 306px;
   width: 100%;
+  overflow: hidden;
+
+  .AdvertisementListItem {
+    max-height: 306px;
+  }
 
   &:hover {
     opacity: 0.8;

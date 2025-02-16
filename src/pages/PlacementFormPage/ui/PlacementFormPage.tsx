@@ -35,7 +35,7 @@ const reducers: ReducersList = {
 };
 
 const PlacementFormPage = memo(({}) => {
-  const {t} = useTranslation('placementFormPage');
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const [isError, setIsError] = useState(false);
   const [step, setStep] = useState(1);

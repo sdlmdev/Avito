@@ -5,7 +5,7 @@ import {Page} from 'widgets/Page';
 import styles from './NotFoundPage.module.scss';
 
 export const NotFoundPage = memo(({}) => {
-  const {t} = useTranslation('notFoundPage');
+  const {t} = useTranslation();
 
   return (
     <Page testId="NotFoundPage" className={styles.NotFoundPage}>

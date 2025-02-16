@@ -100,7 +100,7 @@ export const ArticleFields = memo(() => {
             label={t('Тип недвижимости')}
             className={styles.listBox}
             direction="bottom right"
-            defaultValue="Выберите тип недвижимости"
+            defaultValue={t('Выберите тип недвижимости')}
           />
         </>
       );
@@ -182,7 +182,7 @@ export const ArticleFields = memo(() => {
             value={serviceType}
             onChange={onChangeServiceType}
             label={t('Тип услуги')}
-            defaultValue="Выберите тип услуги"
+            defaultValue={t('Выберите тип услуги')}
             className={styles.listBox}
             direction="bottom right"
           />

@@ -37,7 +37,7 @@ export const AdvertisementList = memo(
     if (!isLoading && !articles.length) {
       return (
         <div className={cn(styles.AdvertisementList, className, styles[view])}>
-          <Text size="l" title={t('Статьи не найдены')} />
+          <Text size="l" title={t('Объявления не найдены')} />
         </div>
       );
     }

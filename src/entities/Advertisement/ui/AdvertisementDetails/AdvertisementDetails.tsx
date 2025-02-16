@@ -297,7 +297,7 @@ const AdvertisementDetailsForm = ({
           </label>
         </>
       )}
-      <Button className={styles.button} type="submit">Сохранить</Button>
+      <Button className={styles.button} type="submit">{t('Сохранить')}</Button>
       {isError && <Text className={styles.error} title={t('Произошла ошибка при сохранении данных.')} />}
     </form>
   );
@@ -346,7 +346,7 @@ const Advertisement = () => {
 
           <div className={styles.descr}>
             <Text title={`${t('Название')}: ${advertisement.name}`} size="l" bold />
-            <Text title={`${t('Местоположение')}: ${advertisement.location}`} />
+            <Text title={`${t('Локация')}: ${advertisement.location}`} />
             <Text title={`${t('Описание')}: ${advertisement.description}`} />
             {advertisement.type === AdvertisementType.IMMOVABLES && (
               <>
@@ -360,7 +360,7 @@ const Advertisement = () => {
                   title={`${t('Комнаты')}: ${(advertisement as AdvertisementTypeImmovables).rooms}`}
                 />
                 <Text
-                  title={`${t('Цена')}: ${(advertisement as AdvertisementTypeImmovables).price} ${t('USD')}`}
+                  title={`${t('Цена')}: ${(advertisement as AdvertisementTypeImmovables).price} ${t('₽')}`}
                 />
               </>
             )}
@@ -389,7 +389,7 @@ const Advertisement = () => {
                   title={`${t('Опыт')}: ${(advertisement as AdvertisementTypeService).experience} ${t('лет')}`}
                 />
                 <Text
-                  title={`${t('Стоимость')}: ${(advertisement as AdvertisementTypeService).cost} ${t('USD')}`}
+                  title={`${t('Стоимость')}: ${(advertisement as AdvertisementTypeService).cost} ${t('₽')}`}
                 />
                 {(advertisement as AdvertisementTypeService)?.schedule && (
                   <Text
@@ -423,6 +423,8 @@ export const AdvertisementDetailsSkeleton = () => {
         <Skeleton width="100%" className={styles.skeleton} height={24} />
         <Skeleton width="100%" className={styles.skeleton} height={24} />
         <Skeleton width="100%" className={styles.skeleton} height={24} />
+        <Skeleton width="100%" className={styles.skeleton} height={24} />
+        <Skeleton width="100%" className={styles.skeleton} height={24} />
       </div>
     </div>
   );
@@ -444,7 +446,7 @@ export const AdvertisementDetails = memo(({className, id}: AdvertisementDetailsP
     content = <AdvertisementDetailsSkeleton />;
   } else if (error) {
     content = (
-      <Text align="center" title={t('Произошла ошибка при загрузке статьи.')} />
+      <Text align="center" title={t('Произошла ошибка при загрузке статьи')} />
     );
   } else {
     content = <Advertisement />;

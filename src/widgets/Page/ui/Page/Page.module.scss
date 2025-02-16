@@ -4,5 +4,5 @@
   @include flex-column;
   flex-grow: 1;
   flex-shrink: 100;
-  min-height: calc(100vh - var(--navbar-height) - 10px);
+  min-height: calc(100vh - var(--navbar-height) - 20px);
 }

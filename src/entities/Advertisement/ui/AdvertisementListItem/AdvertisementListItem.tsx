@@ -2,6 +2,7 @@ import cn from 'classnames';
 import {HTMLAttributeAnchorTarget, memo} from 'react';
 
 import {getRouteAdvertisement} from 'shared/constants/router';
+import {truncateText} from 'shared/lib/helpers/helpers';
 import {AppImage} from 'shared/ui/AppImage';
 import {AppLink} from 'shared/ui/AppLink';
 import {Skeleton} from 'shared/ui/Skeleton';
@@ -35,9 +36,30 @@ export const AdvertisementListItem = memo(
             className={styles.img}
           />
           <div className={styles.text}>
-            <Text title={advertisement.name} className={styles.title} />
-            <Text title={advertisement.location} className={styles.location} />
-            <Text title={advertisement.type} className={styles.type} />
+            <Text
+              title={
+                view === AdvertisementView.SMALL
+                  ? truncateText(advertisement.name, 15)
+                  : advertisement.name
+              }
+              className={styles.title}
+            />
+            <Text
+              title={
+                view === AdvertisementView.SMALL
+                  ? truncateText(advertisement.location, 15)
+                  : advertisement.location
+              }
+              className={styles.location}
+            />
+            <Text
+              title={
+                view === AdvertisementView.SMALL
+                  ? truncateText(advertisement.type, 15)
+                  : advertisement.type
+              }
+              className={styles.type}
+            />
           </div>
         </article>
       </AppLink>
@@ -45,4 +67,4 @@ export const AdvertisementListItem = memo(
   },
 );
 
-AdvertisementListItem.displayName = 'AdvertisementListItemRedesigned';
+AdvertisementListItem.displayName = 'AdvertisementListItem';
