@@ -7,8 +7,7 @@ import {
   useState,
 } from 'react';
 
-import {DEFAULT_IMG} from 'shared/constants/consts';
-
+import {DEFAULT_IMG} from '../../constants/consts';
 import styles from './AppImage.module.scss';
 
 interface AppImageProps extends ImgHTMLAttributes<HTMLImageElement> {

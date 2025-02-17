@@ -8,8 +8,6 @@ import {
   clearQueryParams,
 } from 'shared/lib/url/changeQueryParams/changeQueryParams';
 
-import {articlesPageActions} from 'pages/ArticlesPage/model/slices/articlesPageSlice';
-
 import {
   getArticlesPageArea,
   getArticlesPageBrand,
@@ -28,6 +26,7 @@ import {
   getArticlesPageType,
   getArticlesPageYear,
 } from '../../selectors/articlesPageSelectors';
+import {articlesPageActions} from '../../slices/articlesPageSlice';
 
 interface FetchArticlesListProps {
   replace?: boolean;

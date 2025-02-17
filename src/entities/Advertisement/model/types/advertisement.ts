@@ -1,5 +1,4 @@
-import {User} from 'entities/User';
-
+import {User} from '../../../User';
 import {AdvertisementType} from '../consts/advertisementConstants';
 
 export interface AdvertisementDefault {

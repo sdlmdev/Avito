@@ -1,8 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ThunkConfig} from 'app/providers/StoreProvider';
-
-import {advertisementDetailsActions} from '../../../../../entities/Advertisement/model/slice/advertisementDetailsSlice';
-import {Advertisement} from '../../../../../entities/Advertisement/model/types/advertisement';
+import {advertisementDetailsActions} from 'entities/Advertisement/model/slice/advertisementDetailsSlice';
+import {Advertisement} from 'entities/Advertisement/model/types/advertisement';
 
 const appendFormData = (
   formData: FormData,

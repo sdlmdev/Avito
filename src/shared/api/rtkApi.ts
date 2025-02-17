@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-import {USER_KEY} from 'shared/constants/localstorage';
+import {USER_KEY} from '../constants/localstorage';
 
 export const rtkApi = createApi({
   reducerPath: 'api',

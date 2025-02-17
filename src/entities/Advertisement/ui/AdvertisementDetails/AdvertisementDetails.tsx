@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import {AdvertisementType} from 'entities/Advertisement';
+import {AdvertisementType} from "../../model/consts/advertisementConstants";
 import {changeAdvertisementData} from 'pages/AdvertisementPage/model/services/changeAdvertisementData/changeAdvertisementData';
 import {fetchAdvertisementById} from 'pages/AdvertisementPage/model/services/fetchAdvertisementById/fetchArticleById';
 import {
@@ -7,7 +7,7 @@ import {
   AdvertisementTypeAutomobile,
   AdvertisementTypeImmovables,
   AdvertisementTypeService,
-} from 'entities/Advertisement/model/types/advertisement';
+} from '../../model/types/advertisement';
 import {ChangeEvent, FormEvent, memo, useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';

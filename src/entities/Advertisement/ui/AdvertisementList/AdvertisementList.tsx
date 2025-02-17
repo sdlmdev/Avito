@@ -1,12 +1,13 @@
 import cn from 'classnames';
-import {Advertisement, AdvertisementView} from 'entities/Advertisement';
-import {AdvertisementListItem} from 'entities/Advertisement/ui/AdvertisementListItem/AdvertisementListItem';
-import {AdvertisementListItemSkeleton} from 'entities/Advertisement/ui/AdvertisementListItem/AdvertisementListItemSkeleton';
 import {HTMLAttributeAnchorTarget, memo} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {Text} from 'shared/ui/Text';
 
+import {AdvertisementView} from '../../model/consts/advertisementConstants';
+import {Advertisement} from '../../model/types/advertisement';
+import {AdvertisementListItem} from '../AdvertisementListItem/AdvertisementListItem';
+import {AdvertisementListItemSkeleton} from '../AdvertisementListItem/AdvertisementListItemSkeleton';
 import styles from './AdvertisementList.module.scss';
 
 interface AdvertisementListProps {

@@ -5,8 +5,7 @@ import {memo} from 'react';
 import ListIcon from 'shared/assets/icons/burger.svg';
 import TiledIcon from 'shared/assets/icons/tile.svg';
 
-import {useArticleFilters} from 'pages/ArticlesPage/lib/hooks/useArticleFilters';
-
+import {useArticleFilters} from '../../lib/hooks/useArticleFilters';
 import styles from './ViewSelector.module.scss';
 
 interface ViewSelectorProps {

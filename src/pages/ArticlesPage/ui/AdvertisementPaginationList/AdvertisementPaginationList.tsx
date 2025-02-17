@@ -8,8 +8,6 @@ import {Pagination} from 'features/Pagination/ui/Pagination';
 import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {Text} from 'shared/ui/Text';
 
-import {fetchArticlesList} from 'pages/ArticlesPage/model/services/fetchArticlesList/fetchArticlesList';
-
 import {
   getArticlesPageError,
   getArticlesPageIsLoading,
@@ -17,6 +15,7 @@ import {
   getArticlesPageNum,
   getArticlesPageView,
 } from '../../model/selectors/articlesPageSelectors';
+import {fetchArticlesList} from '../../model/services/fetchArticlesList/fetchArticlesList';
 import {
   articlesPageActions,
   getArticles,

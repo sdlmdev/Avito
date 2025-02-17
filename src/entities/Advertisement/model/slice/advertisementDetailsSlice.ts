@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AdvertisementType} from 'entities/Advertisement';
 
 import {ADVERTISEMENT_FORM} from 'shared/constants/localstorage';
 
 import {fetchAdvertisementById} from 'pages/AdvertisementPage/model/services/fetchAdvertisementById/fetchArticleById';
 
+import {AdvertisementType} from '../consts/advertisementConstants';
 import {
   Advertisement,
   AdvertisementTypeAutomobile,

@@ -1,17 +1,14 @@
 import {MutableRefObject, useCallback, useRef} from 'react';
 
-/**
- * Хук, который позволяет отменять предыдущий вызов функции пока не истечет delay
- * @param callback
- * @param delay - задержка в мс
- */
-export function useDebounce(
+export const useDebounce = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   callback: (...args: Array<any>) => void,
   delay: number,
-) {
+) => {
   const timer = useRef() as MutableRefObject<any>;
 
   return useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (...args: Array<any>) => {
       if (timer.current) {
         clearTimeout(timer.current);
@@ -23,4 +20,4 @@ export function useDebounce(
     },
     [callback, delay],
   );
-}
+};

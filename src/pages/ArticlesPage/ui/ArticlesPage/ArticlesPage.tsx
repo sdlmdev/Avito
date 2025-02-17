@@ -9,12 +9,11 @@ import {
 import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {StickyContentLayout} from 'shared/ui/StickyContentLayout';
 
-import {AdvertisementPaginationList} from 'pages/ArticlesPage/ui/AdvertisementPaginationList/AdvertisementPaginationList';
-import {FiltersContainer} from 'pages/ArticlesPage/ui/FiltersContainer/FiltersContainer';
-import {ViewSelector} from 'pages/ArticlesPage/ui/ViewSelector/ViewSelectorContainer';
-
 import {initArticlesPage} from '../../model/services/initArticlesPage/initArticlesPage';
 import {articlesPageReducer} from '../../model/slices/articlesPageSlice';
+import {AdvertisementPaginationList} from '../AdvertisementPaginationList/AdvertisementPaginationList';
+import {FiltersContainer} from '../FiltersContainer/FiltersContainer';
+import {ViewSelector} from '../ViewSelector/ViewSelectorContainer';
 import styles from './ArticlesPage.module.scss';
 
 interface ArticlesPageProps {
@@ -25,8 +24,7 @@ const reducers: ReducersList = {
   advertisementsPage: articlesPageReducer,
 };
 
-const ArticlesPage = (props: ArticlesPageProps) => {
-  const {className} = props;
+const ArticlesPage = ({className}: ArticlesPageProps) => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
 

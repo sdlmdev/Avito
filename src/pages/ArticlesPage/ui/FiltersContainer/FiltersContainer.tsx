@@ -4,9 +4,8 @@ import {useTranslation} from 'react-i18next';
 
 import {Input, InputSize} from 'shared/ui/Input';
 
-import {ArticleFields} from 'pages/ArticlesPage/ui/FiltersContainer/ArticleFields/ArticleFields';
-
 import {useArticleFilters} from '../../lib/hooks/useArticleFilters';
+import {ArticleFields} from './ArticleFields/ArticleFields';
 import {ArticleTypeTabs} from './ArticleTypeTabs/ArticleTypeTabs';
 import styles from './FiltersContainer.module.scss';
 

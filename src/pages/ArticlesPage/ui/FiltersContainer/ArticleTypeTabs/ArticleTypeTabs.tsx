@@ -46,7 +46,6 @@ export const ArticleTypeTabs = memo(
 
     return (
       <Tabs
-        // direction="column"
         tabs={typeTabs}
         value={value}
         onTabClick={onTabClick}

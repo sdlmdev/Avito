@@ -25,13 +25,12 @@ import {
 import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {Button} from 'shared/ui/Button/Button';
 
-import {useHandlers} from 'pages/PlacementFormPage/lib/hooks/useHandlers';
-import {MainStep} from 'pages/PlacementFormPage/ui/steps/MainStep';
-import {StepAutomobile} from 'pages/PlacementFormPage/ui/steps/StepAutomobile';
-import {StepImmovables} from 'pages/PlacementFormPage/ui/steps/StepImmovables';
-import {StepServices} from 'pages/PlacementFormPage/ui/steps/StepServices';
-
+import {useHandlers} from '../lib/hooks/useHandlers';
 import {addNewAdvertisement} from '../model/services/addNewAdvertisement/addNewAdvertisement';
+import {MainStep} from '../ui/steps/MainStep';
+import {StepAutomobile} from '../ui/steps/StepAutomobile';
+import {StepImmovables} from '../ui/steps/StepImmovables';
+import {StepServices} from '../ui/steps/StepServices';
 import styles from './PlacementFormPage.module.scss';
 
 const reducers: ReducersList = {

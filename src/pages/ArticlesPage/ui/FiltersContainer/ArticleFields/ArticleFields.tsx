@@ -6,9 +6,8 @@ import {useSelector} from 'react-redux';
 import {Input} from 'shared/ui/Input';
 import {ListBox} from 'shared/ui/Popups';
 
-import {useArticleFilters} from 'pages/ArticlesPage/lib/hooks/useArticleFilters';
-import {getArticlesPageType} from 'pages/ArticlesPage/model/selectors/articlesPageSelectors';
-
+import {useArticleFilters} from '../../../lib/hooks/useArticleFilters';
+import {getArticlesPageType} from '../../../model/selectors/articlesPageSelectors';
 import styles from '../FiltersContainer.module.scss';
 
 export const ArticleFields = memo(() => {
@@ -182,7 +181,7 @@ export const ArticleFields = memo(() => {
             value={serviceType}
             onChange={onChangeServiceType}
             label={t('Тип услуги')}
-            defaultValue={t('Выберите тип услуги')}
+            defaultValue="Выберите тип услуги"
             className={styles.listBox}
             direction="bottom right"
           />

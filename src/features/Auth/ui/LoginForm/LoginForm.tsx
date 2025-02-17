@@ -3,9 +3,6 @@ import {FormEvent, memo, MouseEvent, useCallback, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
-import {login} from 'features/Auth/model/services/login/login';
-import {register} from 'features/Auth/model/services/register/register';
-
 import {
   DynamicModuleLoader,
   ReducersList,
@@ -24,6 +21,8 @@ import {getRegisterError} from '../../model/selectors/getRegisterError/getRegist
 import {getRegisterIsLoading} from '../../model/selectors/getRegisterIsLoading/getRegisterIsLoading';
 import {getRegisterPassword} from '../../model/selectors/getRegisterPassword/getRegisterPassword';
 import {getRegisterUsername} from '../../model/selectors/getRegisterUsername/getRegisterUsername';
+import {login} from '../../model/services/login/login';
+import {register} from '../../model/services/register/register';
 import {loginActions, loginReducer} from '../../model/slices/login/loginSlice';
 import {
   registerActions,

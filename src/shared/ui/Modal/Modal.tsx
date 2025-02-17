@@ -7,9 +7,8 @@ import {
   useState,
 } from 'react';
 
-import {Portal} from 'shared/ui/Portal';
-
 import CloseBtn from '../../assets/icons/x-close.svg';
+import {Portal} from '../Portal';
 import styles from './Modal.module.scss';
 
 interface ModalProps {

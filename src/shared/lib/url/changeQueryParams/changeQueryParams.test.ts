@@ -1,7 +1,7 @@
 import {getQueryParams} from './changeQueryParams';
 
-describe('shared/url/changeQueryParams', () => {
-  test('test with one param', () => {
+describe('Тесты changeQueryParams', () => {
+  test('Тест с одним параметром', () => {
     const params = getQueryParams({
       test: 'value',
     });
@@ -9,7 +9,7 @@ describe('shared/url/changeQueryParams', () => {
     expect(params).toBe('?test=value');
   });
 
-  test('test with multiple params', () => {
+  test('Тест с несколькими параметрами', () => {
     const params = getQueryParams({
       test: 'value',
       second: '2',
@@ -18,7 +18,7 @@ describe('shared/url/changeQueryParams', () => {
     expect(params).toBe('?test=value&second=2');
   });
 
-  test('test with undefined', () => {
+  test('Тест с undefined', () => {
     const params = getQueryParams({
       test: 'value',
       second: undefined,

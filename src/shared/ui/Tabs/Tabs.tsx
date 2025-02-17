@@ -1,8 +1,7 @@
 import cn from 'classnames';
 import {memo, ReactNode, useCallback} from 'react';
 
-import {Button, ButtonTheme} from 'shared/ui/Button';
-
+import {Button, ButtonTheme} from '../Button';
 import styles from './Tabs.module.scss';
 
 export interface TabItem {
