@@ -37,7 +37,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handleAreaChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       if (value >= 1 && value <= 100000) {
         dispatch(advertisementDetailsActions.setArea(value));
         validateForm();
@@ -47,7 +47,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handleRoomsChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       if (value >= 1 && value <= 50) {
         dispatch(advertisementDetailsActions.setRooms(value));
         validateForm();
@@ -57,7 +57,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handlePriceChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       if (value >= 1 && value <= 10 ** 9) {
         dispatch(advertisementDetailsActions.setPrice(value));
         validateForm();
@@ -87,7 +87,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handleYearChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       const currentYear = new Date().getFullYear();
 
       if (value > 0 && value <= currentYear) {
@@ -99,7 +99,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handleMileageChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       if (value >= 0 && value <= 10 ** 6) {
         dispatch(advertisementDetailsActions.setMileage(value));
         validateForm();
@@ -109,7 +109,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handleExperienceChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       if (value >= 1 && value <= 100) {
         dispatch(advertisementDetailsActions.setExperience(value));
         validateForm();
@@ -119,7 +119,7 @@ export const useHandlers = (validateForm: () => void) => {
   );
 
   const handleCostChange = useCallback(
-    (value: number) => {
+    (value: number | string) => {
       if (value >= 1 && value <= 10 ** 9) {
         dispatch(advertisementDetailsActions.setCost(value));
         validateForm();

@@ -6,6 +6,7 @@ import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {useDebounce} from 'shared/lib/hooks/useDebounce/useDebounce';
 
 import {
+  getArticlesData,
   getArticlesPageArea,
   getArticlesPageBrand,
   getArticlesPageCost,
@@ -26,6 +27,7 @@ import {fetchArticlesList} from '../../model/services/fetchArticlesList/fetchArt
 import {articlesPageActions} from '../../model/slices/articlesPageSlice';
 
 export const useArticleFilters = () => {
+  const data = useSelector(getArticlesData);
   const view = useSelector(getArticlesPageView);
   const search = useSelector(getArticlesPageSearch);
   const type = useSelector(getArticlesPageType);
@@ -86,7 +88,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangeArea = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setArea(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -95,7 +97,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangeRooms = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setRooms(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -104,7 +106,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangePrice = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setPrice(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -131,7 +133,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangeYear = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setYear(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -140,7 +142,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangeMileage = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setMileage(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -158,7 +160,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangeExperience = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setExperience(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -167,7 +169,7 @@ export const useArticleFilters = () => {
   );
 
   const onChangeCost = useCallback(
-    (value: string) => {
+    (value: string | number) => {
       dispatch(articlesPageActions.setCost(Number(value)));
       dispatch(articlesPageActions.setPage(1));
       debouncedFetchData();
@@ -194,6 +196,7 @@ export const useArticleFilters = () => {
   );
 
   return {
+    data,
     view,
     search,
     type,

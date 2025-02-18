@@ -1,9 +1,13 @@
 import {AdvertisementType} from 'entities/Advertisement';
-import {ChangeEvent, memo} from 'react';
+import {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
-import {Input} from 'shared/ui/Input';
+import {
+  StepAutomobile,
+  StepImmovables,
+  StepServices,
+} from 'shared/ui/FieldsLists';
 import {ListBox} from 'shared/ui/Popups';
 
 import {useArticleFilters} from '../../../lib/hooks/useArticleFilters';
@@ -39,44 +43,19 @@ export const ArticleFields = memo(() => {
     cost,
   } = useArticleFilters();
 
-  const handleChange =
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (callback: (value: any) => void) => (e: ChangeEvent<HTMLInputElement>) => {
-      const value =
-        e.target.type === 'number'
-          ? parseFloat(e.target.value)
-          : e.target.value;
-
-      callback(value);
-    };
-
   switch (type) {
     case AdvertisementType.IMMOVABLES:
       return (
         <>
-          <Input
-            value={area}
-            name="area"
-            placeholder={t('Площадь')}
-            type="number"
-            onChange={handleChange(onChangeArea)}
-            label={t('Площадь')}
-          />
-          <Input
-            value={rooms}
-            name="rooms"
-            placeholder={t('Количество комнат')}
-            type="number"
-            onChange={handleChange(onChangeRooms)}
-            label={t('Количество комнат')}
-          />
-          <Input
-            value={price}
-            name="price"
-            placeholder={t('Цена')}
-            type="number"
-            onChange={handleChange(onChangePrice)}
-            label={t('Цена')}
+          <StepImmovables
+            valuesData={{
+              area,
+              rooms,
+              price,
+            }}
+            handleAreaChange={onChangeArea}
+            handleRoomsChange={onChangeRooms}
+            handlePriceChange={onChangePrice}
           />
           <ListBox
             items={[
@@ -100,58 +79,31 @@ export const ArticleFields = memo(() => {
 
     case AdvertisementType.AUTOMOBILE:
       return (
-        <>
-          <Input
-            value={brand}
-            name="brand"
-            placeholder={t('Марка')}
-            onChange={handleChange(onChangeBrand)}
-            label={t('Марка')}
-          />
-          <Input
-            value={model}
-            name="model"
-            placeholder={t('Модель')}
-            onChange={handleChange(onChangeModel)}
-            label={t('Модель')}
-          />
-          <Input
-            value={year}
-            name="year"
-            placeholder={t('Год выпуска')}
-            type="number"
-            onChange={handleChange(onChangeYear)}
-            label={t('Год выпуска')}
-          />
-          <Input
-            value={mileage}
-            name="mileage"
-            placeholder={t('Пробег')}
-            type="number"
-            onChange={handleChange(onChangeMileage)}
-            label={t('Пробег')}
-          />
-        </>
+        <StepAutomobile
+          valuesData={{
+            brand,
+            model,
+            year,
+            mileage,
+          }}
+          handleBrandChange={onChangeBrand}
+          handleModelChange={onChangeModel}
+          handleYearChange={onChangeYear}
+          handleMileageChange={onChangeMileage}
+        />
       );
 
     case AdvertisementType.SERVICES:
       return (
         <>
-          <Input
-            value={experience}
-            name="experience"
-            placeholder={t('Опыт (лет)')}
-            type="number"
-            onChange={handleChange(onChangeExperience)}
-            label={t('Опыт (лет)')}
-          />
-          <Input
-            value={cost}
-            name="cost"
-            placeholder={t('Стоимость')}
-            type="number"
-            onChange={handleChange(onChangeCost)}
-            label={t('Стоимость')}
+          <StepServices
+            valuesData={{
+              experience,
+              cost,
+            }}
+            handleExperienceChange={onChangeExperience}
+            handleCostChange={onChangeCost}
+            isSchedule={false}
           />
           <ListBox
             items={[

@@ -1,11 +1,11 @@
 import {EntityState} from '@reduxjs/toolkit';
 import {
-  Advertisement,
   AdvertisementType,
+  AdvertisementVariant,
   AdvertisementView,
 } from 'entities/Advertisement';
 
-export interface ArticlesPageSchema extends EntityState<Advertisement> {
+export interface ArticlesPageSchema extends EntityState<AdvertisementVariant> {
   isLoading?: boolean;
   error?: string;
   page: number;

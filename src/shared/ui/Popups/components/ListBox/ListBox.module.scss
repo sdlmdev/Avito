@@ -1,3 +1,11 @@
+@import '../../../../styles/mixins.scss';
+
+.ListBox {
+  @include flex-column;
+  gap: 5px;
+  width: max-content;
+}
+
 .options {
   position: absolute;
   z-index: 1000;

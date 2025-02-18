@@ -1,6 +1,6 @@
 import {
-  Advertisement,
   AdvertisementType,
+  AdvertisementVariant,
   getAdvertisementDetailsData,
 } from 'entities/Advertisement';
 import {
@@ -23,14 +23,17 @@ import {
   ReducersList,
 } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import {Button} from 'shared/ui/Button/Button';
+import {Button} from 'shared/ui/Button';
+import {MainStep} from 'shared/ui/FieldsLists';
+import {StepAutomobile} from 'shared/ui/FieldsLists';
+import {StepImmovables} from 'shared/ui/FieldsLists';
+import {StepServices} from 'shared/ui/FieldsLists';
+import {Input} from 'shared/ui/Input';
+import {ListBox} from 'shared/ui/Popups';
+import {Text} from 'shared/ui/Text';
 
 import {useHandlers} from '../lib/hooks/useHandlers';
 import {addNewAdvertisement} from '../model/services/addNewAdvertisement/addNewAdvertisement';
-import {MainStep} from '../ui/steps/MainStep';
-import {StepAutomobile} from '../ui/steps/StepAutomobile';
-import {StepImmovables} from '../ui/steps/StepImmovables';
-import {StepServices} from '../ui/steps/StepServices';
 import styles from './PlacementFormPage.module.scss';
 
 const reducers: ReducersList = {
@@ -53,10 +56,11 @@ const PlacementFormPage = memo(({}) => {
   const resetForm = () => {
     dispatch(advertisementDetailsActions.resetAdvertisementForm());
     setStep(1);
+    setImageFile(null);
   };
 
   const handleSubmitForm = async (
-    updatedAdvertisement: Advertisement,
+    updatedAdvertisement: AdvertisementVariant,
     e: MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
@@ -67,6 +71,7 @@ const PlacementFormPage = memo(({}) => {
 
     if (res.meta.requestStatus === 'fulfilled') {
       resetForm();
+      setIsError(false);
       setIsSuccess(true);
     } else {
       setIsError(true);
@@ -155,47 +160,132 @@ const PlacementFormPage = memo(({}) => {
       <Page testId="PlacementFormPage" className={styles.PlacementFormPage}>
         <form className={styles.formWrapper}>
           {step === 1 && advertisement && (
-            <MainStep
-              advertisement={advertisement}
-              handleNameChange={handleNameChange}
-              handleDescriptionChange={handleDescriptionChange}
-              handleLocationChange={handleLocationChange}
-              handleFileChange={(e) => handleFileChange(e, setImageFile)}
-              t={t}
-              dispatch={dispatch}
-            />
+            <div className={styles.step}>
+              <Text title={t('Основной шаг')} size="m" />
+              <ListBox
+                items={[
+                  {
+                    value: AdvertisementType.IMMOVABLES,
+                    content: t('Недвижимость'),
+                  },
+                  {value: AdvertisementType.AUTOMOBILE, content: t('Авто')},
+                  {value: AdvertisementType.SERVICES, content: t('Услуги')},
+                ]}
+                value={advertisement?.type || AdvertisementType.IMMOVABLES}
+                onChange={(value) =>
+                  dispatch(advertisementDetailsActions.setCategory(value))
+                }
+                label={t('Категория объявления')}
+                defaultValue={AdvertisementType.ALL}
+                direction="bottom right"
+              />
+              <MainStep
+                valuesData={advertisement}
+                handleNameChange={handleNameChange}
+                handleDescriptionChange={handleDescriptionChange}
+                handleLocationChange={handleLocationChange}
+              />
+              <Input
+                id="imageFile"
+                type="file"
+                name="image"
+                onChange={(e) => handleFileChange(e, setImageFile)}
+                label={t('Изображение')}
+              />
+            </div>
           )}
           {step === 2 &&
             advertisement?.type === AdvertisementType.IMMOVABLES && (
-              <StepImmovables
-                advertisement={advertisement}
-                handleAreaChange={handleAreaChange}
-                handleRoomsChange={handleRoomsChange}
-                handlePriceChange={handlePriceChange}
-                t={t}
-                dispatch={dispatch}
-              />
+              <div className={styles.step}>
+                <Text title={t('Недвижимость')} size="m" />
+                <ListBox
+                  items={[
+                    {value: 'Квартира', content: t('Квартира')},
+                    {value: 'Дом', content: t('Дом')},
+                    {value: 'Земля', content: t('Земля')},
+                    {
+                      value: 'Коммерческая недвижимость',
+                      content: t('Коммерческая недвижимость'),
+                    },
+                  ]}
+                  value={
+                    (advertisement as AdvertisementTypeImmovables)
+                      ?.propertyType || 'Квартира'
+                  }
+                  onChange={(value) =>
+                    dispatch(advertisementDetailsActions.setPropertyType(value))
+                  }
+                  label={t('Тип недвижимости')}
+                  defaultValue="Квартира"
+                  className={styles.listBox}
+                  direction="bottom right"
+                />
+                <StepImmovables
+                  valuesData={{
+                    area: (advertisement as AdvertisementTypeImmovables).area,
+                    rooms: (advertisement as AdvertisementTypeImmovables).rooms,
+                    price: (advertisement as AdvertisementTypeImmovables).price,
+                  }}
+                  handleAreaChange={handleAreaChange}
+                  handleRoomsChange={handleRoomsChange}
+                  handlePriceChange={handlePriceChange}
+                />
+              </div>
             )}
           {step === 2 &&
             advertisement?.type === AdvertisementType.AUTOMOBILE && (
-              <StepAutomobile
-                advertisement={advertisement}
-                handleBrandChange={handleBrandChange}
-                handleModelChange={handleModelChange}
-                handleYearChange={handleYearChange}
-                handleMileageChange={handleMileageChange}
-                t={t}
-              />
+              <div className={styles.step}>
+                <Text title={t('Авто')} size="m" />
+                <StepAutomobile
+                  valuesData={{
+                    brand: (advertisement as AdvertisementTypeAutomobile).brand,
+                    model: (advertisement as AdvertisementTypeAutomobile).model,
+                    year: (advertisement as AdvertisementTypeAutomobile).year,
+                    mileage: (advertisement as AdvertisementTypeAutomobile)
+                      .mileage,
+                  }}
+                  handleBrandChange={handleBrandChange}
+                  handleModelChange={handleModelChange}
+                  handleYearChange={handleYearChange}
+                  handleMileageChange={handleMileageChange}
+                />
+              </div>
             )}
           {step === 2 && advertisement?.type === AdvertisementType.SERVICES && (
-            <StepServices
-              advertisement={advertisement}
-              dispatch={dispatch}
-              t={t}
-              handleExperienceChange={handleExperienceChange}
-              handleCostChange={handleCostChange}
-              handleScheduleChange={handleScheduleChange}
-            />
+            <div className={styles.step}>
+              <Text title={t('Услуги')} size="m" />
+              <ListBox
+                items={[
+                  {value: 'Консультация', content: t('Консультация')},
+                  {value: 'Ремонт', content: t('Ремонт')},
+                  {value: 'Уборка', content: t('Уборка')},
+                  {value: 'Обучение', content: t('Обучение')},
+                ]}
+                value={
+                  (advertisement as AdvertisementTypeService)?.serviceType ||
+                  'Консультация'
+                }
+                onChange={(value) =>
+                  dispatch(advertisementDetailsActions.setServiceType(value))
+                }
+                label={t('Тип услуги')}
+                defaultValue="Консультация"
+                className={styles.listBox}
+                direction="bottom right"
+              />
+              <StepServices
+                valuesData={{
+                  experience: (advertisement as AdvertisementTypeService)
+                    .experience,
+                  cost: (advertisement as AdvertisementTypeService).cost,
+                  schedule: (advertisement as AdvertisementTypeService)
+                    .schedule,
+                }}
+                handleExperienceChange={handleExperienceChange}
+                handleCostChange={handleCostChange}
+                handleScheduleChange={handleScheduleChange}
+              />
+            </div>
           )}
           <div className={styles.buttons}>
             {step === 1 && (
@@ -213,13 +303,12 @@ const PlacementFormPage = memo(({}) => {
               </>
             )}
           </div>
-          {isError && (
-            <div className={styles.error}>{t('Произошла ошибка')}</div>
-          )}
+          {isError && <Text text={t('Произошла ошибка')} variant="error" />}
           {isSuccess && (
-            <div className={styles.success}>
-              {t('Объявление успешно добавлено')}
-            </div>
+            <Text
+              text={t('Объявление успешно добавлено')}
+              className={styles.success}
+            />
           )}
         </form>
       </Page>

@@ -5,14 +5,14 @@ import {useTranslation} from 'react-i18next';
 import {Text} from 'shared/ui/Text';
 
 import {AdvertisementView} from '../../model/consts/advertisementConstants';
-import {Advertisement} from '../../model/types/advertisement';
+import {AdvertisementVariant} from '../../model/types/advertisement';
 import {AdvertisementListItem} from '../AdvertisementListItem/AdvertisementListItem';
 import {AdvertisementListItemSkeleton} from '../AdvertisementListItem/AdvertisementListItemSkeleton';
 import styles from './AdvertisementList.module.scss';
 
 interface AdvertisementListProps {
   className?: string;
-  articles: Array<Advertisement>;
+  articles: Array<AdvertisementVariant>;
   isLoading?: boolean;
   target?: HTMLAttributeAnchorTarget;
   view?: AdvertisementView;

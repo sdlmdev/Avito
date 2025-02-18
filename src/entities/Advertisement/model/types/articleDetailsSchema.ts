@@ -1,7 +1,7 @@
-import {Advertisement} from './advertisement';
+import {AdvertisementVariant} from './advertisement';
 
 export interface AdvertisementDetailsSchema {
   isLoading: boolean;
   error?: string;
-  data: Advertisement;
+  data: AdvertisementVariant;
 }

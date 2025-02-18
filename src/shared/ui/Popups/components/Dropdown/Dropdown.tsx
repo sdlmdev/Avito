@@ -31,12 +31,9 @@ export const Dropdown = ({
   const menuClasses = [mapDirectionClass[direction], popupCls.menu];
 
   return (
-    <Menu
-      as="div"
-      className={cn(styles.Dropdown, {}, [className, popupCls.popup])}
-    >
+    <Menu as="div" className={cn(styles.Dropdown, className, popupCls.popup)}>
       <Menu.Button className={popupCls.trigger}>{trigger}</Menu.Button>
-      <Menu.Items className={cn(styles.menu, {}, menuClasses)}>
+      <Menu.Items className={cn(styles.menu, menuClasses)}>
         {items.map((item, index) => {
           const content = ({active}: {active: boolean}) => (
             <button

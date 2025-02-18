@@ -10,12 +10,6 @@
   width: 100%;
 }
 
-.listBox {
-  @include flex-column;
-  width: max-content;
-  gap: 5px;
-}
-
 .buttons {
   @include flex-row;
   flex-wrap: wrap;

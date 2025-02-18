@@ -1,9 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ThunkConfig} from 'app/providers/StoreProvider';
-import {Advertisement} from 'entities/Advertisement/model/types/advertisement';
+
+import {AdvertisementVariant} from '../../types/advertisement';
 
 export const fetchAdvertisementById = createAsyncThunk<
-  Advertisement,
+  AdvertisementVariant,
   string | undefined,
   ThunkConfig<string>
 >(
@@ -16,7 +17,7 @@ export const fetchAdvertisementById = createAsyncThunk<
     }
 
     try {
-      const response = await extra.api.get<Advertisement>(
+      const response = await extra.api.get<AdvertisementVariant>(
         `/items/${advertisementId}`,
       );
 

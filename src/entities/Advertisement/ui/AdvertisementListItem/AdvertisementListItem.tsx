@@ -9,12 +9,12 @@ import {Skeleton} from 'shared/ui/Skeleton';
 import {Text} from 'shared/ui/Text';
 
 import {AdvertisementView} from '../../model/consts/advertisementConstants';
-import {Advertisement} from '../../model/types/advertisement';
+import {AdvertisementVariant} from '../../model/types/advertisement';
 import styles from './AdvertisementListItem.module.scss';
 
 export interface AdvertisementListItemProps {
   className?: string;
-  advertisement: Advertisement;
+  advertisement: AdvertisementVariant;
   view: AdvertisementView;
   target?: HTMLAttributeAnchorTarget;
 }

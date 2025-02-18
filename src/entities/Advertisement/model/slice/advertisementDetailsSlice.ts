@@ -2,14 +2,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {ADVERTISEMENT_FORM} from 'shared/constants/localstorage';
 
-import {fetchAdvertisementById} from 'pages/AdvertisementPage/model/services/fetchAdvertisementById/fetchArticleById';
-
 import {AdvertisementType} from '../consts/advertisementConstants';
+import {fetchAdvertisementById} from '../services/fetchAdvertisementById/fetchArticleById';
 import {
-  Advertisement,
   AdvertisementTypeAutomobile,
   AdvertisementTypeImmovables,
   AdvertisementTypeService,
+  AdvertisementVariant,
 } from '../types/advertisement';
 import {AdvertisementDetailsSchema} from '../types/articleDetailsSchema';
 
@@ -63,9 +62,8 @@ export const advertisementDetailsSlice = createSlice({
   name: 'advertisementDetails',
   initialState,
   reducers: {
-    updateArticleDetails(state, action: PayloadAction<Advertisement>) {
+    updateArticleDetails(state, action: PayloadAction<AdvertisementVariant>) {
       state.data = action.payload;
-      saveStateToLocalStorage(state);
     },
     setName(state, action: PayloadAction<string>) {
       state.data.name = action.payload;
@@ -91,19 +89,19 @@ export const advertisementDetailsSlice = createSlice({
         saveStateToLocalStorage(state);
       }
     },
-    setArea(state, action: PayloadAction<number>) {
+    setArea(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.IMMOVABLES) {
         (state.data as AdvertisementTypeImmovables).area = action.payload;
         saveStateToLocalStorage(state);
       }
     },
-    setRooms(state, action: PayloadAction<number>) {
+    setRooms(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.IMMOVABLES) {
         (state.data as AdvertisementTypeImmovables).rooms = action.payload;
         saveStateToLocalStorage(state);
       }
     },
-    setPrice(state, action: PayloadAction<number>) {
+    setPrice(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.IMMOVABLES) {
         (state.data as AdvertisementTypeImmovables).price = action.payload;
         saveStateToLocalStorage(state);
@@ -121,13 +119,13 @@ export const advertisementDetailsSlice = createSlice({
         saveStateToLocalStorage(state);
       }
     },
-    setYear(state, action: PayloadAction<number>) {
+    setYear(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.AUTOMOBILE) {
         (state.data as AdvertisementTypeAutomobile).year = action.payload;
         saveStateToLocalStorage(state);
       }
     },
-    setMileage(state, action: PayloadAction<number>) {
+    setMileage(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.AUTOMOBILE) {
         (state.data as AdvertisementTypeAutomobile).mileage = action.payload;
         saveStateToLocalStorage(state);
@@ -139,13 +137,13 @@ export const advertisementDetailsSlice = createSlice({
         saveStateToLocalStorage(state);
       }
     },
-    setExperience(state, action: PayloadAction<number>) {
+    setExperience(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.SERVICES) {
         (state.data as AdvertisementTypeService).experience = action.payload;
         saveStateToLocalStorage(state);
       }
     },
-    setCost(state, action: PayloadAction<number>) {
+    setCost(state, action: PayloadAction<number | string>) {
       if (state.data.type === AdvertisementType.SERVICES) {
         (state.data as AdvertisementTypeService).cost = action.payload;
         saveStateToLocalStorage(state);
@@ -176,7 +174,7 @@ export const advertisementDetailsSlice = createSlice({
       })
       .addCase(
         fetchAdvertisementById.fulfilled,
-        (state, action: PayloadAction<Advertisement>) => {
+        (state, action: PayloadAction<AdvertisementVariant>) => {
           state.isLoading = false;
           state.data = action.payload;
         },

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ThunkConfig} from 'app/providers/StoreProvider';
 import {AxiosResponse} from 'axios';
-import {Advertisement, AdvertisementType} from 'entities/Advertisement';
+import {AdvertisementType, AdvertisementVariant} from 'entities/Advertisement';
 
 import {
   addQueryParams,
@@ -33,7 +33,7 @@ interface FetchArticlesListProps {
 }
 
 export const fetchArticlesList = createAsyncThunk<
-  Array<Advertisement>,
+  Array<AdvertisementVariant>,
   FetchArticlesListProps,
   ThunkConfig<string>
 >('articlesPage/fetchArticlesList', async (props, thunkApi) => {
@@ -95,7 +95,7 @@ export const fetchArticlesList = createAsyncThunk<
     addQueryParams(queryParams);
 
     interface AdvertisementItems {
-      items: Array<Advertisement>;
+      items: Array<AdvertisementVariant>;
       maxPage: number;
       currentPage: number;
     }

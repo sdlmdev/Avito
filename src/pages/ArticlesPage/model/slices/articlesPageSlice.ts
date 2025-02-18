@@ -5,8 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 import {StateScheme} from 'app/providers/StoreProvider';
 import {
-  Advertisement,
   AdvertisementType,
+  AdvertisementVariant,
   AdvertisementView,
 } from 'entities/Advertisement';
 
@@ -15,7 +15,7 @@ import {ARTICLES_VIEW_LOCALSTORAGE_KEY} from 'shared/constants/localstorage';
 import {ArticlesPageSchema} from '../types/articlesPageSchema';
 import {fetchArticlesList} from './../services/fetchArticlesList/fetchArticlesList';
 
-const articlesAdapter = createEntityAdapter<Advertisement>({
+const articlesAdapter = createEntityAdapter<AdvertisementVariant>({
   selectId: (article) => article.id,
 });
 
@@ -23,34 +23,36 @@ export const getArticles = articlesAdapter.getSelectors<StateScheme>(
   (state) => state.advertisementsPage || articlesAdapter.getInitialState(),
 );
 
+const initialState = articlesAdapter.getInitialState<ArticlesPageSchema>({
+  isLoading: false,
+  error: undefined,
+  ids: [],
+  entities: {},
+  view: AdvertisementView.SMALL,
+  page: 1,
+  _inited: false,
+  limit: 5,
+  search: '',
+  type: AdvertisementType.ALL,
+  propertyType: '',
+  area: 0,
+  rooms: 0,
+  price: 0,
+  brand: '',
+  model: '',
+  year: 0,
+  mileage: 0,
+  serviceType: '',
+  experience: 0,
+  cost: 0,
+  location: '',
+  maxPage: 1,
+  // schedule: '',
+});
+
 const articlesPageSlice = createSlice({
   name: 'articlesPageSlice',
-  initialState: articlesAdapter.getInitialState<ArticlesPageSchema>({
-    isLoading: false,
-    error: undefined,
-    ids: [],
-    entities: {},
-    view: AdvertisementView.SMALL,
-    page: 1,
-    _inited: false,
-    limit: 5,
-    search: '',
-    type: AdvertisementType.ALL,
-    propertyType: '',
-    area: 0,
-    rooms: 0,
-    price: 0,
-    brand: '',
-    model: '',
-    year: 0,
-    mileage: 0,
-    serviceType: '',
-    experience: 0,
-    cost: 0,
-    location: '',
-    maxPage: 1,
-    // schedule: '',
-  }),
+  initialState,
   reducers: {
     setView: (state, action: PayloadAction<AdvertisementView>) => {
       state.view = action.payload;

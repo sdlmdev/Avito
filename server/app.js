@@ -51,7 +51,6 @@ const addTestItems = () => {
       model: 'Model S',
       year: 2021,
       mileage: 15000,
-      // image: 'uploads/default.svg',
       user: {id: 0, username: 'defaultUser'},
     },
     {
@@ -62,7 +61,6 @@ const addTestItems = () => {
       serviceType: 'Консультация',
       experience: 8,
       cost: 5000,
-      // image: 'uploads/default.svg',
       user: {id: 0, username: 'defaultUser'},
       schedule: 'Пн-Пт 10:00-18:00',
     },
@@ -75,7 +73,6 @@ const addTestItems = () => {
       area: 300,
       rooms: 6,
       price: 35000000,
-      // image: 'uploads/default.svg',
       user: {id: 0, username: 'defaultUser'},
     },
     {

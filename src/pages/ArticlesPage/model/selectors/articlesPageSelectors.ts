@@ -3,6 +3,8 @@ import {AdvertisementType, AdvertisementView} from 'entities/Advertisement';
 
 import {buildSelector} from 'shared/lib/store';
 
+export const getArticlesData = (state: StateScheme) =>
+  state.advertisementDetails;
 export const getArticlesPageIsLoading = (state: StateScheme) =>
   state.advertisementsPage?.isLoading || false;
 export const getArticlesPageError = (state: StateScheme) =>

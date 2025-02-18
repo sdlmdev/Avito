@@ -1,25 +1,14 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ThunkConfig} from 'app/providers/StoreProvider';
-import {advertisementDetailsActions} from 'entities/Advertisement/model/slice/advertisementDetailsSlice';
-import {Advertisement} from 'entities/Advertisement/model/types/advertisement';
 
-const appendFormData = (
-  formData: FormData,
-  data: any,
-  parentKey: string = '',
-) => {
-  if (data && typeof data === 'object' && !(data instanceof File)) {
-    Object.entries(data).forEach(([key, value]) => {
-      appendFormData(formData, value, parentKey ? `${parentKey}[${key}]` : key);
-    });
-  } else {
-    formData.append(parentKey, data);
-  }
-};
+import {appendFormData} from 'shared/lib/helpers/helpers';
+
+import {advertisementDetailsActions} from '../../slice/advertisementDetailsSlice';
+import {AdvertisementVariant} from '../../types/advertisement';
 
 export const changeAdvertisementData = createAsyncThunk<
-  Advertisement,
-  Advertisement,
+  AdvertisementVariant,
+  AdvertisementVariant,
   ThunkConfig<string>
 >(
   'changeAdvertisementData/changeAdvertisementData',
@@ -35,7 +24,7 @@ export const changeAdvertisementData = createAsyncThunk<
     appendFormData(formData, advertisementData);
 
     try {
-      const response = await extra.api.put<Advertisement>(
+      const response = await extra.api.put<AdvertisementVariant>(
         `/items/${id}`,
         formData,
       );

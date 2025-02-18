@@ -28,7 +28,7 @@ export const FiltersContainer = memo((props: FiltersContainerProps) => {
   const {t} = useTranslation();
 
   return (
-    <div className={cn(styles.ArticlesFilters, {}, [className])}>
+    <div className={cn(styles.ArticlesFilters, className)}>
       <ArticleTypeTabs
         value={type}
         onChangeType={onChangeType}

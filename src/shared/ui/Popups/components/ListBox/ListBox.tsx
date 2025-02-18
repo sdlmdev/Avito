@@ -7,7 +7,7 @@ import {DropdownDirection} from 'shared/types/ui';
 import {Button, ButtonTheme} from '../../../Button/Button';
 import {mapDirectionClass} from '../../styles/consts';
 import popupCls from '../../styles/popup.module.scss';
-import cls from './ListBox.module.scss';
+import styles from './ListBox.module.scss';
 
 export interface ListBoxItem {
   value: string;
@@ -43,12 +43,12 @@ export const ListBox = <T extends string>({
   }, [items, value]);
 
   return (
-    <div className={className}>
+    <div className={cn(styles.ListBox, className)}>
       {label && <span>{label}</span>}
       <Listbox
         disabled={readonly}
         as="div"
-        className={cn(cls.ListBox, popupCls.popup)}
+        className={cn(styles.ListBox, popupCls.popup)}
         value={value}
         onChange={onChange}
       >
@@ -59,7 +59,7 @@ export const ListBox = <T extends string>({
         >
           {selectedItem?.content ?? defaultValue}
         </Listbox.Button>
-        <Listbox.Options className={cn(cls.options, {}, optionsClasses)}>
+        <Listbox.Options className={cn(styles.options, optionsClasses)}>
           {items?.map((item) => (
             <Listbox.Option
               key={item.value}
@@ -69,7 +69,7 @@ export const ListBox = <T extends string>({
             >
               {({active, selected}) => (
                 <li
-                  className={cn(cls.item, {
+                  className={cn(styles.item, {
                     [popupCls.active]: active,
                     [popupCls.disabled]: item.disabled,
                     [popupCls.selected]: selected,

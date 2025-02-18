@@ -1,22 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ThunkConfig} from 'app/providers/StoreProvider';
-import {Advertisement} from 'entities/Advertisement/model/types/advertisement';
+import {AdvertisementVariant} from 'entities/Advertisement/model/types/advertisement';
 
-const appendFormData = (
-  formData: FormData,
-  data: any,
-  parentKey: string = '',
-) => {
-  if (data && typeof data === 'object' && !(data instanceof File)) {
-    Object.entries(data).forEach(([key, value]) => {
-      appendFormData(formData, value, parentKey ? `${parentKey}[${key}]` : key);
-    });
-  } else {
-    formData.append(parentKey, data);
-  }
-};
+import {appendFormData} from 'shared/lib/helpers/helpers';
 
-const filterAdvertisementData = (advertisementData: Advertisement) => {
+const filterAdvertisementData = (advertisementData: AdvertisementVariant) => {
   const allowedKeys = Object.keys(advertisementData).filter((key) => {
     switch (advertisementData.type) {
       case 'Недвижимость':
@@ -72,7 +60,7 @@ const filterAdvertisementData = (advertisementData: Advertisement) => {
 
 export const addNewAdvertisement = createAsyncThunk<
   undefined,
-  Advertisement,
+  AdvertisementVariant,
   ThunkConfig<string>
 >(
   'addNewAdvertisement/addNewAdvertisement',
@@ -83,7 +71,10 @@ export const addNewAdvertisement = createAsyncThunk<
     appendFormData(formData, filteredData);
 
     try {
-      const response = await extra.api.post<Advertisement>('/items', formData);
+      const response = await extra.api.post<AdvertisementVariant>(
+        '/items',
+        formData,
+      );
 
       if (!response.data) {
         throw new Error();
