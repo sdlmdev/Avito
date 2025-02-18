@@ -45,7 +45,7 @@ const reducers: ReducersList = {
 const AdvertisementDetailsForm = ({
   advertisement,
   onSave,
-                                    isError,
+  isError,
 }: {
   advertisement: Advertisement;
   onSave: (advertisement: Advertisement) => void;
@@ -88,8 +88,6 @@ const AdvertisementDetailsForm = ({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label className={styles.label}>
-        <Text title={t('Название')} />
         <Input
           name="name"
           value={formData.name}
@@ -98,10 +96,8 @@ const AdvertisementDetailsForm = ({
           maxLength={200}
           required
           minLength={3}
+          label={t('Название')}
         />
-      </label>
-      <label className={styles.label}>
-        <Text title={t('Описание')} />
         <Input
           name="description"
           value={formData.description}
@@ -110,10 +106,8 @@ const AdvertisementDetailsForm = ({
           maxLength={200}
           minLength={3}
           required
+          label={t('Описание')}
         />
-      </label>
-      <label className={styles.label}>
-        <Text title={t('Локация')} />
         <Input
           name="location"
           value={formData.location}
@@ -122,16 +116,14 @@ const AdvertisementDetailsForm = ({
           required
           maxLength={50}
           minLength={3}
+          label={t('Локация')}
         />
-      </label>
-      <label className={styles.label}>
-        <Text title={t('Изображение')} />
         <Input
           type="file"
           name="image"
           onChange={handleImageChange}
+          label={t('Изображение')}
         />
-      </label>
       {formData.type === AdvertisementType.IMMOVABLES && (
         <>
           <ListBox
@@ -148,8 +140,6 @@ const AdvertisementDetailsForm = ({
             className={styles.listBox}
             direction="bottom right"
           />
-          <label className={styles.label}>
-            <Text title={t('Площадь')} />
             <Input
               name="area"
               value={(formData as AdvertisementTypeImmovables).area}
@@ -159,10 +149,8 @@ const AdvertisementDetailsForm = ({
               required
               minLength={1}
               type="number"
+              label={t('Площадь')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('Комнаты')} />
             <Input
               name="rooms"
               value={(formData as AdvertisementTypeImmovables).rooms}
@@ -172,10 +160,8 @@ const AdvertisementDetailsForm = ({
               max={50}
               required
               min={1}
+              label={t('Количество комнат')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('Цена')} />
             <Input
               name="price"
               value={(formData as AdvertisementTypeImmovables).price}
@@ -185,14 +171,12 @@ const AdvertisementDetailsForm = ({
               max={10 ** 9}
               required
               min={1}
+              label={t('Цена')}
             />
-          </label>
         </>
       )}
       {formData.type === AdvertisementType.AUTOMOBILE && (
         <>
-          <label className={styles.label}>
-            <Text title={t('Марка')} />
             <Input
               name="brand"
               value={(formData as AdvertisementTypeAutomobile).brand}
@@ -201,10 +185,8 @@ const AdvertisementDetailsForm = ({
               required
               maxLength={30}
               minLength={1}
+              label={t('Марка')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('Модель')} />
             <Input
               name="model"
               value={(formData as AdvertisementTypeAutomobile).model}
@@ -213,10 +195,8 @@ const AdvertisementDetailsForm = ({
               required
               maxLength={30}
               minLength={1}
+              label={t('Модель')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('Год')} />
             <Input
               name="year"
               value={(formData as AdvertisementTypeAutomobile).year}
@@ -226,10 +206,8 @@ const AdvertisementDetailsForm = ({
               max={new Date().getFullYear()}
               required
               min={1800}
+              label={t('Год')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('Пробег')} />
             <Input
               name="mileage"
               value={(formData as AdvertisementTypeAutomobile).mileage}
@@ -239,8 +217,8 @@ const AdvertisementDetailsForm = ({
               required
               max={10 ** 6}
               min={0}
+              label={t('Пробег')}
             />
-          </label>
         </>
       )}
       {formData.type === AdvertisementType.SERVICES && (
@@ -259,8 +237,6 @@ const AdvertisementDetailsForm = ({
             className={styles.listBox}
             direction="bottom right"
           />
-          <label className={styles.label}>
-            <Text title={t('Опыт')} />
             <Input
               name="experience"
               value={(formData as AdvertisementTypeService).experience}
@@ -270,10 +246,8 @@ const AdvertisementDetailsForm = ({
               required
               max={100}
               min={0}
+              label={t('Опыт')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('Стоимость')} />
             <Input
               name="cost"
               value={(formData as AdvertisementTypeService).cost}
@@ -283,18 +257,16 @@ const AdvertisementDetailsForm = ({
               required
               max={10 ** 9}
               min={1}
+              label={t('Стоимость')}
             />
-          </label>
-          <label className={styles.label}>
-            <Text title={t('График')} />
             <Input
               name="schedule"
               value={(formData as AdvertisementTypeService).schedule}
               onChange={handleChange}
               placeholder={t('График')}
               maxLength={30}
+              label={t('График')}
             />
-          </label>
         </>
       )}
       <Button className={styles.button} type="submit">{t('Сохранить')}</Button>
@@ -446,7 +418,7 @@ export const AdvertisementDetails = memo(({className, id}: AdvertisementDetailsP
     content = <AdvertisementDetailsSkeleton />;
   } else if (error) {
     content = (
-      <Text align="center" title={t('Произошла ошибка при загрузке статьи')} />
+      <Text align="center" title={t('Произошла ошибка при загрузке объявления')} />
     );
   } else {
     content = <Advertisement />;

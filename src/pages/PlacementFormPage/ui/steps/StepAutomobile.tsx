@@ -24,51 +24,43 @@ export const StepAutomobile = ({
 }: StepAutomobileProps) => (
   <div className={styles.step}>
     <h2>{t('Авто')}</h2>
-    <label className={styles.label}>
-      {t('Марка')}
-      <Input
-        value={(advertisement as AdvertisementTypeAutomobile).brand}
-        onChange={(e) => handleBrandChange(e.target.value)}
-        placeholder={t('Марка')}
-        required
-        maxLength={30}
-        minLength={1}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Модель')}
-      <Input
-        value={(advertisement as AdvertisementTypeAutomobile).model}
-        onChange={(e) => handleModelChange(e.target.value)}
-        placeholder={t('Модель')}
-        required
-        maxLength={30}
-        minLength={1}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Год выпуска')}
-      <Input
-        value={(advertisement as AdvertisementTypeAutomobile).year}
-        onChange={(e) => handleYearChange(Number(e.target.value))}
-        placeholder={t('Год выпуска')}
-        type="number"
-        max={new Date().getFullYear()}
-        required
-        min={1}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Пробег')}
-      <Input
-        value={(advertisement as AdvertisementTypeAutomobile).mileage}
-        onChange={(e) => handleMileageChange(Number(e.target.value))}
-        placeholder={t('Пробег')}
-        type="number"
-        required
-        max={10 ** 6}
-        min={0}
-      />
-    </label>
+    <Input
+      value={(advertisement as AdvertisementTypeAutomobile).brand}
+      onChange={(e) => handleBrandChange(e.target.value)}
+      placeholder={t('Марка')}
+      required
+      maxLength={30}
+      minLength={1}
+      label={t('Марка')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeAutomobile).model}
+      onChange={(e) => handleModelChange(e.target.value)}
+      placeholder={t('Модель')}
+      required
+      maxLength={30}
+      minLength={1}
+      label={t('Модель')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeAutomobile).year}
+      onChange={(e) => handleYearChange(Number(e.target.value))}
+      placeholder={t('Год выпуска')}
+      type="number"
+      max={new Date().getFullYear()}
+      required
+      min={1}
+      label={t('Год выпуска')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeAutomobile).mileage}
+      onChange={(e) => handleMileageChange(Number(e.target.value))}
+      placeholder={t('Пробег')}
+      type="number"
+      required
+      max={10 ** 6}
+      min={0}
+      label={t('Пробег')}
+    />
   </div>
 );

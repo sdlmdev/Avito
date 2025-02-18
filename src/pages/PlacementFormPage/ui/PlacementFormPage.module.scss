@@ -10,11 +10,6 @@
   width: 100%;
 }
 
-.label {
-  @include flex-column;
-  gap: 5px;
-}
-
 .listBox {
   @include flex-column;
   width: max-content;

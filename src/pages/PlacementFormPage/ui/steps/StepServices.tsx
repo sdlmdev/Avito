@@ -45,38 +45,32 @@ export const StepServices = ({
       className={styles.listBox}
       direction="bottom right"
     />
-    <label className={styles.label}>
-      {t('Опыт работы')}
-      <Input
-        value={(advertisement as AdvertisementTypeService).experience}
-        onChange={(e) => handleExperienceChange(Number(e.target.value))}
-        placeholder={t('Опыт работы')}
-        type="number"
-        required
-        max={100}
-        min={0}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Стоимость')}
-      <Input
-        value={(advertisement as AdvertisementTypeService).cost}
-        onChange={(e) => handleCostChange(Number(e.target.value))}
-        placeholder={t('Стоимость')}
-        type="number"
-        required
-        max={10 ** 9}
-        min={1}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('График работы')}
-      <Input
-        value={(advertisement as AdvertisementTypeService).schedule}
-        onChange={(e) => handleScheduleChange(e.target.value)}
-        placeholder={t('График работы')}
-        maxLength={30}
-      />
-    </label>
+    <Input
+      value={(advertisement as AdvertisementTypeService).experience}
+      onChange={(e) => handleExperienceChange(Number(e.target.value))}
+      placeholder={t('Опыт работы')}
+      type="number"
+      required
+      max={100}
+      min={0}
+      label={t('Опыт работы')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeService).cost}
+      onChange={(e) => handleCostChange(Number(e.target.value))}
+      placeholder={t('Стоимость')}
+      type="number"
+      required
+      max={10 ** 9}
+      min={1}
+      label={t('Стоимость')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeService).schedule}
+      onChange={(e) => handleScheduleChange(e.target.value)}
+      placeholder={t('График работы')}
+      maxLength={30}
+      label={t('График работы')}
+    />
   </div>
 );

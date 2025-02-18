@@ -48,41 +48,35 @@ export const StepImmovables = ({
       className={styles.listBox}
       direction="bottom right"
     />
-    <label className={styles.label}>
-      {t('Площадь')}
-      <Input
-        value={(advertisement as AdvertisementTypeImmovables).area}
-        onChange={(e) => handleAreaChange(Number(e.target.value))}
-        placeholder={t('Площадь')}
-        type="number"
-        max={100000}
-        required
-        min={1}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Количество комнат')}
-      <Input
-        value={(advertisement as AdvertisementTypeImmovables).rooms}
-        onChange={(e) => handleRoomsChange(Number(e.target.value))}
-        placeholder={t('Количество комнат')}
-        type="number"
-        max={50}
-        required
-        min={1}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Цена')}
-      <Input
-        value={(advertisement as AdvertisementTypeImmovables).price}
-        onChange={(e) => handlePriceChange(Number(e.target.value))}
-        placeholder={t('Цена')}
-        type="number"
-        max={10 ** 9}
-        required
-        min={1}
-      />
-    </label>
+    <Input
+      value={(advertisement as AdvertisementTypeImmovables).area}
+      onChange={(e) => handleAreaChange(Number(e.target.value))}
+      placeholder={t('Площадь')}
+      type="number"
+      max={100000}
+      required
+      min={1}
+      label={t('Площадь')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeImmovables).rooms}
+      onChange={(e) => handleRoomsChange(Number(e.target.value))}
+      placeholder={t('Количество комнат')}
+      type="number"
+      max={50}
+      required
+      min={1}
+      label={t('Количество комнат')}
+    />
+    <Input
+      value={(advertisement as AdvertisementTypeImmovables).price}
+      onChange={(e) => handlePriceChange(Number(e.target.value))}
+      placeholder={t('Цена')}
+      type="number"
+      max={10 ** 9}
+      required
+      min={1}
+      label={t('Цена')}
+    />
   </div>
 );

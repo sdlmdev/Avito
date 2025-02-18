@@ -44,3 +44,9 @@
 .m {
   font: var(--font-m);
 }
+
+.label {
+  @include flex-column;
+  gap: 5px;
+  width: 100%;
+}

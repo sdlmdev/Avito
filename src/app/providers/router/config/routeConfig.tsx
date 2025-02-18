@@ -26,7 +26,6 @@ export enum AppRoutes {
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.MAIN]: {
     path: getRouteMain(),
-    // element: <MainPage />,
     element: <ArticlesPage />,
   },
   [AppRoutes.PLACEMENT_FORM]: {

@@ -27,6 +27,7 @@ interface InputProps extends HTMLInputProps {
   inputSize?: InputSize;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
+  label?: string;
 }
 
 export const Input = ({
@@ -36,6 +37,7 @@ export const Input = ({
   type,
   autofocus,
   inputSize = InputSize.M,
+  label,
   ...props
 }: InputProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -55,7 +57,7 @@ export const Input = ({
     onChange?.(e);
   };
 
-  return (
+  const inputElement = (
     <div className={cn(styles.inputWrapper, className)}>
       <input
         className={cn(styles.input, styles[inputSize])}
@@ -65,6 +67,19 @@ export const Input = ({
         value={value}
         {...props}
       />
+    </div>
+  );
+
+  return (
+    <>
+      {label ? (
+        <label className={styles.label}>
+          {label}
+          {inputElement}
+        </label>
+      ) : (
+        inputElement
+      )}
       {type === 'password' && (
         <button
           type="button"
@@ -74,7 +89,7 @@ export const Input = ({
           {isPasswordVisible ? <OpenEye /> : <CloseEye />}
         </button>
       )}
-    </div>
+    </>
   );
 };
 

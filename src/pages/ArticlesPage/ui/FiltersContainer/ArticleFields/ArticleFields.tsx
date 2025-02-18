@@ -54,36 +54,30 @@ export const ArticleFields = memo(() => {
     case AdvertisementType.IMMOVABLES:
       return (
         <>
-          <label className={styles.label}>
-            {t('Площадь')}
-            <Input
-              value={area}
-              name="area"
-              placeholder={t('Площадь')}
-              type="number"
-              onChange={handleChange(onChangeArea)}
-            />
-          </label>
-          <label className={styles.label}>
-            {t('Количество комнат')}
-            <Input
-              value={rooms}
-              name="rooms"
-              placeholder={t('Количество комнат')}
-              type="number"
-              onChange={handleChange(onChangeRooms)}
-            />
-          </label>
-          <label className={styles.label}>
-            {t('Цена')}
-            <Input
-              value={price}
-              name="price"
-              placeholder={t('Цена')}
-              type="number"
-              onChange={handleChange(onChangePrice)}
-            />
-          </label>
+          <Input
+            value={area}
+            name="area"
+            placeholder={t('Площадь')}
+            type="number"
+            onChange={handleChange(onChangeArea)}
+            label={t('Площадь')}
+          />
+          <Input
+            value={rooms}
+            name="rooms"
+            placeholder={t('Количество комнат')}
+            type="number"
+            onChange={handleChange(onChangeRooms)}
+            label={t('Количество комнат')}
+          />
+          <Input
+            value={price}
+            name="price"
+            placeholder={t('Цена')}
+            type="number"
+            onChange={handleChange(onChangePrice)}
+            label={t('Цена')}
+          />
           <ListBox
             items={[
               {value: 'Квартира', content: t('Квартира')},
@@ -107,70 +101,58 @@ export const ArticleFields = memo(() => {
     case AdvertisementType.AUTOMOBILE:
       return (
         <>
-          <label className={styles.label}>
-            {t('Марка')}
-            <Input
-              value={brand}
-              name="brand"
-              placeholder={t('Марка')}
-              onChange={handleChange(onChangeBrand)}
-            />
-          </label>
-          <label className={styles.label}>
-            {t('Модель')}
-            <Input
-              value={model}
-              name="model"
-              placeholder={t('Модель')}
-              onChange={handleChange(onChangeModel)}
-            />
-          </label>
-          <label className={styles.label}>
-            {t('Год выпуска')}
-            <Input
-              value={year}
-              name="year"
-              placeholder={t('Год выпуска')}
-              type="number"
-              onChange={handleChange(onChangeYear)}
-            />
-          </label>
-          <label className={styles.label}>
-            {t('Пробег')}
-            <Input
-              value={mileage}
-              name="mileage"
-              placeholder={t('Пробег')}
-              type="number"
-              onChange={handleChange(onChangeMileage)}
-            />
-          </label>
+          <Input
+            value={brand}
+            name="brand"
+            placeholder={t('Марка')}
+            onChange={handleChange(onChangeBrand)}
+            label={t('Марка')}
+          />
+          <Input
+            value={model}
+            name="model"
+            placeholder={t('Модель')}
+            onChange={handleChange(onChangeModel)}
+            label={t('Модель')}
+          />
+          <Input
+            value={year}
+            name="year"
+            placeholder={t('Год выпуска')}
+            type="number"
+            onChange={handleChange(onChangeYear)}
+            label={t('Год выпуска')}
+          />
+          <Input
+            value={mileage}
+            name="mileage"
+            placeholder={t('Пробег')}
+            type="number"
+            onChange={handleChange(onChangeMileage)}
+            label={t('Пробег')}
+          />
         </>
       );
 
     case AdvertisementType.SERVICES:
       return (
         <>
-          <label className={styles.label}>
-            {t('Опыт (лет)')}
-            <Input
-              value={experience}
-              name="experience"
-              placeholder={t('Опыт (лет)')}
-              type="number"
-              onChange={handleChange(onChangeExperience)}
-            />
-          </label>
-          <label className={styles.label}>
-            {t('Стоимость')}
-            <Input
-              value={cost}
-              name="cost"
-              placeholder={t('Стоимость')}
-              type="number"
-              onChange={handleChange(onChangeCost)}
-            />
-          </label>
+          <Input
+            value={experience}
+            name="experience"
+            placeholder={t('Опыт (лет)')}
+            type="number"
+            onChange={handleChange(onChangeExperience)}
+            label={t('Опыт (лет)')}
+          />
+          <Input
+            value={cost}
+            name="cost"
+            placeholder={t('Стоимость')}
+            type="number"
+            onChange={handleChange(onChangeCost)}
+            label={t('Стоимость')}
+          />
           <ListBox
             items={[
               {value: 'Консультация', content: t('Консультация')},

@@ -34,25 +34,20 @@ export const FiltersContainer = memo((props: FiltersContainerProps) => {
         onChangeType={onChangeType}
         className={styles.tabs}
       />
-      <label className={styles.label}>
-        {t('Поиск')}
-        <Input
-          onChange={(e) => onChangeSearch(e.target.value)}
-          value={search}
-          inputSize={InputSize.M}
-          placeholder={t('Поиск')}
-        />
-      </label>
-      <label className={styles.label}>
-        {t('Город')}
-        <Input
-          onChange={(e) => onChangeLocation(e.target.value)}
-          value={location}
-          inputSize={InputSize.M}
-          placeholder={t('Город')}
-        />
-      </label>
-
+      <Input
+        onChange={(e) => onChangeSearch(e.target.value)}
+        value={search}
+        inputSize={InputSize.M}
+        placeholder={t('Поиск')}
+        label={t('Поиск')}
+      />
+      <Input
+        onChange={(e) => onChangeLocation(e.target.value)}
+        value={location}
+        inputSize={InputSize.M}
+        placeholder={t('Город')}
+        label={t('Город')}
+      />
       <ArticleFields />
     </div>
   );

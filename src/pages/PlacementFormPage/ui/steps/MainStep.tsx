@@ -43,46 +43,38 @@ export const MainStep = ({
       className={styles.listBox}
       direction="bottom right"
     />
-    <label className={styles.label}>
-      {t('Название')}
-      <Input
-        value={advertisement.name}
-        onChange={(e) => handleNameChange(e.target.value)}
-        placeholder={t('Название')}
-        maxLength={200}
-        required
-        minLength={3}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Описание')}
-      <Input
-        value={advertisement.description}
-        onChange={(e) => handleDescriptionChange(e.target.value)}
-        placeholder={t('Описание')}
-        maxLength={200}
-        minLength={3}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Локация')}
-      <Input
-        value={advertisement.location}
-        onChange={(e) => handleLocationChange(e.target.value)}
-        placeholder={t('Локация')}
-        required
-        maxLength={50}
-        minLength={3}
-      />
-    </label>
-    <label className={styles.label}>
-      {t('Изображение')}
-      <Input
-        id="imageFile"
-        type="file"
-        name="image"
-        onChange={handleFileChange}
-      />
-    </label>
+    <Input
+      value={advertisement.name}
+      onChange={(e) => handleNameChange(e.target.value)}
+      placeholder={t('Название')}
+      maxLength={200}
+      required
+      minLength={3}
+      label={t('Название')}
+    />
+    <Input
+      value={advertisement.description}
+      onChange={(e) => handleDescriptionChange(e.target.value)}
+      placeholder={t('Описание')}
+      maxLength={200}
+      minLength={3}
+      label={t('Описание')}
+    />
+    <Input
+      value={advertisement.location}
+      onChange={(e) => handleLocationChange(e.target.value)}
+      placeholder={t('Локация')}
+      required
+      maxLength={50}
+      minLength={3}
+      label={t('Локация')}
+    />
+    <Input
+      id="imageFile"
+      type="file"
+      name="image"
+      onChange={handleFileChange}
+      label={t('Изображение')}
+    />
   </div>
 );
