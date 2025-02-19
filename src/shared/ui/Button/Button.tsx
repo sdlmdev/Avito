@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import React, {forwardRef} from 'react';
 import {ButtonHTMLAttributes, FC, memo} from 'react';
 
 import {Spinner} from '../Spinner';
@@ -24,27 +25,33 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: FC<ButtonProps> = memo(
-  ({
-    className,
-    children,
-    theme = ButtonTheme.BLUE,
-    size = ButtonSize.S,
-    disabled = false,
-    isLoading = false,
-    ...props
-  }: ButtonProps) => {
-    return (
-      <button
-        disabled={disabled || isLoading}
-        className={cn(styles.Button, className, styles[theme], styles[size], {
-          [styles.disabled]: disabled || isLoading,
-        })}
-        {...props}
-      >
-        {isLoading ? <Spinner /> : children}
-      </button>
-    );
-  },
+  forwardRef<HTMLButtonElement, ButtonProps>(
+    (
+      {
+        className,
+        children,
+        theme = ButtonTheme.BLUE,
+        size = ButtonSize.S,
+        disabled = false,
+        isLoading = false,
+        ...props
+      },
+      ref,
+    ) => {
+      return (
+        <button
+          ref={ref}
+          disabled={disabled || isLoading}
+          className={cn(styles.Button, className, styles[theme], styles[size], {
+            [styles.disabled]: disabled || isLoading,
+          })}
+          {...props}
+        >
+          {isLoading ? <Spinner /> : children}
+        </button>
+      );
+    },
+  ),
 );
 
 Button.displayName = 'Button';

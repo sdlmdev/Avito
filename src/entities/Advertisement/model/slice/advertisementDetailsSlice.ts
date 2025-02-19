@@ -168,6 +168,9 @@ export const advertisementDetailsSlice = createSlice({
       state.data = JSON.parse(JSON.stringify(defaultState.data));
       saveStateToLocalStorage(defaultState);
     },
+    reInitState(state) {
+      state.data = loadStateFromLocalStorage().data;
+    },
   },
   extraReducers: (builder) => {
     builder

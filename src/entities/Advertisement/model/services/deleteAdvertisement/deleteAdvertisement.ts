@@ -22,8 +22,12 @@ export const deleteAdvertisement = createAsyncThunk<
       }
 
       return response.data;
-    } catch (e) {
-      return rejectWithValue('error');
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+
+      return rejectWithValue('Ошибка');
     }
   },
 );

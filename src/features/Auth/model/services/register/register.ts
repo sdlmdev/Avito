@@ -25,6 +25,10 @@ export const register = createAsyncThunk<
 
     return response.data;
   } catch (error) {
-    return rejectWithValue((error as Error).message);
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+
+    return rejectWithValue('Ошибка');
   }
 });

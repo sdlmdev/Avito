@@ -113,6 +113,12 @@ const PlacementFormPage = memo(({}) => {
     validateForm();
   }, [advertisement, validateForm]);
 
+  useEffect(() => {
+    dispatch(advertisementDetailsActions.reInitState());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
       <Page testId="PlacementFormPage" className={styles.PlacementFormPage}>

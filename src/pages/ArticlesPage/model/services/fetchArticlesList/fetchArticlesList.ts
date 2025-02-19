@@ -32,6 +32,12 @@ interface FetchArticlesListProps {
   replace?: boolean;
 }
 
+interface AdvertisementItems {
+  items: Array<AdvertisementVariant>;
+  maxPage: number;
+  currentPage: number;
+}
+
 export const fetchArticlesList = createAsyncThunk<
   Array<AdvertisementVariant>,
   FetchArticlesListProps,
@@ -94,12 +100,6 @@ export const fetchArticlesList = createAsyncThunk<
 
     addQueryParams(queryParams);
 
-    interface AdvertisementItems {
-      items: Array<AdvertisementVariant>;
-      maxPage: number;
-      currentPage: number;
-    }
-
     const response: AxiosResponse<AdvertisementItems> = await extra.api.get(
       '/items',
       {
@@ -122,6 +122,10 @@ export const fetchArticlesList = createAsyncThunk<
 
     return items;
   } catch (error) {
-    return rejectWithValue((error as Error).message);
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+
+    return rejectWithValue('Ошибка');
   }
 });
