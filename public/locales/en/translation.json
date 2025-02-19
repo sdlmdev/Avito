@@ -62,5 +62,6 @@
   "Произошла ошибка при сохранении данных.": "An error occurred while saving data.",
   "Редактировать": "Edit",
   "Назад": "Back",
-  "Произошла ошибка при загрузке статьи.": "An error occurred while loading the article."
+  "Произошла ошибка при загрузке статьи.": "An error occurred while loading the article.",
+  "Удалить": "Delete"
 }

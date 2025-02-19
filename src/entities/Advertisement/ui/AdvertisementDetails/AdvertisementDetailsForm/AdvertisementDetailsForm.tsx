@@ -2,8 +2,11 @@ import 'entities/Advertisement';
 import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
-import {Button} from 'shared/ui/Button';
+import {getRouteMain} from 'shared/constants/router';
+import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import {Button, ButtonTheme} from 'shared/ui/Button';
 import {
   MainStep,
   StepAutomobile,
@@ -17,6 +20,7 @@ import {Text} from 'shared/ui/Text';
 import {useFormHandlers} from '../../../lib/hooks/useFormHandlers';
 import {AdvertisementType} from '../../../model/consts/advertisementConstants';
 import {getAdvertisementDetailsIsLoading} from '../../../model/selectors/advertisementDetails';
+import {deleteAdvertisement} from '../../../model/services/deleteAdvertisement/deleteAdvertisement';
 import {
   AdvertisementTypeAutomobile,
   AdvertisementTypeImmovables,
@@ -37,6 +41,8 @@ export const AdvertisementDetailsForm = ({
   const {t} = useTranslation();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const isLoading = useSelector(getAdvertisementDetailsIsLoading);
+  const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
   const {
     formData,
@@ -70,6 +76,14 @@ export const AdvertisementDetailsForm = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSave({...formData, image: imageFile});
+  };
+
+  const handleDeleteAdvertisement = async () => {
+    const res = await dispatch(deleteAdvertisement(advertisement.id));
+
+    if (res.meta.requestStatus === 'fulfilled') {
+      navigation(getRouteMain());
+    }
   };
 
   return (
@@ -148,6 +162,14 @@ export const AdvertisementDetailsForm = ({
       )}
       <Button isLoading={isLoading} className={styles.button} type="submit">
         {t('Сохранить')}
+      </Button>
+      <Button
+        className={styles.deleteButton}
+        onClick={handleDeleteAdvertisement}
+        type="button"
+        theme={ButtonTheme.OUTLINE}
+      >
+        {t('Удалить')}
       </Button>
       {isError && (
         <Text

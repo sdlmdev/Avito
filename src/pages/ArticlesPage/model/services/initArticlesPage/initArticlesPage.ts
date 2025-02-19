@@ -89,5 +89,5 @@ export const initArticlesPage = createAsyncThunk<
   }
 
   dispatch(articlesPageActions.initState());
-  dispatch(fetchArticlesList({}));
+  dispatch(fetchArticlesList({replace: true}));
 });

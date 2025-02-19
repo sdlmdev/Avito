@@ -649,13 +649,14 @@ app.put('/items/:id', authenticate, upload.single('image'), (req, res) => {
 });
 
 app.delete('/items/:id', authenticate, (req, res) => {
+  const id = parseInt(req.params.id, 10);
   const itemIndex = items.findIndex(
-    (i) => parseInt(i.id) === parseInt(req.params.id, 10),
+    (i) => parseInt(i.id) === id,
   );
 
   if (itemIndex !== -1) {
     items.splice(itemIndex, 1);
-    res.status(204).send();
+    res.status(200).send(`Item with id ${id} was deleted`);
   } else {
     res.status(404).send('Item not found');
   }

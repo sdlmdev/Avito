@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {addNewAdvertisement} from 'entities/Advertisement/model/services/addNewAdvertisement/addNewAdvertisement';
 import {changeAdvertisementData} from 'entities/Advertisement/model/services/changeAdvertisementData/changeAdvertisementData';
+import {deleteAdvertisement} from 'entities/Advertisement/model/services/deleteAdvertisement/deleteAdvertisement';
 
 import {ADVERTISEMENT_FORM} from 'shared/constants/localstorage';
 
@@ -207,6 +208,18 @@ export const advertisementDetailsSlice = createSlice({
         state.error = undefined;
       })
       .addCase(addNewAdvertisement.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteAdvertisement.pending, (state) => {
+        state.isLoading = true;
+        state.error = undefined;
+      })
+      .addCase(deleteAdvertisement.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = undefined;
+      })
+      .addCase(deleteAdvertisement.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
