@@ -1,76 +1,269 @@
-import {useCallback, useState} from 'react';
+import {AdvertisementType, AdvertisementVariant} from 'entities/Advertisement';
+import {advertisementDetailsActions} from 'entities/Advertisement/model/slice/advertisementDetailsSlice';
+import {ChangeEvent, useCallback, useState} from 'react';
 
-import {AdvertisementVariant} from '../../model/types/advertisement';
+import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 
-export const useFormHandlers = (initialFormData: AdvertisementVariant) => {
+export const useFormHandlers = (initialFormData?: AdvertisementVariant) => {
   const [formData, setFormData] = useState(initialFormData);
+  const dispatch = useAppDispatch();
 
-  const handleNameChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, name: value}));
-  }, []);
+  const handleNameChange = useCallback(
+    (value: string) => {
+      if (value.length <= 200) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, name: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setName(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleDescriptionChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, description: value}));
-  }, []);
+  const handleDescriptionChange = useCallback(
+    (value: string) => {
+      if (value.length <= 200) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) =>
+              prevFormData && {
+                ...prevFormData,
+                description: value,
+              },
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setDescription(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleLocationChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, location: value}));
-  }, []);
+  const handleLocationChange = useCallback(
+    (value: string) => {
+      if (value.length <= 50) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) =>
+              prevFormData && {...prevFormData, location: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setLocation(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handlePropertyTypeChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, propertyType: value}));
-  }, []);
+  const handleAreaChange = useCallback(
+    (value: number | string) => {
+      if (value >= 1 && value <= 100000) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, area: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setArea(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleAreaChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, area: value}));
-  }, []);
+  const handleRoomsChange = useCallback(
+    (value: number | string) => {
+      if (value >= 1 && value <= 50) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, rooms: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setRooms(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleRoomsChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, rooms: value}));
-  }, []);
+  const handlePriceChange = useCallback(
+    (value: number | string) => {
+      if (value >= 1 && value <= 10 ** 9) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, price: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setPrice(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handlePriceChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, price: value}));
-  }, []);
+  const handleBrandChange = useCallback(
+    (value: string) => {
+      if (value.length <= 30) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, brand: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setBrand(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleBrandChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, brand: value}));
-  }, []);
+  const handleModelChange = useCallback(
+    (value: string) => {
+      if (value.length <= 30) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, model: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setModel(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleModelChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, model: value}));
-  }, []);
+  const handleYearChange = useCallback(
+    (value: number | string) => {
+      const currentYear = new Date().getFullYear();
 
-  const handleYearChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, year: value}));
-  }, []);
+      if (value > 0 && value <= currentYear) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, year: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setYear(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleMileageChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, mileage: value}));
-  }, []);
+  const handleMileageChange = useCallback(
+    (value: number | string) => {
+      if (value >= 0 && value <= 10 ** 6) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, mileage: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setMileage(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleServiceTypeChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, serviceType: value}));
-  }, []);
+  const handleExperienceChange = useCallback(
+    (value: number | string) => {
+      if (value >= 1 && value <= 100) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) =>
+              prevFormData && {...prevFormData, experience: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setExperience(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleExperienceChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, experience: value}));
-  }, []);
+  const handleCostChange = useCallback(
+    (value: number | string) => {
+      if (value >= 1 && value <= 10 ** 9) {
+        if (initialFormData) {
+          setFormData(
+            (prevFormData) => prevFormData && {...prevFormData, cost: value},
+          );
+        } else {
+          dispatch(advertisementDetailsActions.setCost(value));
+        }
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleCostChange = useCallback((value: string | number) => {
-    setFormData((prevFormData) => ({...prevFormData, cost: value}));
-  }, []);
+  const handleScheduleChange = useCallback(
+    (value: string) => {
+      if (initialFormData) {
+        setFormData(
+          (prevFormData) => prevFormData && {...prevFormData, schedule: value},
+        );
+      } else {
+        dispatch(advertisementDetailsActions.setSchedule(value));
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
-  const handleScheduleChange = useCallback((value: string) => {
-    setFormData((prevFormData) => ({...prevFormData, schedule: value}));
-  }, []);
+  const handleFileChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, setImageFile: (file: File) => void) => {
+      if (e.target.files && e.target.files[0]) {
+        setImageFile(e.target.files[0]);
+      }
+    },
+    [],
+  );
+
+  const handlePropertyTypeChange = useCallback(
+    (value: string) => {
+      if (initialFormData) {
+        setFormData(
+          (prevFormData) =>
+            prevFormData && {...prevFormData, propertyType: value},
+        );
+      } else {
+        dispatch(advertisementDetailsActions.setPropertyType(value));
+      }
+    },
+    [dispatch, initialFormData],
+  );
+
+  const handleServiceTypeChange = useCallback(
+    (value: string) => {
+      if (initialFormData) {
+        setFormData(
+          (prevFormData) =>
+            prevFormData && {...prevFormData, serviceType: value},
+        );
+      } else {
+        dispatch(advertisementDetailsActions.setServiceType(value));
+      }
+    },
+    [dispatch, initialFormData],
+  );
+
+  const handleCategoryChange = useCallback(
+    (value: AdvertisementType) => {
+      if (initialFormData) {
+        setFormData(
+          (prevFormData) => prevFormData && {...prevFormData, type: value},
+        );
+      } else {
+        dispatch(advertisementDetailsActions.setCategory(value));
+      }
+    },
+    [dispatch, initialFormData],
+  );
 
   return {
     formData,
     handleNameChange,
     handleDescriptionChange,
     handleLocationChange,
-    handlePropertyTypeChange,
     handleAreaChange,
     handleRoomsChange,
     handlePriceChange,
@@ -78,9 +271,12 @@ export const useFormHandlers = (initialFormData: AdvertisementVariant) => {
     handleModelChange,
     handleYearChange,
     handleMileageChange,
-    handleServiceTypeChange,
     handleExperienceChange,
     handleCostChange,
     handleScheduleChange,
+    handleFileChange,
+    handlePropertyTypeChange,
+    handleServiceTypeChange,
+    handleCategoryChange,
   };
 };

@@ -9,7 +9,7 @@ import {AxiosInstance} from 'axios';
 import {AdvertisementDetailsSchema} from 'entities/Advertisement';
 import {UserScheme} from 'entities/User';
 
-import {LoginScheme, RegisterScheme} from 'features/Auth';
+import {AuthScheme} from 'features/Auth';
 
 import {rtkApi} from 'shared/api/rtkApi';
 
@@ -19,8 +19,7 @@ export interface StateScheme {
   user: UserScheme;
   [rtkApi.reducerPath]: ReturnType<typeof rtkApi.reducer>;
 
-  loginForm?: LoginScheme;
-  registerForm?: RegisterScheme;
+  authForm?: AuthScheme;
   advertisementDetails?: AdvertisementDetailsSchema;
   advertisementsPage?: ArticlesPageSchema;
 }

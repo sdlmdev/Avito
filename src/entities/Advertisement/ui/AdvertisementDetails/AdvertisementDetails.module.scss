@@ -42,3 +42,13 @@
 .button {
   margin-top: 30px;
 }
+
+.types {
+    @include flex-row;
+    justify-content: space-evenly;
+}
+
+.errorWrapper {
+  @include flex-column;
+  gap: 20px;
+}

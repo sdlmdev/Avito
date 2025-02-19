@@ -41,7 +41,9 @@
 
 ```json
 {
-  "message": "User registered successfully"
+  "username": "user",
+  "id": 1,
+  "token": "token"
 }
 ```
 
@@ -68,6 +70,8 @@
 
 ```json
 {
+  "username": "user",
+  "id": 1,
   "token": "token"
 }
 ```
@@ -160,7 +164,10 @@
   "propertyType": "Квартира",
   "area": 100,
   "rooms": 3,
-  "price": 15000000
+  "price": 15000000,
+  "user": {
+    "id": 1
+  }
 }
 ```
 

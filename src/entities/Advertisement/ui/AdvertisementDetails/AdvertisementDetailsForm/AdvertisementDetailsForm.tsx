@@ -1,6 +1,7 @@
 import 'entities/Advertisement';
 import {ChangeEvent, FormEvent, useCallback, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 
 import {Button} from 'shared/ui/Button';
 import {
@@ -15,6 +16,7 @@ import {Text} from 'shared/ui/Text';
 
 import {useFormHandlers} from '../../../lib/hooks/useFormHandlers';
 import {AdvertisementType} from '../../../model/consts/advertisementConstants';
+import {getAdvertisementDetailsIsLoading} from '../../../model/selectors/advertisementDetails';
 import {
   AdvertisementTypeAutomobile,
   AdvertisementTypeImmovables,
@@ -34,6 +36,7 @@ export const AdvertisementDetailsForm = ({
 }) => {
   const {t} = useTranslation();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const isLoading = useSelector(getAdvertisementDetailsIsLoading);
 
   const {
     formData,
@@ -59,6 +62,10 @@ export const AdvertisementDetailsForm = ({
       setImageFile(e.target.files[0]);
     }
   }, []);
+
+  if (!formData) {
+    return <Text title={t('Что-то пошло не так')} />;
+  }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,7 +101,7 @@ export const AdvertisementDetailsForm = ({
             value={(formData as AdvertisementTypeImmovables)?.propertyType}
             onChange={handlePropertyTypeChange}
             label={t('Тип недвижимости')}
-            defaultValue=""
+            defaultValue="Квартира"
             className={styles.listBox}
             direction="bottom right"
           />
@@ -127,7 +134,7 @@ export const AdvertisementDetailsForm = ({
             value={(formData as AdvertisementTypeService)?.serviceType}
             onChange={handleServiceTypeChange}
             label={t('Тип услуги')}
-            defaultValue=""
+            defaultValue="Консультация"
             className={styles.listBox}
             direction="bottom right"
           />
@@ -139,7 +146,7 @@ export const AdvertisementDetailsForm = ({
           />
         </>
       )}
-      <Button className={styles.button} type="submit">
+      <Button isLoading={isLoading} className={styles.button} type="submit">
         {t('Сохранить')}
       </Button>
       {isError && (

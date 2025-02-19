@@ -59,6 +59,12 @@ export const Input = memo(
       onChange?.(e);
     };
 
+    const handleBlur = () => {
+      if (inputRef.current) {
+        inputRef.current.reportValidity();
+      }
+    };
+
     const inputElement = (
       <div className={cn(styles.inputWrapper, className)}>
         <input
@@ -67,6 +73,7 @@ export const Input = memo(
           type={isPasswordVisible && type === 'password' ? 'text' : type}
           onChange={handleChange}
           value={value}
+          onBlur={handleBlur}
           {...props}
         />
         {type === 'password' && (

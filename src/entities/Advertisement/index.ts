@@ -5,7 +5,11 @@ export type {AdvertisementVariant} from './model/types/advertisement';
 export type {AdvertisementDetailsSchema} from './model/types/articleDetailsSchema';
 
 export {AdvertisementList} from './ui/AdvertisementList/AdvertisementList';
-export {getAdvertisementDetailsData} from './model/selectors/advertisementDetails';
+export {
+  getAdvertisementDetailsData,
+  getAdvertisementDetailsIsLoading,
+  getAdvertisementDetailsError,
+} from './model/selectors/advertisementDetails';
 export {
   AdvertisementView,
   AdvertisementType,

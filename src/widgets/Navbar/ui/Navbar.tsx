@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {LoginModal} from 'features/Auth';
+import {AuthModal} from 'features/Auth';
 import {AvatarDropdown} from 'features/AvatarDropdown';
 import {LangSwitcher} from 'features/LangSwitcher';
 
@@ -52,7 +52,7 @@ export const Navbar = memo(({className}: NavbarProps) => {
         )}
       </div>
       {isAuthModalOpen && (
-        <LoginModal
+        <AuthModal
           isOpen={isAuthModalOpen}
           onClose={changeVisibilityAuthModal}
         />

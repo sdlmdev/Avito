@@ -2,7 +2,12 @@ import {
   AdvertisementType,
   AdvertisementVariant,
   getAdvertisementDetailsData,
+  getAdvertisementDetailsError,
+  getAdvertisementDetailsIsLoading,
 } from 'entities/Advertisement';
+import {useFormHandlers} from 'entities/Advertisement/lib/hooks/useFormHandlers';
+import {useFormValidation} from 'entities/Advertisement/lib/hooks/useFormValidation';
+import {addNewAdvertisement} from 'entities/Advertisement/model/services/addNewAdvertisement/addNewAdvertisement';
 import {
   advertisementDetailsActions,
   advertisementDetailsReducer,
@@ -12,7 +17,7 @@ import {
   AdvertisementTypeImmovables,
   AdvertisementTypeService,
 } from 'entities/Advertisement/model/types/advertisement';
-import {memo, MouseEvent, useCallback, useState} from 'react';
+import {FormEvent, memo, useState} from 'react';
 import {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
@@ -32,8 +37,6 @@ import {Input} from 'shared/ui/Input';
 import {ListBox} from 'shared/ui/Popups';
 import {Text} from 'shared/ui/Text';
 
-import {useHandlers} from '../lib/hooks/useHandlers';
-import {addNewAdvertisement} from '../model/services/addNewAdvertisement/addNewAdvertisement';
 import styles from './PlacementFormPage.module.scss';
 
 const reducers: ReducersList = {
@@ -43,63 +46,13 @@ const reducers: ReducersList = {
 const PlacementFormPage = memo(({}) => {
   const {t} = useTranslation();
   const dispatch = useAppDispatch();
-  const [isError, setIsError] = useState(false);
   const [step, setStep] = useState(1);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const advertisement = useSelector(getAdvertisementDetailsData);
+  const isLoading = useSelector(getAdvertisementDetailsIsLoading);
+  const isError = useSelector(getAdvertisementDetailsError);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  const handleNextStep = () => setStep(step + 1);
-  const handlePrevStep = () => setStep(step - 1);
-
-  const resetForm = () => {
-    dispatch(advertisementDetailsActions.resetAdvertisementForm());
-    setStep(1);
-    setImageFile(null);
-  };
-
-  const handleSubmitForm = async (
-    updatedAdvertisement: AdvertisementVariant,
-    e: MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.preventDefault();
-
-    const res = await dispatch(
-      addNewAdvertisement({...updatedAdvertisement, image: imageFile}),
-    );
-
-    if (res.meta.requestStatus === 'fulfilled') {
-      resetForm();
-      setIsError(false);
-      setIsSuccess(true);
-    } else {
-      setIsError(true);
-      setIsSuccess(false);
-    }
-  };
-
-  const validateForm = useCallback(() => {
-    const {name, location, type} = advertisement || {};
-
-    let isValid =
-      name?.trim() !== '' && location?.trim() !== '' && type !== undefined;
-
-    if (type === AdvertisementType.IMMOVABLES) {
-      isValid =
-        isValid &&
-        validateImmovables(advertisement as AdvertisementTypeImmovables);
-    } else if (type === AdvertisementType.AUTOMOBILE) {
-      isValid =
-        isValid &&
-        validateAutomobile(advertisement as AdvertisementTypeAutomobile);
-    } else if (type === AdvertisementType.SERVICES) {
-      isValid =
-        isValid && validateServices(advertisement as AdvertisementTypeService);
-    }
-
-    setIsFormValid(isValid);
-  }, [advertisement]);
+  const {isFormValid, validateForm} = useFormValidation(advertisement);
 
   const {
     handleNameChange,
@@ -116,29 +69,34 @@ const PlacementFormPage = memo(({}) => {
     handleCostChange,
     handleScheduleChange,
     handleFileChange,
-  } = useHandlers(validateForm);
+    handleCategoryChange,
+  } = useFormHandlers();
 
-  const validateImmovables = (advertisement: AdvertisementTypeImmovables) => {
-    const {area, rooms, price} = advertisement;
+  const handleNextStep = () => setStep(step + 1);
+  const handlePrevStep = () => setStep(step - 1);
 
-    return area !== undefined && rooms !== undefined && price !== undefined;
+  const resetForm = () => {
+    dispatch(advertisementDetailsActions.resetAdvertisementForm());
+    setStep(1);
+    setImageFile(null);
   };
 
-  const validateAutomobile = (advertisement: AdvertisementTypeAutomobile) => {
-    const {brand, model, year, mileage} = advertisement;
+  const handleSubmitForm = async (
+    updatedAdvertisement: AdvertisementVariant,
+    e: FormEvent<HTMLFormElement>,
+  ) => {
+    e.preventDefault();
 
-    return (
-      brand?.trim() !== '' &&
-      model?.trim() !== '' &&
-      year !== undefined &&
-      mileage !== undefined
+    const res = await dispatch(
+      addNewAdvertisement({...updatedAdvertisement, image: imageFile}),
     );
-  };
 
-  const validateServices = (advertisement: AdvertisementTypeService) => {
-    const {experience, cost} = advertisement;
-
-    return experience !== undefined && cost !== undefined;
+    if (res.meta.requestStatus === 'fulfilled') {
+      resetForm();
+      setIsSuccess(true);
+    } else {
+      setIsSuccess(false);
+    }
   };
 
   useEffect(() => {
@@ -158,7 +116,12 @@ const PlacementFormPage = memo(({}) => {
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
       <Page testId="PlacementFormPage" className={styles.PlacementFormPage}>
-        <form className={styles.formWrapper}>
+        <form
+          className={styles.formWrapper}
+          onSubmit={async (e) =>
+            advertisement && handleSubmitForm(advertisement, e)
+          }
+        >
           {step === 1 && advertisement && (
             <div className={styles.step}>
               <Text title={t('Основной шаг')} size="m" />
@@ -172,9 +135,7 @@ const PlacementFormPage = memo(({}) => {
                   {value: AdvertisementType.SERVICES, content: t('Услуги')},
                 ]}
                 value={advertisement?.type || AdvertisementType.IMMOVABLES}
-                onChange={(value) =>
-                  dispatch(advertisementDetailsActions.setCategory(value))
-                }
+                onChange={handleCategoryChange}
                 label={t('Категория объявления')}
                 defaultValue={AdvertisementType.ALL}
                 direction="bottom right"
@@ -295,8 +256,9 @@ const PlacementFormPage = memo(({}) => {
               <>
                 <Button onClick={handlePrevStep}>{t('Назад')}</Button>
                 <Button
-                  onClick={async (e) => handleSubmitForm(advertisement, e)}
+                  isLoading={isLoading}
                   disabled={!isFormValid}
+                  type="submit"
                 >
                   {t('Отправить')}
                 </Button>

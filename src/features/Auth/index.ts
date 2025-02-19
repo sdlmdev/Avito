@@ -1,3 +1,2 @@
-export {LoginModal} from './ui/LoginModal/LoginModal';
-export type {LoginScheme} from './model/types/loginScheme';
-export type {RegisterScheme} from './model/types/RegisterScheme';
+export {AuthModal} from 'features/Auth/ui/AuthModal/AuthModal';
+export type {AuthScheme} from './model/types/authScheme';

@@ -2,7 +2,7 @@ import {TestAsyncThunk} from 'shared/lib/tests/TestAsyncThunk/TestAsyncThunk';
 
 import {login} from './login';
 
-describe('Тесты login', () => {
+describe('Тесты auth', () => {
   test('Должен пройти успешный процесс авторизации', async () => {
     const userValue = {username: 'testName'};
 

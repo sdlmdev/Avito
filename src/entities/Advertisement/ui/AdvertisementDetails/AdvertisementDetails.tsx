@@ -8,6 +8,7 @@ import {
   ReducersList,
 } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import {useAppDispatch} from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import {Button, ButtonTheme} from 'shared/ui/Button';
 import {Text} from 'shared/ui/Text';
 
 import {
@@ -17,6 +18,7 @@ import {
 import {fetchAdvertisementById} from '../../model/services/fetchAdvertisementById/fetchArticleById';
 import {advertisementDetailsReducer} from '../../model/slice/advertisementDetailsSlice';
 import {Advertisement} from './Advertisement/Advertisement';
+import styles from './AdvertisementDetails.module.scss';
 
 interface AdvertisementDetailsProps {
   id?: string;
@@ -42,10 +44,18 @@ export const AdvertisementDetails = memo(({id}: AdvertisementDetailsProps) => {
     content = <AdvertisementDetailsSkeleton />;
   } else if (error) {
     content = (
-      <Text
-        align="center"
-        title={t('Произошла ошибка при загрузке объявления')}
-      />
+      <div className={styles.errorWrapper}>
+        <Text
+          align="center"
+          title={t('Произошла ошибка при загрузке объявления')}
+        />
+        <Button
+          theme={ButtonTheme.BLUE}
+          onClick={() => window.location.reload()}
+        >
+          {t('Обновить страницу')}
+        </Button>
+      </div>
     );
   } else {
     content = <Advertisement />;

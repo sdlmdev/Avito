@@ -1,4 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {addNewAdvertisement} from 'entities/Advertisement/model/services/addNewAdvertisement/addNewAdvertisement';
+import {changeAdvertisementData} from 'entities/Advertisement/model/services/changeAdvertisementData/changeAdvertisementData';
 
 import {ADVERTISEMENT_FORM} from 'shared/constants/localstorage';
 
@@ -177,9 +179,34 @@ export const advertisementDetailsSlice = createSlice({
         (state, action: PayloadAction<AdvertisementVariant>) => {
           state.isLoading = false;
           state.data = action.payload;
+          state.error = undefined;
         },
       )
       .addCase(fetchAdvertisementById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(changeAdvertisementData.pending, (state) => {
+        state.isLoading = true;
+        state.error = undefined;
+      })
+      .addCase(changeAdvertisementData.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = undefined;
+      })
+      .addCase(changeAdvertisementData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(addNewAdvertisement.pending, (state) => {
+        state.isLoading = true;
+        state.error = undefined;
+      })
+      .addCase(addNewAdvertisement.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = undefined;
+      })
+      .addCase(addNewAdvertisement.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
