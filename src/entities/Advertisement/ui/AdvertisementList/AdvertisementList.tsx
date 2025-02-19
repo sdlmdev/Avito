@@ -37,7 +37,14 @@ export const AdvertisementList = memo(
 
     if (!isLoading && !articles.length) {
       return (
-        <div className={cn(styles.AdvertisementList, className, styles[view])}>
+        <div
+          className={cn(
+            styles.AdvertisementList,
+            className,
+            styles[view],
+            styles.empty,
+          )}
+        >
           <Text size="l" title={t('Объявления не найдены')} />
         </div>
       );
@@ -48,15 +55,16 @@ export const AdvertisementList = memo(
         className={cn(styles.AdvertisementList, styles[view])}
         data-testid="AdvertisementList"
       >
-        {articles.map((item) => (
-          <AdvertisementListItem
-            advertisement={item}
-            view={view}
-            target={target}
-            key={item.id}
-            className={styles.card}
-          />
-        ))}
+        {!isLoading &&
+          articles.map((item) => (
+            <AdvertisementListItem
+              advertisement={item}
+              view={view}
+              target={target}
+              key={item.id}
+              className={styles.card}
+            />
+          ))}
         {isLoading && getSkeletons(view)}
       </div>
     );

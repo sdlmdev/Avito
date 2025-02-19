@@ -30,7 +30,6 @@ const initialState = articlesAdapter.getInitialState<ArticlesPageSchema>({
   entities: {},
   view: AdvertisementView.SMALL,
   page: 1,
-  _inited: false,
   limit: 5,
   search: '',
   type: AdvertisementType.ALL,
@@ -116,7 +115,6 @@ const articlesPageSlice = createSlice({
       ) as AdvertisementView;
 
       state.view = view;
-      state._inited = true;
     },
   },
   extraReducers: (builder) => {

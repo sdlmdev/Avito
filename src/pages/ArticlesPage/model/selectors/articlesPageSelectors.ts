@@ -1,8 +1,6 @@
 import {StateScheme} from 'app/providers/StoreProvider';
 import {AdvertisementType, AdvertisementView} from 'entities/Advertisement';
 
-import {buildSelector} from 'shared/lib/store';
-
 export const getArticlesData = (state: StateScheme) =>
   state.advertisementDetails;
 export const getArticlesPageIsLoading = (state: StateScheme) =>
@@ -15,8 +13,6 @@ export const getArticlesPageNum = (state: StateScheme) =>
   state.advertisementsPage?.page || 1;
 export const getArticlesPageLimit = (state: StateScheme) =>
   state.advertisementsPage?.limit || 5;
-export const getArticlesPageInited = (state: StateScheme) =>
-  state.advertisementsPage?._inited;
 export const getArticlesPageSearch = (state: StateScheme) =>
   state.advertisementsPage?.search ?? '';
 export const getArticlesPageType = (state: StateScheme) =>
@@ -47,7 +43,3 @@ export const getArticlesPageLocation = (state: StateScheme) =>
   state.advertisementsPage?.location ?? '';
 export const getArticlesPageMaxPage = (state: StateScheme) =>
   state.advertisementsPage?.maxPage || 1;
-
-export const [useArticleItemById] = buildSelector(
-  (state, id: string) => state.advertisementsPage?.entities[id],
-);

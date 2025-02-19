@@ -28,6 +28,4 @@ export interface ArticlesPageSchema extends EntityState<AdvertisementVariant> {
   location?: string;
 
   schedule?: string;
-
-  _inited: boolean;
 }
